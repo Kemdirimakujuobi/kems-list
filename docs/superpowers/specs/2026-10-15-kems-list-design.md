@@ -43,7 +43,7 @@ writer feeds ──(discover job: cron 3h + on push)──▶ data/queue.json
 
 No server code. Three moving parts, each replaceable: a discovery script, a site builder,
 and a static desk page. Runtime: Node (LTS) in GitHub Actions only. Dependencies: one XML parser
-(`fast-xml-parser`, zero transitive deps). Site and desk are plain HTML/CSS/JS — no framework.
+(`fast-xml-parser`, which brings two tiny deps: `strnum`, `anynum`). Site and desk are plain HTML/CSS/JS — no framework.
 
 ## Data (`data/`)
 
