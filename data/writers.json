@@ -152,5 +152,181 @@
     "active": true,
     "addedAt": "2026-10-15T20:00:04.605Z",
     "icon": "https://substackcdn.com/image/fetch/$s_!-0jV!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F19e3a96a-4a0e-4ee7-ac93-fa392480251a%2Fapple-touch-icon-1024x1024.png"
+  },
+  {
+    "id": "mona-eltahawy",
+    "name": "Mona Eltahawy",
+    "country": "Egypt / Canada",
+    "links": {
+      "site": "https://www.feministgiant.com"
+    },
+    "active": true,
+    "addedAt": "2026-10-15T21:41:09.351Z",
+    "icon": "https://substackcdn.com/image/fetch/$s_!tZ9n!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fbucketeer-e05bbc84-baa3-437e-9518-adb32be77984.s3.amazonaws.com%2Fpublic%2Fimages%2F13a6a09a-f3fa-4b23-be27-092c360699b9%2Fapple-touch-icon-1024x1024.png"
+  },
+  {
+    "id": "yassmin-abdel-magied",
+    "name": "Yassmin Abdel-Magied",
+    "country": "Sudan / UK",
+    "links": {
+      "substack": "https://yassmin.substack.com"
+    },
+    "active": true,
+    "addedAt": "2026-10-15T21:41:09.351Z",
+    "icon": "https://substackcdn.com/image/fetch/$s_!cdCO!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F3ccdd428-a793-43fa-9988-9a9469467f01%2Fapple-touch-icon-1024x1024.png"
+  },
+  {
+    "id": "yousra-imran",
+    "name": "Yousra Imran",
+    "country": "Egypt / UK",
+    "links": {
+      "substack": "https://eybnewsletter.substack.com"
+    },
+    "active": true,
+    "addedAt": "2026-10-15T21:41:09.351Z",
+    "icon": "https://substackcdn.com/image/fetch/$s_!NnBd!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fbucketeer-e05bbc84-baa3-437e-9518-adb32be77984.s3.amazonaws.com%2Fpublic%2Fimages%2F1be75860-0cb1-4cc6-bc58-19f2429f4999%2Fapple-touch-icon-1024x1024.png"
+  },
+  {
+    "id": "hossam-el-hamalawy",
+    "name": "Hossam el-Hamalawy",
+    "country": "Egypt / Germany",
+    "links": {
+      "substack": "https://barracks.substack.com"
+    },
+    "active": true,
+    "addedAt": "2026-10-15T21:41:09.351Z",
+    "icon": "https://substackcdn.com/image/fetch/$s_!F_R3!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F5ad39318-0168-4b06-bc3c-73c82efb1ba7%2Fapple-touch-icon-1024x1024.png"
+  },
+  {
+    "id": "keguro-macharia",
+    "name": "Keguro Macharia",
+    "country": "Kenya",
+    "links": {
+      "substack": "https://keguro.substack.com"
+    },
+    "active": true,
+    "addedAt": "2026-10-15T21:41:09.351Z",
+    "icon": "https://substackcdn.com/image/fetch/$s_!vhE4!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fbucketeer-e05bbc84-baa3-437e-9518-adb32be77984.s3.amazonaws.com%2Fpublic%2Fimages%2Fb52c6f4a-5ed7-4c6e-9c50-ff5dba0505db%2Fapple-touch-icon-1024x1024.png"
+  },
+  {
+    "id": "karim-f-hirji",
+    "name": "Karim F. Hirji",
+    "country": "Tanzania",
+    "links": {
+      "substack": "https://karimfhirji.substack.com"
+    },
+    "active": true,
+    "addedAt": "2026-10-15T21:41:09.351Z",
+    "icon": "https://substackcdn.com/image/fetch/$s_!NFjD!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F33d4aaaf-0025-428d-90c5-5131269a4ccf%2Fapple-touch-icon-1024x1024.png"
+  },
+  {
+    "id": "beyan-negash",
+    "name": "Beyan Negash",
+    "country": "Eritrea / US",
+    "links": {
+      "substack": "https://bnegashb.substack.com"
+    },
+    "active": true,
+    "addedAt": "2026-10-15T21:41:09.351Z",
+    "icon": "https://substackcdn.com/image/fetch/$s_!ae8g!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Ff3c8b163-ae61-4e40-bfd0-126a5ee32aaf_999x999.png"
+  },
+  {
+    "id": "yusuf-bangura",
+    "name": "Yusuf Bangura",
+    "country": "Sierra Leone",
+    "links": {
+      "substack": "https://yusufbangura.substack.com"
+    },
+    "active": true,
+    "addedAt": "2026-10-15T21:41:09.351Z",
+    "icon": "https://substack-post-media.s3.amazonaws.com/public/images/b52e7bf2-0965-4fbe-8974-8b85f2198a95_906x908.png"
+  },
+  {
+    "id": "dami-ajayi",
+    "name": "Dami Ajayi",
+    "country": "Nigeria / UK",
+    "links": {
+      "substack": "https://damiajayi.substack.com"
+    },
+    "active": true,
+    "addedAt": "2026-10-15T21:41:09.351Z",
+    "icon": "https://substackcdn.com/image/fetch/$s_!SHuJ!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F08d28de5-e374-4ca1-8892-f150975d1392%2Fapple-touch-icon-1024x1024.png"
+  },
+  {
+    "id": "nnamdi-ehirim",
+    "name": "Nnamdi Ehirim",
+    "country": "Nigeria / US",
+    "links": {
+      "substack": "https://nnamdiehirim.substack.com"
+    },
+    "active": true,
+    "addedAt": "2026-10-15T21:41:09.351Z",
+    "icon": "https://substack-post-media.s3.amazonaws.com/public/images/b7dde2b0-ecf5-4cec-8a09-43df34c51bf7_1041x1041.jpeg"
+  },
+  {
+    "id": "nana-darkoa-sekyiamah",
+    "name": "Nana Darkoa Sekyiamah",
+    "country": "Ghana",
+    "links": {
+      "substack": "https://nanadarkoa.substack.com"
+    },
+    "active": true,
+    "addedAt": "2026-10-15T21:41:09.351Z",
+    "icon": "https://substackcdn.com/image/fetch/$s_!BaAN!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fc5dd3c03-2e78-4340-81a8-be363b87d590%2Fapple-touch-icon-1024x1024.png"
+  },
+  {
+    "id": "kobby-ankomah-graham",
+    "name": "Kobby Ankomah Graham",
+    "country": "Ghana",
+    "links": {
+      "substack": "https://kobbyankomah.substack.com"
+    },
+    "active": true,
+    "addedAt": "2026-10-15T21:41:09.351Z",
+    "icon": "https://substackcdn.com/image/fetch/$s_!r0Yi!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F467862ef-e1d5-438a-9041-b051a717f610%2Fapple-touch-icon-1024x1024.png"
+  },
+  {
+    "id": "perry-munzwembiri",
+    "name": "Perry Munzwembiri",
+    "country": "Zimbabwe",
+    "links": {
+      "substack": "https://opinionista.substack.com"
+    },
+    "active": true,
+    "addedAt": "2026-10-15T21:41:09.351Z",
+    "icon": "https://bucketeer-e05bbc84-baa3-437e-9518-adb32be77984.s3.amazonaws.com/public/images/6c5fefdb-2a51-4160-bed9-8795aec6604d_1506x1635.jpeg"
+  },
+  {
+    "id": "remy-ngamije",
+    "name": "Rémy Ngamije",
+    "country": "Namibia",
+    "links": {
+      "site": "https://www.remythequill.com"
+    },
+    "active": true,
+    "addedAt": "2026-10-15T21:41:09.351Z",
+    "icon": "https://remythequill.com/wp-content/uploads/2025/11/cropped-2026-Website-Favicon-180x180.png"
+  },
+  {
+    "id": "sisonke-msimang",
+    "name": "Sisonke Msimang",
+    "country": "South Africa / Australia",
+    "links": {
+      "substack": "https://sisonkemsimang.substack.com"
+    },
+    "active": true,
+    "addedAt": "2026-10-15T21:41:09.351Z",
+    "icon": "https://substackcdn.com/image/fetch/$s_!eahy!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fbucketeer-e05bbc84-baa3-437e-9518-adb32be77984.s3.amazonaws.com%2Fpublic%2Fimages%2Fda512365-9f33-4f40-a0ce-b14afb3012cf%2Fapple-touch-icon-1024x1024.png"
+  },
+  {
+    "id": "jj-bola",
+    "name": "JJ Bola",
+    "country": "DR Congo / UK",
+    "links": {
+      "substack": "https://jjbola.substack.com"
+    },
+    "active": true,
+    "addedAt": "2026-10-15T21:41:09.351Z",
+    "icon": "https://substack-post-media.s3.amazonaws.com/public/images/f6adbd6b-47b5-4a77-9ec2-ed1555c32af5_235x235.jpeg"
   }
 ]

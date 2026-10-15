@@ -27,7 +27,14 @@ export async function fetchText(url, fetchImpl = fetch, { wait = sleep } = {}) {
     const seconds = Number(res.headers.get('retry-after'));
     await wait(Math.min(30, Number.isFinite(seconds) && seconds > 0 ? seconds : 5) * 1000);
   }
-  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  if (!res.ok) {
+    // A bot challenge (Cloudflare's "Just a moment...") means the site refuses servers, not that it's broken.
+    if ((res.status === 403 || res.status === 503) && /cloudflare/i.test(res.headers.get('server') || '')) {
+      const body = await res.text().catch(() => '');
+      if (/Just a moment|cf-challenge|challenge-platform/i.test(body)) throw Object.assign(new Error('blocked by a bot challenge'), { code: 'BLOCKED' });
+    }
+    throw new Error(`HTTP ${res.status}`);
+  }
   if (Number(res.headers.get('content-length') || 0) > MAX_BYTES) throw new Error('response too large');
   const text = await res.text();
   if (text.length > MAX_BYTES) throw new Error('response too large');

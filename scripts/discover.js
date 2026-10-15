@@ -6,6 +6,7 @@ import { idFor, canonicalUrl } from './lib/canonical.js';
 import { discoverFeedUrl, fetchText, parseFeed, toCandidate, pageMeta, excerptOf, platformOf, titleFromUrl, isManualHost, USER_AGENT } from './lib/feeds.js';
 
 const MANUAL_REASON = 'Substack blocks automatic checks — add their pieces with Add link';
+const BLOCKED_REASON = 'This site blocks automatic checks — add their pieces with the + Kem\'s List bookmark';
 
 const SEED_COUNT = 3;
 
@@ -37,6 +38,7 @@ export async function discover({ data, fetchImpl = fetch, now = new Date(), week
         entry.failCount = 0;
         delete entry.lastError;
       } catch (err) {
+        if (err.code === 'BLOCKED') { status.feeds[key] = { manual: true, failCount: 0, reason: BLOCKED_REASON }; continue; }
         entry.failCount = (entry.failCount ?? 0) + 1;
         entry.lastError = `${now.toISOString().slice(0, 10)}: ${err.message}`;
         log(`feed failed ${key}: ${err.message}`);

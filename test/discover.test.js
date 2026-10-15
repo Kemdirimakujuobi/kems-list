@@ -195,3 +195,13 @@ test('feed candidates carry the feed title as source and the feed image as icon'
   assert.equal(queue[0].source, 'Ada Writes');
   assert.equal(queue[0].icon, 'https://cdn.example/ada.png');
 });
+
+test('a site behind a bot challenge (e.g. Substack on a custom domain) becomes manual, not failing', async () => {
+  const challenge = '<!DOCTYPE html><html lang="en-US"><head><title>Just a moment...</title></head><body>cf-challenge</body></html>';
+  const data = { ...empty(), writers: [writer('mona', { site: 'https://www.feministgiant.com' })] };
+  const fetchImpl = async () => new Response(challenge, { status: 403, headers: { 'content-type': 'text/html', server: 'cloudflare' } });
+  const { status } = await discover({ data, fetchImpl, now: NOW });
+  assert.equal(status.feeds['mona:site'].manual, true);
+  assert.equal(status.feeds['mona:site'].failCount, 0);
+  assert.match(status.feeds['mona:site'].reason, /blocks automatic checks/);
+});
