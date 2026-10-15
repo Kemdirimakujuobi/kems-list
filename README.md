@@ -1,0 +1,96 @@
+# Kem's List
+
+The best writing by Africans on the internet, chosen one piece at a time.
+
+**Site:** https://kemdirimakujuobi.github.io/kems-list/ · **RSS:** https://kemdirimakujuobi.github.io/kems-list/feed.xml
+
+A calm, Tempo-style reading list. Each piece shows its title, writer, a short excerpt and an
+optional note from the curator, then links to the original, so writers keep their readers and
+subscribers.
+
+## How it works
+
+There's no server and no database. This public repo *is* the database:
+
+```
+writers' feeds ──(Discover, every 3h)──▶ data/queue.json ──▶ /desk ──a/s──▶ data/pieces.json ──(Build)──▶ GitHub Pages
+```
+
+| | |
+|---|---|
+| `data/writers.json` | Writer roster: name, country, Substack/Medium/site links |
+| `data/queue.json` | Candidates found by Discover, waiting for review |
+| `data/pieces.json` | Published pieces, with the curator's notes |
+| `data/skipped.json` | IDs of skipped pieces, which are never re-queued |
+| `data/inbox.json` | Single links pasted at the desk |
+| `data/status.json` | Feed health and dead-link checks |
+
+- **Discover** (`.github/workflows/discover.yml`) runs every 3 hours, and whenever a writer or link is
+  added. It reads each writer's feed and queues new pieces. A new writer gets only their 3 latest pieces.
+  It drops podcasts and very short posts, and flags paid-only posts.
+- **Build** (`.github/workflows/build.yml`) runs the tests, renders the site, and deploys to GitHub Pages.
+  Bad data fails the build, so the live site never breaks.
+
+Cost: **$0**. Dependencies: one XML parser. Nothing to keep alive.
+
+## Curating at the desk
+
+Open **`/kems-list/desk/`**. It isn't linked from the site.
+
+**Unlock it once per device** with a fine-grained GitHub token:
+
+1. Go to GitHub → Settings → Developer settings → [Fine-grained tokens](https://github.com/settings/personal-access-tokens/new).
+2. For **Repository access**, choose *only* `kems-list`.
+3. Under **Permissions**, set **Contents** to **Read and write**. No other permissions are needed.
+4. Paste the token at the desk. It's stored in that browser only, and **Lock** removes it.
+
+**Keys**
+
+| Key | |
+|---|---|
+| `j` / `k` | Move down / up |
+| `Enter` | Open the preview |
+| `o` | Open the original in a new tab |
+| `a` | Approve: write a note, then `Enter` to save (`Shift+Enter` adds a new line) |
+| `A` | Approve without a note |
+| `s` | Skip |
+| `u` | Undo the last action |
+| `e` / `x` | Edit the note / unpublish (Published tab) |
+| `p` | Pause or resume a writer (Writers tab) |
+| `n` | Add a single link from anywhere |
+| `w` | Add a writer (paste their Substack, Medium or site links) |
+| `1` `2` `3` | Switch between Queue, Writers and Published |
+| `?` | Show all keys |
+
+Everything also works by tapping, on a phone. An approved piece is live in about a minute.
+
+## Development
+
+```bash
+npm ci
+npm test                 # node:test, no network needed
+npm run serve            # http://localhost:4173/kems-list/ (desk at /kems-list/desk/)
+```
+
+`npm run serve` uses a scratch copy of the data (`.dev-data/`) and stands in for GitHub's API, so
+the desk can be tried end to end without a token. To point a browser's desk at it, run this once in
+the browser console:
+
+```js
+localStorage.setItem('kems.api', location.origin + '/__github__'); localStorage.setItem('kems.token', 'dev');
+```
+
+To run Discover locally, which writes to `data/`, use `npm run discover`.
+
+**Custom domain later:** set `SITE_BASE=/` and `SITE_URL=https://your.domain` in the Build workflow,
+and add the domain in the repo's Pages settings.
+
+## Layout
+
+```
+lib/        shared by Node and the browser: schema.js, desk.js (actions), github.js, url.js
+scripts/    discover.js, build.js, serve.js, lib/{feeds,canonical}.js
+site/       assets/ (style.css, keys.js), desk/ (index.html, desk.js)
+test/       node:test suites + real feed fixtures
+docs/       design spec and implementation plan
+```

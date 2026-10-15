@@ -1,0 +1,43 @@
+name: Discover
+
+# Watches every writer's feed and pasted links, and fills data/queue.json for the desk.
+on:
+  schedule:
+    - cron: '17 */3 * * *'   # every 3 hours
+    - cron: '41 6 * * 1'     # Mondays: also check published links for 404s
+  push:
+    branches: [main]
+    paths: ['data/writers.json', 'data/inbox.json']
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: discover
+  cancel-in-progress: false
+
+jobs:
+  discover:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: node scripts/discover.js ${{ github.event.schedule == '41 6 * * 1' && '--weekly' || '' }}
+      - name: Commit queue and status (only if changed)
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add data/queue.json data/status.json
+          if git diff --cached --quiet; then echo "No changes."; exit 0; fi
+          git commit -m "discover: update queue"
+          for attempt in 1 2 3; do
+            git push && exit 0
+            git pull --rebase
+          done
+          exit 1
