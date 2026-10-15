@@ -33,6 +33,14 @@ writers' feeds ──(Discover, every 3h)──▶ data/queue.json ──▶ /de
 
 Cost: **$0**. Dependencies: one XML parser. Nothing to keep alive.
 
+## Curation rules
+
+- **Individuals only.** The roster is for individual African writers: their Substack, Medium or personal
+  site. No publications, magazines or group blogs.
+- An individual's piece published *in* a magazine can still be added with **Add link** (`n`). The rule is
+  about who wrote it, not where it appeared.
+- Quality over volume: skipping is the default; approve what you'd send a friend.
+
 ## Curating at the desk
 
 Open **`/kems-list/desk/`**. It isn't linked from the site.
