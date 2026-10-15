@@ -63,7 +63,18 @@ const parser = new XMLParser({
   processEntities: true,
   htmlEntities: false,
   isArray: (name) => ['item', 'entry', 'link', 'category'].includes(name),
+  // Atom bodies may be inline XHTML markup; keep them raw and decode per their `type` below.
+  stopNodes: ['feed.entry.content', 'feed.entry.summary'],
 });
+
+// Raw Atom <content>/<summary> → HTML string, honouring type="xhtml" | "html" | "text" and CDATA.
+function atomBody(node) {
+  if (node == null) return '';
+  const raw = String(typeof node === 'object' ? node['#text'] ?? '' : node).trim();
+  const cdata = raw.match(/^<!\[CDATA\[([\s\S]*)\]\]>$/);
+  if (cdata) return cdata[1];
+  return (typeof node === 'object' && node['@_type'] === 'xhtml') ? raw : decodeEntities(raw);
+}
 
 const text = (v) => (v == null ? '' : typeof v === 'object' ? String(v['#text'] ?? '') : String(v)).trim();
 const first = (v) => (Array.isArray(v) ? v[0] : v);
@@ -95,11 +106,11 @@ export function parseFeed(xml) {
     const alt = links.find((l) => !l['@_rel'] || l['@_rel'] === 'alternate');
     const enclosure = links.find((l) => l['@_rel'] === 'enclosure');
     return {
-      url: alt?.['@_href'] || '',
+      url: alt?.['@_href'] || (/^https?:\/\//.test(text(e.id)) ? text(e.id) : ''),
       title: textOf(text(e.title)),
       publishedAt: isoOrNull(e.published ?? e.updated),
-      description: textOf(text(e.summary)),
-      html: text(e.content),
+      description: textOf(atomBody(e.summary)),
+      html: atomBody(e.content),
       enclosureType: enclosure?.['@_type'] || null,
     };
   });
@@ -163,7 +174,8 @@ function leadText(html) {
   return paragraphs.join(' ') || textOf(body);
 }
 
-const PAYWALL =/class="[^"]*paywall|for paid subscribers|continue reading on medium|member-only story/i;
+const TEASER = /\[(…|\.\.\.)\]|continue reading|read more\b|appeared first on/i;
+const PAYWALL = /class="[^"]*paywall|for paid subscribers|continue reading on medium|member-only story/i;
 
 /* ---------- candidates ---------- */
 
@@ -175,7 +187,8 @@ export function toCandidate(item, { writerId, now = new Date(), feed = {} }) {
 
   const paywalled = PAYWALL.test(item.html || '');
   const bodyText = item.html ? textOf(item.html) : '';
-  const words = item.html ? wordCount(bodyText) : null;
+  // Only trust the length when the feed carries the actual text, not nothing or a teaser.
+  const words = bodyText && !TEASER.test(bodyText) ? wordCount(bodyText) : null;
   if (!paywalled && words !== null && words < MIN_WORDS) return null;
 
   const source = item.description && item.description.length >= 40 ? item.description : leadText(item.html) || item.description;

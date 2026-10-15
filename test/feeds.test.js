@@ -56,6 +56,21 @@ test('parseFeed reads Atom with HTML titles, enclosures and missing dates', () =
   assert.equal(items[3].publishedAt, null);
 });
 
+test('parseFeed handles Atom entries with no <link> and inline XHTML content', () => {
+  const xml = `<?xml version="1.0"?><feed xmlns="http://www.w3.org/2005/Atom"><title type="text">AIAC</title>
+    <entry><id>https://africasacountry.com/2026/10/reading-list</id><title type="text">Reading List</title>
+    <updated>2026-10-15T16:48:55.487087Z</updated>
+    <content type="xhtml"><div xmlns=""><p>We are taught to think of a <em>refugee camp</em> as an object &amp; nothing more.</p></div></content></entry>
+    <entry><id>tag:x,2026:2</id><title>Escaped</title><updated>2026-10-14T00:00:00Z</updated>
+    <link href="https://x.example/2"/><summary type="html">&lt;p&gt;Escaped &amp;amp; fine&lt;/p&gt;</summary></entry></feed>`;
+  const { items } = parseFeed(xml);
+  assert.equal(items[0].url, 'https://africasacountry.com/2026/10/reading-list');
+  assert.match(items[0].html, /<p>We are taught to think of a <em>refugee camp<\/em> as an object &amp; nothing more\.<\/p>/);
+  assert.equal(textOf(items[0].html), 'We are taught to think of a refugee camp as an object & nothing more.');
+  assert.equal(items[1].url, 'https://x.example/2');
+  assert.equal(items[1].description, 'Escaped & fine');
+});
+
 test('parseFeed throws on non-feed content', () => {
   assert.throws(() => parseFeed('<html><body>Not Found</body></html>'), /not an RSS or Atom feed/);
 });
@@ -111,6 +126,16 @@ test('excerpts come from body paragraphs, not captions or headings', () => {
     <p>${'More words follow here. '.repeat(70)}</p>`;
   const c = toCandidate({ url: 'https://x.example/p', title: 'T', publishedAt: null, description: 'short', html: body }, { now: NOW });
   assert.ok(c.excerpt.startsWith('Last week, Brazil’s Congress'), c.excerpt);
+});
+
+test('length is unknown (not short) when the feed carries no text or only a teaser', () => {
+  const base = { url: 'https://aiac.example/2026/10/essay', title: 'Death as liberation', publishedAt: '2026-10-14T00:00:00.000Z', description: 'What would it take for them to spend that leverage on something that lasts, and who decides?' };
+  const imageOnly = toCandidate({ ...base, html: '<figure><img src="https://aiac.example/a.jpg"></figure>' }, { now: NOW });
+  assert.ok(imageOnly, 'image-only content is not a short post');
+  assert.equal(imageOnly.readMinutes, undefined);
+  for (const teaser of ['<p>The opening lines of a long essay… [&#8230;]</p>', '<p>Opening lines.</p><p><a href="x">Continue reading →</a></p>', '<p>Opening.</p><p>The post Death as liberation appeared first on AIAC.</p>']) {
+    assert.ok(toCandidate({ ...base, html: teaser }, { now: NOW }), teaser);
+  }
 });
 
 test('toCandidate keeps truncated paywalled posts and flags them', () => {
