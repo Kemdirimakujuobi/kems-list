@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import {
-  feedUrlFor, discoverFeedUrl, parseFeed, toCandidate, excerptOf, readMinutes, textOf, pageMeta, platformOf,
+  fetchText, feedUrlFor, discoverFeedUrl, parseFeed, toCandidate, excerptOf, readMinutes, textOf, pageMeta, platformOf,
 } from '../scripts/lib/feeds.js';
 
 const fixture = (n) => readFileSync(new URL(`./fixtures/${n}`, import.meta.url), 'utf8');
@@ -12,7 +12,7 @@ const html = (s, type = 'text/html') => async () => new Response(s, { status: 20
 test('feedUrlFor knows Substack and Medium URL shapes', () => {
   assert.equal(feedUrlFor('https://ada.substack.com'), 'https://ada.substack.com/feed');
   assert.equal(feedUrlFor('https://ada.substack.com/p/some-post'), 'https://ada.substack.com/feed');
-  assert.equal(feedUrlFor('https://substack.com/@ada'), 'https://ada.substack.com/feed');
+  assert.equal(feedUrlFor('https://substack.com/@ada'), null, 'profile handles need a lookup, see discoverFeedUrl');
   assert.equal(feedUrlFor('https://medium.com/@kem'), 'https://medium.com/feed/@kem');
   assert.equal(feedUrlFor('https://medium.com/@kem/some-post-123'), 'https://medium.com/feed/@kem');
   assert.equal(feedUrlFor('https://kem.medium.com/'), 'https://medium.com/feed/@kem');
@@ -156,4 +156,31 @@ test('pageMeta reads Open Graph and article metadata', () => {
     <meta name="author" content="Wanjiru K.">
     <link rel="canonical" href="https://mag.example/essays/long-walk"></head></html>`);
   assert.deepEqual(meta, { title: 'The Long Walk & After', description: 'An essay on distance.', publishedAt: '2026-09-30T10:00:00.000Z', author: 'Wanjiru K.', canonical: 'https://mag.example/essays/long-walk' });
+});
+
+test('discoverFeedUrl resolves substack.com/@handle via the public profile, including custom domains', async () => {
+  const seen = [];
+  const fetchImpl = async (url) => {
+    seen.push(url);
+    if (url === 'https://substack.com/api/v1/user/pumladineo/public_profile') return Response.json({ primaryPublication: { subdomain: 'pumladineo', custom_domain: null } });
+    if (url === 'https://substack.com/api/v1/user/joey/public_profile') return Response.json({ primaryPublication: { subdomain: 'x', custom_domain: 'www.joey.example' } });
+    if (url === 'https://substack.com/api/v1/user/nopub/public_profile') return Response.json({ primaryPublication: null });
+    return new Response('', { status: 404 });
+  };
+  assert.equal(await discoverFeedUrl('https://substack.com/@pumladineo', fetchImpl), 'https://pumladineo.substack.com/feed');
+  assert.equal(await discoverFeedUrl('https://substack.com/@joey?utm_source=x', fetchImpl), 'https://www.joey.example/feed');
+  assert.equal(await discoverFeedUrl('https://substack.com/@nopub', fetchImpl), null);
+});
+
+test('fetchText waits and retries on 429/503, honouring Retry-After', async () => {
+  const waits = [];
+  let calls = 0;
+  const fetchImpl = async () => (++calls < 3 ? new Response('', { status: 429, headers: { 'retry-after': '2' } }) : new Response('ok'));
+  assert.equal(await fetchText('https://x.substack.com/feed', fetchImpl, { wait: async (ms) => waits.push(ms) }), 'ok');
+  assert.deepEqual(waits, [2000, 2000]);
+});
+
+test('fetchText gives up after its retries with the HTTP status', async () => {
+  const fetchImpl = async () => new Response('', { status: 503 });
+  await assert.rejects(fetchText('https://x.example/feed', fetchImpl, { wait: async () => {} }), /HTTP 503/);
 });

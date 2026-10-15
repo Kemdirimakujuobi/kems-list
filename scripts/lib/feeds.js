@@ -11,12 +11,22 @@ const EXCERPT_MAX = 280;
 
 /* ---------- fetching ---------- */
 
-export async function fetchText(url, fetchImpl = fetch) {
-  const res = await fetchImpl(url, {
-    headers: { 'user-agent': USER_AGENT, accept: 'application/rss+xml, application/atom+xml, application/xml, text/xml, text/html;q=0.8' },
-    redirect: 'follow',
-    signal: AbortSignal.timeout(TIMEOUT_MS),
-  });
+const RETRIES = 2;
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+
+// Retries rate limits (429) and temporary outages (503), waiting Retry-After seconds (default 5, max 30).
+export async function fetchText(url, fetchImpl = fetch, { wait = sleep } = {}) {
+  let res;
+  for (let attempt = 0; ; attempt++) {
+    res = await fetchImpl(url, {
+      headers: { 'user-agent': USER_AGENT, accept: 'application/rss+xml, application/atom+xml, application/xml, text/xml, text/html;q=0.8' },
+      redirect: 'follow',
+      signal: AbortSignal.timeout(TIMEOUT_MS),
+    });
+    if ((res.status !== 429 && res.status !== 503) || attempt >= RETRIES) break;
+    const seconds = Number(res.headers.get('retry-after'));
+    await wait(Math.min(30, Number.isFinite(seconds) && seconds > 0 ? seconds : 5) * 1000);
+  }
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
   if (Number(res.headers.get('content-length') || 0) > MAX_BYTES) throw new Error('response too large');
   const text = await res.text();
@@ -32,7 +42,7 @@ export function feedUrlFor(link) {
   const host = u.hostname.toLowerCase().replace(/^www\./, '');
   const first = u.pathname.split('/').filter(Boolean)[0] || '';
 
-  if (host === 'substack.com' && first.startsWith('@')) return `https://${first.slice(1)}.substack.com/feed`;
+  if (host === 'substack.com') return null; // profile handles don't map to newsletter addresses; see discoverFeedUrl
   if (host.endsWith('.substack.com')) return `https://${host}/feed`;
   if (host === 'medium.com' && first) return first.startsWith('@') ? `https://medium.com/feed/${first}` : `https://medium.com/feed/${first}`;
   if (host.endsWith('.medium.com')) return `https://medium.com/feed/@${host.split('.')[0]}`;
@@ -42,6 +52,16 @@ export function feedUrlFor(link) {
 export async function discoverFeedUrl(link, fetchImpl = fetch) {
   const direct = feedUrlFor(link);
   if (direct) return direct;
+
+  // substack.com/@handle → the writer's primary newsletter (its subdomain or custom domain)
+  const handle = link.match(/^https?:\/\/(?:www\.)?substack\.com\/@([\w.-]+)/i)?.[1];
+  if (handle) {
+    const profile = JSON.parse(await fetchText(`https://substack.com/api/v1/user/${handle}/public_profile`, fetchImpl));
+    const pub = profile?.primaryPublication;
+    if (!pub) return null;
+    return pub.custom_domain ? `https://${pub.custom_domain}/feed` : `https://${pub.subdomain}.substack.com/feed`;
+  }
+
   const page = await fetchText(link, fetchImpl);
   for (const tag of page.match(/<link\b[^>]*>/gi) || []) {
     const a = attrs(tag);
