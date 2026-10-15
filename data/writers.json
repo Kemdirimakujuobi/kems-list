@@ -1,1 +1,142 @@
-[]
+[
+  {
+    "id": "kaothar-kadir",
+    "name": "Kaothar Kadir",
+    "country": "Nigeria",
+    "links": {
+      "substack": "https://kaotharkadir.substack.com"
+    },
+    "active": true,
+    "addedAt": "2026-10-15T20:00:04.605Z"
+  },
+  {
+    "id": "pumla-dineo-gqola",
+    "name": "Pumla Dineo Gqola",
+    "country": "South Africa",
+    "links": {
+      "substack": "https://pumladineo.substack.com"
+    },
+    "active": true,
+    "addedAt": "2026-10-15T20:00:04.605Z"
+  },
+  {
+    "id": "michelle-chepchumba-korir",
+    "name": "Michelle Chepchumba Korir",
+    "country": "Kenya",
+    "links": {
+      "substack": "https://thekenyanbookmaker.substack.com"
+    },
+    "active": true,
+    "addedAt": "2026-10-15T20:00:04.605Z"
+  },
+  {
+    "id": "joey-akan",
+    "name": "Joey Akan",
+    "country": "Nigeria",
+    "links": {
+      "substack": "https://afrobeatsintelligence.substack.com"
+    },
+    "active": true,
+    "addedAt": "2026-10-15T20:00:04.605Z"
+  },
+  {
+    "id": "zana-w-kiragu",
+    "name": "Zana W. Kiragu",
+    "country": "Kenya",
+    "links": {
+      "substack": "https://thingsiwanttosay.substack.com"
+    },
+    "active": true,
+    "addedAt": "2026-10-15T20:00:04.605Z"
+  },
+  {
+    "id": "gloria-mari",
+    "name": "Gloria Mari",
+    "country": "Kenya",
+    "links": {
+      "substack": "https://kenyandispatch.substack.com"
+    },
+    "active": true,
+    "addedAt": "2026-10-15T20:00:04.605Z"
+  },
+  {
+    "id": "khaya-dlanga",
+    "name": "Khaya Dlanga",
+    "country": "South Africa",
+    "links": {
+      "substack": "https://khayadlanga.substack.com"
+    },
+    "active": true,
+    "addedAt": "2026-10-15T20:00:04.605Z"
+  },
+  {
+    "id": "thandotalks",
+    "name": "ThandoTalks",
+    "country": "South Africa",
+    "links": {
+      "substack": "https://thandotalks.substack.com"
+    },
+    "active": true,
+    "addedAt": "2026-10-15T20:00:04.605Z"
+  },
+  {
+    "id": "fati-ayinda",
+    "name": "Fati Ayinda",
+    "country": "Nigeria",
+    "links": {
+      "substack": "https://fatiayinda.substack.com"
+    },
+    "active": true,
+    "addedAt": "2026-10-15T20:00:04.605Z"
+  },
+  {
+    "id": "athambile-masola",
+    "name": "Athambile Masola",
+    "country": "South Africa",
+    "links": {
+      "substack": "https://athambile.substack.com"
+    },
+    "active": true,
+    "addedAt": "2026-10-15T20:00:04.605Z"
+  },
+  {
+    "id": "aisha-ayan",
+    "name": "Aisha Ayan",
+    "country": "Nigeria",
+    "links": {
+      "substack": "https://aishaayan.substack.com"
+    },
+    "active": true,
+    "addedAt": "2026-10-15T20:00:04.605Z"
+  },
+  {
+    "id": "tayo-aluko",
+    "name": "Tayo Aluko",
+    "country": "Nigeria / UK",
+    "links": {
+      "substack": "https://tayoaluko.substack.com"
+    },
+    "active": true,
+    "addedAt": "2026-10-15T20:00:04.605Z"
+  },
+  {
+    "id": "janice-okoh",
+    "name": "Janice Okoh",
+    "country": "Nigeria / UK",
+    "links": {
+      "substack": "https://janiceokoh.substack.com"
+    },
+    "active": true,
+    "addedAt": "2026-10-15T20:00:04.605Z"
+  },
+  {
+    "id": "will-essilfie",
+    "name": "Will Essilfie",
+    "country": "Ghana / US",
+    "links": {
+      "substack": "https://essilfie.substack.com"
+    },
+    "active": true,
+    "addedAt": "2026-10-15T20:00:04.605Z"
+  }
+]

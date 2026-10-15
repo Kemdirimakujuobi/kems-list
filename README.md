@@ -37,6 +37,8 @@ Cost: **$0**. Dependencies: one XML parser. Nothing to keep alive.
 
 - **Individuals only.** The roster is for individual African writers: their Substack, Medium or personal
   site. No publications, magazines or group blogs.
+- **The diaspora counts.** African writers living abroad belong on the list. Record both places in `country`,
+  for example `Nigeria / UK`.
 - An individual's piece published *in* a magazine can still be added with **Add link** (`n`). The rule is
   about who wrote it, not where it appeared.
 - Quality over volume: skipping is the default; approve what you'd send a friend.

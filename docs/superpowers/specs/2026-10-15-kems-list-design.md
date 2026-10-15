@@ -20,7 +20,7 @@ personal blogs and anywhere else. Inspired by rsrch.space; looks and feels like 
 | Question | Decision |
 |---|---|
 | Automation vs judgement | Automation **finds** candidates; nothing is public until the curator approves it |
-| Who qualifies | **Individual writers only**. No publications, magazines or group blogs. An individual's piece in a magazine can be added as a single link |
+| Who qualifies | **Individual African writers, including the diaspora**; **individuals only**. No publications, magazines or group blogs. An individual's piece in a magazine can be added as a single link |
 | Unit of curation | **Writers first** — a curated roster; their feeds are watched. "Is this writer African" is decided once per writer, by the curator |
 | Reading experience | **Preview + note**: title, writer, excerpt, read time, optional curator note, then "Read on <platform> →". Never republish full text |
 | Curation UI | Private **/desk** page in the same Tempo style |
