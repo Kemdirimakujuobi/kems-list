@@ -125,8 +125,8 @@ test('slugify', () => {
 
 test('addLink keeps an optional title and excerpt, trimmed', () => {
   const d = data();
-  const after = applyLocal(d, addLink(d, 'https://khayadlanga.substack.com/p/dear-sa', NOW, { title: '  Dear South African Education ', excerpt: ' A letter to a system. ' }));
-  assert.deepEqual(after.inbox.at(-1), { url: 'https://khayadlanga.substack.com/p/dear-sa', addedAt: NOW, title: 'Dear South African Education', excerpt: 'A letter to a system.' });
+  const after = applyLocal(d, addLink(d, 'https://khayadlanga.substack.com/p/dear-sa', NOW, { title: '  Dear South African Education ', excerpt: ' A letter to a system. ', publishedAt: '2026-10-01T00:00:00.000Z' }));
+  assert.deepEqual(after.inbox.at(-1), { url: 'https://khayadlanga.substack.com/p/dear-sa', addedAt: NOW, title: 'Dear South African Education', excerpt: 'A letter to a system.', publishedAt: '2026-10-01T00:00:00.000Z' });
   const bare = applyLocal(d, addLink(d, 'https://x.example/a', NOW, { title: ' ', excerpt: '' }));
   assert.deepEqual(Object.keys(bare.inbox.at(-1)).sort(), ['addedAt', 'url']);
 });
@@ -142,4 +142,24 @@ test('addLink carries captured details; approve copies them onto the piece', () 
   assert.equal(piece.source, 'Dee');
   assert.equal(piece.author, 'Dianne');
   assert.equal(piece.icon, 'https://substackcdn.com/a.jpg');
+});
+
+test('addLink refuses Substack app links, which do not say which post they are', () => {
+  for (const url of ['https://substack.com/home/post/p-203478911', 'https://substack.com/@deesknees1/p-203478911', 'https://substack.com/@deesknees1/note/c-1']) {
+    assert.throws(() => addLink(data(), url, NOW, { title: 'T', publishedAt: NOW }), /Substack app link/);
+  }
+});
+
+test('addLink turns open.substack.com share links into the post address', () => {
+  const d = data();
+  const after = applyLocal(d, addLink(d, 'https://open.substack.com/pub/fatiayinda/p/entry-6-is-consistency-key?r=abc&utm_medium=ios', NOW, { title: 'Entry 6: Is Consistency key?', publishedAt: '2024-06-28T08:05:35.000Z' }));
+  assert.equal(after.inbox.at(-1).url, 'https://fatiayinda.substack.com/p/entry-6-is-consistency-key');
+});
+
+test('a bare Substack link needs a title and publish date (the server cannot read Substack)', () => {
+  const url = 'https://fatiayinda.substack.com/p/entry-6-is-consistency-key';
+  assert.throws(() => addLink(data(), url, NOW, {}), /\+ Kem's List bookmark/);
+  assert.throws(() => addLink(data(), url, NOW, { title: 'Entry 6' }), /publish date/);
+  assert.doesNotThrow(() => addLink(data(), url, NOW, { title: 'Entry 6', publishedAt: '2024-06-28T08:05:35.000Z' }));
+  assert.doesNotThrow(() => addLink(data(), 'https://mag.example/essay', NOW, {}), 'other sites can still be enriched by the server');
 });

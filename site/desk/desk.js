@@ -168,8 +168,8 @@ function renderDialog() {
     return `<div class="overlay" data-do="dismiss"><form class="dialog" data-form="link"><h2>${state.prefill ? 'Add this piece' : 'Add a link'}</h2>
 ${state.prefill ? `<p class="meta" style="display:flex;gap:10px;align-items:center">${f.icon ? avatarOf(captured || '·', f.icon) : ''}<span>${esc(captured || 'Captured from the page')}</span></p>` : ''}
 <label class="field"><span>Link</span><input name="url" type="url" required placeholder="https://" value="${esc(f.url ?? '')}"></label>
-<label class="field"><span>Title${state.prefill ? '' : ' (optional — otherwise taken from the page or the link)'}</span><input name="title" value="${esc(f.title ?? '')}"></label>
-<label class="field"><span>Published on${state.prefill ? '' : ' (optional)'}</span><input name="publishedAt" type="date" value="${esc((f.publishedAt ?? '').slice(0, 10))}"></label>
+<label class="field"><span>Title${state.prefill ? '' : ' — needed for Substack links (tip: the + Kem\'s List bookmark fills everything in)'}</span><input name="title" value="${esc(f.title ?? '')}"></label>
+<label class="field"><span>Published on${state.prefill ? '' : ' — needed for Substack links'}</span><input name="publishedAt" type="date" value="${esc((f.publishedAt ?? '').slice(0, 10))}"></label>
 <label class="field"><span>Excerpt (optional — the subtitle or a line you love)</span><textarea name="excerpt">${esc(f.excerpt ?? '')}</textarea></label>
 <input type="hidden" name="author" value="${esc(f.author ?? '')}"><input type="hidden" name="source" value="${esc(f.source ?? '')}"><input type="hidden" name="icon" value="${esc(f.icon ?? '')}">
 <div class="buttons"><button class="button" type="submit">Add to queue</button><button class="button quiet" type="button" data-do="dismiss">Cancel</button></div></form></div>`;
