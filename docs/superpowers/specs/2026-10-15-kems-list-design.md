@@ -62,8 +62,8 @@ Each file has **exactly one writer**, so the desk and the job never conflict.
   no trailing slash). Same piece can never be queued or published twice.
 - **The curator's queue** = `queue.json` minus ids in `pieces.json` and `skipped.json`.
   The job prunes `queue.json` of those ids on each run.
-- An `inbox.json` link is *processed* once its id is in `queue.json`, `pieces.json` or `skipped.json`;
-  the job never edits `inbox.json` — the desk drops processed entries whenever it next writes that file.
+- The job never edits `inbox.json`; it processes each link within minutes (it runs on every push to that file).
+  The desk drops inbox entries older than 7 days whenever it next writes the file (no hashing needed in the browser).
 - `writerId` = slug of the writer's name; unique. `country` is free text chosen by the curator.
 
 ## Discovery job (`scripts/discover.js`, `.github/workflows/discover.yml`)
