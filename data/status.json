@@ -1,74 +1,74 @@
 {
   "feeds": {
     "kaothar-kadir:substack": {
-      "failCount": 1,
-      "feedUrl": "https://kaotharkadir.substack.com/feed",
-      "lastError": "2026-10-15: HTTP 403"
+      "manual": true,
+      "failCount": 0,
+      "reason": "Substack blocks automatic checks — add their pieces with Add link"
     },
     "pumla-dineo-gqola:substack": {
-      "failCount": 1,
-      "feedUrl": "https://pumladineo.substack.com/feed",
-      "lastError": "2026-10-15: HTTP 403"
+      "manual": true,
+      "failCount": 0,
+      "reason": "Substack blocks automatic checks — add their pieces with Add link"
     },
     "michelle-chepchumba-korir:substack": {
-      "failCount": 1,
-      "feedUrl": "https://thekenyanbookmaker.substack.com/feed",
-      "lastError": "2026-10-15: HTTP 403"
+      "manual": true,
+      "failCount": 0,
+      "reason": "Substack blocks automatic checks — add their pieces with Add link"
     },
     "joey-akan:substack": {
-      "failCount": 1,
-      "feedUrl": "https://afrobeatsintelligence.substack.com/feed",
-      "lastError": "2026-10-15: HTTP 403"
+      "manual": true,
+      "failCount": 0,
+      "reason": "Substack blocks automatic checks — add their pieces with Add link"
     },
     "zana-w-kiragu:substack": {
-      "failCount": 1,
-      "feedUrl": "https://thingsiwanttosay.substack.com/feed",
-      "lastError": "2026-10-15: HTTP 403"
+      "manual": true,
+      "failCount": 0,
+      "reason": "Substack blocks automatic checks — add their pieces with Add link"
     },
     "gloria-mari:substack": {
-      "failCount": 1,
-      "feedUrl": "https://kenyandispatch.substack.com/feed",
-      "lastError": "2026-10-15: HTTP 403"
+      "manual": true,
+      "failCount": 0,
+      "reason": "Substack blocks automatic checks — add their pieces with Add link"
     },
     "khaya-dlanga:substack": {
-      "failCount": 1,
-      "feedUrl": "https://khayadlanga.substack.com/feed",
-      "lastError": "2026-10-15: HTTP 403"
+      "manual": true,
+      "failCount": 0,
+      "reason": "Substack blocks automatic checks — add their pieces with Add link"
     },
     "thandotalks:substack": {
-      "failCount": 1,
-      "feedUrl": "https://thandotalks.substack.com/feed",
-      "lastError": "2026-10-15: HTTP 403"
+      "manual": true,
+      "failCount": 0,
+      "reason": "Substack blocks automatic checks — add their pieces with Add link"
     },
     "fati-ayinda:substack": {
-      "failCount": 1,
-      "feedUrl": "https://fatiayinda.substack.com/feed",
-      "lastError": "2026-10-15: HTTP 403"
+      "manual": true,
+      "failCount": 0,
+      "reason": "Substack blocks automatic checks — add their pieces with Add link"
     },
     "athambile-masola:substack": {
-      "failCount": 1,
-      "feedUrl": "https://athambile.substack.com/feed",
-      "lastError": "2026-10-15: HTTP 403"
+      "manual": true,
+      "failCount": 0,
+      "reason": "Substack blocks automatic checks — add their pieces with Add link"
     },
     "aisha-ayan:substack": {
-      "failCount": 1,
-      "feedUrl": "https://aishaayan.substack.com/feed",
-      "lastError": "2026-10-15: HTTP 403"
+      "manual": true,
+      "failCount": 0,
+      "reason": "Substack blocks automatic checks — add their pieces with Add link"
     },
     "tayo-aluko:substack": {
-      "failCount": 1,
-      "feedUrl": "https://tayoaluko.substack.com/feed",
-      "lastError": "2026-10-15: HTTP 403"
+      "manual": true,
+      "failCount": 0,
+      "reason": "Substack blocks automatic checks — add their pieces with Add link"
     },
     "janice-okoh:substack": {
-      "failCount": 1,
-      "feedUrl": "https://janiceokoh.substack.com/feed",
-      "lastError": "2026-10-15: HTTP 403"
+      "manual": true,
+      "failCount": 0,
+      "reason": "Substack blocks automatic checks — add their pieces with Add link"
     },
     "will-essilfie:substack": {
-      "failCount": 1,
-      "feedUrl": "https://essilfie.substack.com/feed",
-      "lastError": "2026-10-15: HTTP 403"
+      "manual": true,
+      "failCount": 0,
+      "reason": "Substack blocks automatic checks — add their pieces with Add link"
     }
   },
   "deadLinks": [],
