@@ -1,6 +1,6 @@
 // Builds the public site into _site/: index, one page per piece, feed.xml, plus the static desk.
 // Usage: node scripts/build.js   (env SITE_BASE / SITE_URL override the GitHub Pages defaults)
-import { readFile, writeFile, mkdir, cp, rm } from 'node:fs/promises';
+import { readFile, writeFile, mkdir, cp, rm, readdir } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import { join } from 'node:path';
 import { createHash } from 'node:crypto';
@@ -56,8 +56,8 @@ function layout(cfg, { title, description, path, body, bodyAttrs = '', type = 'w
 <meta property="og:description" content="${esc(description)}">
 <meta property="og:url" content="${esc(url)}">
 <meta name="twitter:card" content="summary">
-<link rel="stylesheet" href="${cfg.base}assets/style.css">
-<script src="${cfg.base}assets/keys.js" defer></script>
+<link rel="stylesheet" href="${cfg.base}assets/style.css${cfg.version ? `?v=${cfg.version}` : ''}">
+<script src="${cfg.base}assets/keys.js${cfg.version ? `?v=${cfg.version}` : ''}" defer></script>
 </head>
 <body${bodyAttrs}>
 <header class="top"><a class="brand" href="${cfg.base}">${esc(cfg.title)}</a><nav><a href="${cfg.base}feed.xml">RSS</a></nav></header>
@@ -165,7 +165,19 @@ async function downloadIcons(urls, outDir, iconFetch) {
 
 /* ---------- build ---------- */
 
+// A short hash of every shipped asset, appended as ?v= so browsers never serve a stale desk or stylesheet
+// after a deploy (GitHub Pages sends max-age=600).
+async function assetVersion() {
+  const hash = createHash('sha1');
+  for (const dir of ['site/assets', 'site/desk', 'lib']) {
+    const files = (await readdir(fileURLToPath(new URL(dir, ROOT)))).filter((f) => !f.startsWith('.')).sort();
+    for (const f of files) hash.update(f).update(await readFile(fileURLToPath(new URL(`${dir}/${f}`, ROOT))));
+  }
+  return hash.digest('hex').slice(0, 10);
+}
+
 export async function build({ data, outDir, config = CONFIG, now = new Date(), iconFetch = null }) {
+  config = { ...config, version: await assetVersion() };
   const errors = validateData(data);
   if (errors.length) throw new Error(`Invalid data, not building:\n${errors.join('\n')}`);
 
@@ -185,6 +197,13 @@ export async function build({ data, outDir, config = CONFIG, now = new Date(), i
   await cp(src('site/assets'), join(outDir, 'assets'), { recursive: true });
   await cp(src('site/desk'), join(outDir, 'desk'), { recursive: true });
   await cp(src('lib'), join(outDir, 'lib'), { recursive: true, filter: (f) => !f.endsWith('.test.js') });
+
+  // version the desk's own references (module imports included) to match
+  const v = config.version;
+  const deskHtml = join(outDir, 'desk/index.html');
+  await writeFile(deskHtml, (await readFile(deskHtml, 'utf8')).replace('../assets/style.css"', `../assets/style.css?v=${v}"`).replace('./desk.js"', `./desk.js?v=${v}"`));
+  const deskJs = join(outDir, 'desk/desk.js');
+  await writeFile(deskJs, (await readFile(deskJs, 'utf8')).replace(/'\.\.\/lib\/([\w-]+)\.js'/g, `'../lib/$1.js?v=${v}'`));
   return { pages: 2 };
 }
 

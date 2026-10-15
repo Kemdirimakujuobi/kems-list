@@ -117,3 +117,17 @@ test('build downloads icons into /icons and survives failed downloads', async ()
   assert.match(index, /<span class="avatar" aria-hidden="true">M<\/span>/, 'no icon anywhere → the initial');
   assert.equal(srcs.length, 2, 'good icon + the writer icon standing in for the broken one');
 });
+
+test('built pages and desk reference versioned assets, so a deploy is never hidden by browser caches', async () => {
+  const out = mkdtempSync(join(tmpdir(), 'kems-'));
+  await build({ data: data(), outDir: out, config: cfg, now: NOW });
+  const index = readFileSync(join(out, 'index.html'), 'utf8');
+  const deskHtml = readFileSync(join(out, 'desk/index.html'), 'utf8');
+  const deskJs = readFileSync(join(out, 'desk/desk.js'), 'utf8');
+  const v = index.match(/assets\/style\.css\?v=([0-9a-f]{10})/)?.[1];
+  assert.ok(v, 'stylesheet is versioned');
+  assert.match(index, new RegExp(`assets/keys\\.js\\?v=${v}`));
+  assert.match(deskHtml, new RegExp(`\\./desk\\.js\\?v=${v}`));
+  assert.match(deskHtml, new RegExp(`\\.\\./assets/style\\.css\\?v=${v}`));
+  for (const lib of ['github', 'schema', 'desk', 'capture']) assert.match(deskJs, new RegExp(`'\\.\\./lib/${lib}\\.js\\?v=${v}'`), lib);
+});

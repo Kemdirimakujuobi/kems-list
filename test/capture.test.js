@@ -64,3 +64,11 @@ test('still works flattened to one line with comments removed (as the bookmarkle
   const doc = page(readFileSync(new URL('./fixtures/substack-post.html', import.meta.url), 'utf8'));
   assert.equal(recreated(doc, 'https://deesknees1.substack.com/p/x').title, 'IJGB diaries: How selfish are we? — Part 1');
 });
+
+test('trims whitespace around captured text', () => {
+  const doc = page(`<html><head><script type="application/ld+json">${JSON.stringify({ '@type': 'NewsArticle', headline: 'Is the Nigerian Stock Market in a bubble? ', description: '  A data-driven assessment. ', author: [{ name: ' Dalu ' }] })}</script></head></html>`);
+  const m = capturePage(doc, 'https://igwe007.substack.com/p/x');
+  assert.equal(m.title, 'Is the Nigerian Stock Market in a bubble?');
+  assert.equal(m.excerpt, 'A data-driven assessment.');
+  assert.equal(m.author, 'Dalu');
+});
