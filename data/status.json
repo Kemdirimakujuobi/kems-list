@@ -1,1 +1,76 @@
-{"feeds":{},"deadLinks":[],"linkChecks":{}}
+{
+  "feeds": {
+    "kaothar-kadir:substack": {
+      "failCount": 1,
+      "feedUrl": "https://kaotharkadir.substack.com/feed",
+      "lastError": "2026-10-15: HTTP 403"
+    },
+    "pumla-dineo-gqola:substack": {
+      "failCount": 1,
+      "feedUrl": "https://pumladineo.substack.com/feed",
+      "lastError": "2026-10-15: HTTP 403"
+    },
+    "michelle-chepchumba-korir:substack": {
+      "failCount": 1,
+      "feedUrl": "https://thekenyanbookmaker.substack.com/feed",
+      "lastError": "2026-10-15: HTTP 403"
+    },
+    "joey-akan:substack": {
+      "failCount": 1,
+      "feedUrl": "https://afrobeatsintelligence.substack.com/feed",
+      "lastError": "2026-10-15: HTTP 403"
+    },
+    "zana-w-kiragu:substack": {
+      "failCount": 1,
+      "feedUrl": "https://thingsiwanttosay.substack.com/feed",
+      "lastError": "2026-10-15: HTTP 403"
+    },
+    "gloria-mari:substack": {
+      "failCount": 1,
+      "feedUrl": "https://kenyandispatch.substack.com/feed",
+      "lastError": "2026-10-15: HTTP 403"
+    },
+    "khaya-dlanga:substack": {
+      "failCount": 1,
+      "feedUrl": "https://khayadlanga.substack.com/feed",
+      "lastError": "2026-10-15: HTTP 403"
+    },
+    "thandotalks:substack": {
+      "failCount": 1,
+      "feedUrl": "https://thandotalks.substack.com/feed",
+      "lastError": "2026-10-15: HTTP 403"
+    },
+    "fati-ayinda:substack": {
+      "failCount": 1,
+      "feedUrl": "https://fatiayinda.substack.com/feed",
+      "lastError": "2026-10-15: HTTP 403"
+    },
+    "athambile-masola:substack": {
+      "failCount": 1,
+      "feedUrl": "https://athambile.substack.com/feed",
+      "lastError": "2026-10-15: HTTP 403"
+    },
+    "aisha-ayan:substack": {
+      "failCount": 1,
+      "feedUrl": "https://aishaayan.substack.com/feed",
+      "lastError": "2026-10-15: HTTP 403"
+    },
+    "tayo-aluko:substack": {
+      "failCount": 1,
+      "feedUrl": "https://tayoaluko.substack.com/feed",
+      "lastError": "2026-10-15: HTTP 403"
+    },
+    "janice-okoh:substack": {
+      "failCount": 1,
+      "feedUrl": "https://janiceokoh.substack.com/feed",
+      "lastError": "2026-10-15: HTTP 403"
+    },
+    "will-essilfie:substack": {
+      "failCount": 1,
+      "feedUrl": "https://essilfie.substack.com/feed",
+      "lastError": "2026-10-15: HTTP 403"
+    }
+  },
+  "deadLinks": [],
+  "linkChecks": {}
+}
