@@ -25,6 +25,10 @@ writers' feeds ──(Discover, every 3h)──▶ data/queue.json ──▶ /de
 | `data/inbox.json` | Single links pasted at the desk |
 | `data/status.json` | Feed health and dead-link checks |
 
+- **Substack writers are curated by hand.** Substack's Cloudflare protection blocks requests from cloud servers,
+  GitHub Actions included, so Discover skips them and the desk marks them *manual*. Read their latest from
+  the Writers tab (`o`), then paste a piece with **Add link** (`n`). If the page can't be fetched, you can
+  type the title and excerpt yourself, or the title is made from the link.
 - **Discover** (`.github/workflows/discover.yml`) runs every 3 hours, and whenever a writer or link is
   added. It reads each writer's feed and queues new pieces. A new writer gets only their 3 latest pieces.
   It drops podcasts and very short posts, and flags paid-only posts.
@@ -60,14 +64,14 @@ Open **`/kems-list/desk/`**. It isn't linked from the site.
 |---|---|
 | `j` / `k` | Move down / up |
 | `Enter` | Open the preview |
-| `o` | Open the original in a new tab |
+| `o` | Open the original in a new tab (Writers tab: open the writer's page) |
 | `a` | Approve: write a note, then `Enter` to save (`Shift+Enter` adds a new line) |
 | `A` | Approve without a note |
 | `s` | Skip |
 | `u` | Undo the last action |
 | `e` / `x` | Edit the note / unpublish (Published tab) |
 | `p` | Pause or resume a writer (Writers tab) |
-| `n` | Add a single link from anywhere |
+| `n` | Add a single link from anywhere, with an optional title and excerpt |
 | `w` | Add a writer (paste their Substack, Medium or site links) |
 | `1` `2` `3` | Switch between Queue, Writers and Published |
 | `?` | Show all keys |

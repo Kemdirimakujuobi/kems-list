@@ -122,3 +122,11 @@ test('slugify', () => {
   assert.equal(slugify('  Chimamanda Ngozi Adichie '), 'chimamanda-ngozi-adichie');
   assert.equal(slugify('N’gũgĩ wa Thiong’o'), 'ngugi-wa-thiongo');
 });
+
+test('addLink keeps an optional title and excerpt, trimmed', () => {
+  const d = data();
+  const after = applyLocal(d, addLink(d, 'https://khayadlanga.substack.com/p/dear-sa', NOW, { title: '  Dear South African Education ', excerpt: ' A letter to a system. ' }));
+  assert.deepEqual(after.inbox.at(-1), { url: 'https://khayadlanga.substack.com/p/dear-sa', addedAt: NOW, title: 'Dear South African Education', excerpt: 'A letter to a system.' });
+  const bare = applyLocal(d, addLink(d, 'https://x.example/a', NOW, { title: ' ', excerpt: '' }));
+  assert.deepEqual(Object.keys(bare.inbox.at(-1)).sort(), ['addedAt', 'url']);
+});

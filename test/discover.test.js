@@ -28,16 +28,16 @@ function fakeFetch(routes) {
 
 const writer = (id, links, extra = {}) => ({ id, name: id, links, active: true, addedAt: '2026-10-01T00:00:00Z', ...extra });
 const empty = () => ({ writers: [], inbox: [], pieces: [], skipped: [], queue: [], status: { feeds: {}, deadLinks: [], linkChecks: {} } });
-const post = (n, day) => ({ title: `Post ${n}`, url: `https://ada.substack.com/p/post-${n}`, date: `2026-10-${String(day).padStart(2, '0')}T09:00:00Z` });
+const post = (n, day) => ({ title: `Post ${n}`, url: `https://medium.com/@ada/post-${n}`, date: `2026-10-${String(day).padStart(2, '0')}T09:00:00Z` });
 
 test('a new writer is seeded with their 3 most recent pieces only', async () => {
-  const data = { ...empty(), writers: [writer('ada', { substack: 'https://ada.substack.com' })] };
-  const { impl } = fakeFetch({ 'https://ada.substack.com/feed': rss([post(1, 1), post(5, 5), post(3, 3), post(4, 4), post(2, 2)]) });
+  const data = { ...empty(), writers: [writer('ada', { medium: 'https://medium.com/@ada' })] };
+  const { impl } = fakeFetch({ 'https://medium.com/feed/@ada': rss([post(1, 1), post(5, 5), post(3, 3), post(4, 4), post(2, 2)]) });
   const { queue, status } = await discover({ data, fetchImpl: impl, now: NOW });
   assert.deepEqual(queue.map((q) => q.title), ['Post 5', 'Post 4', 'Post 3']);
   assert.equal(queue[0].writerId, 'ada');
-  const s = status.feeds['ada:substack'];
-  assert.equal(s.feedUrl, 'https://ada.substack.com/feed');
+  const s = status.feeds['ada:medium'];
+  assert.equal(s.feedUrl, 'https://medium.com/feed/@ada');
   assert.equal(s.lastOk, NOW.toISOString());
   assert.equal(s.failCount, 0);
 });
@@ -46,13 +46,13 @@ test('after seeding, every unknown item is queued; known ones never are', async 
   const posts = [post(1, 1), post(2, 2), post(3, 3), post(4, 4), post(5, 5)];
   const data = {
     ...empty(),
-    writers: [writer('ada', { substack: 'https://ada.substack.com' })],
+    writers: [writer('ada', { medium: 'https://medium.com/@ada' })],
     pieces: [{ id: idFor(posts[0].url) }],
     skipped: [idFor(posts[1].url)],
     queue: [{ id: idFor(posts[2].url), title: 'Post 3', publishedAt: '2026-10-03T09:00:00.000Z' }],
-    status: { feeds: { 'ada:substack': { feedUrl: 'https://ada.substack.com/feed', lastOk: '2026-10-14T00:00:00Z', failCount: 0 } }, deadLinks: [], linkChecks: {} },
+    status: { feeds: { 'ada:medium': { feedUrl: 'https://medium.com/feed/@ada', lastOk: '2026-10-14T00:00:00Z', failCount: 0 } }, deadLinks: [], linkChecks: {} },
   };
-  const { impl } = fakeFetch({ 'https://ada.substack.com/feed': rss(posts) });
+  const { impl } = fakeFetch({ 'https://medium.com/feed/@ada': rss(posts) });
   const { queue } = await discover({ data, fetchImpl: impl, now: NOW });
   assert.deepEqual(queue.map((q) => q.title), ['Post 5', 'Post 4', 'Post 3']);
 });
@@ -64,26 +64,26 @@ test('decided ids are pruned from the queue', async () => {
 });
 
 test('one broken feed is recorded and the others still run', async () => {
-  const data = { ...empty(), writers: [writer('bad', { substack: 'https://bad.substack.com' }), writer('ada', { substack: 'https://ada.substack.com' })] };
-  data.status.feeds['bad:substack'] = { feedUrl: 'https://bad.substack.com/feed', lastOk: '2026-10-01T00:00:00Z', failCount: 2 };
-  const { impl } = fakeFetch({ 'https://bad.substack.com/feed': '<html>gone</html>', 'https://ada.substack.com/feed': rss([post(1, 1)]) });
+  const data = { ...empty(), writers: [writer('bad', { medium: 'https://medium.com/@bad' }), writer('ada', { medium: 'https://medium.com/@ada' })] };
+  data.status.feeds['bad:medium'] = { feedUrl: 'https://medium.com/feed/@bad', lastOk: '2026-10-01T00:00:00Z', failCount: 2 };
+  const { impl } = fakeFetch({ 'https://medium.com/feed/@bad': '<html>gone</html>', 'https://medium.com/feed/@ada': rss([post(1, 1)]) });
   const { queue, status } = await discover({ data, fetchImpl: impl, now: NOW });
   assert.equal(queue.length, 1);
-  assert.equal(status.feeds['bad:substack'].failCount, 3);
-  assert.match(status.feeds['bad:substack'].lastError, /not an RSS or Atom feed/);
-  assert.equal(status.feeds['bad:substack'].lastOk, '2026-10-01T00:00:00Z');
+  assert.equal(status.feeds['bad:medium'].failCount, 3);
+  assert.match(status.feeds['bad:medium'].lastError, /not an RSS or Atom feed/);
+  assert.equal(status.feeds['bad:medium'].lastOk, '2026-10-01T00:00:00Z');
 });
 
 test('network errors and missing feeds are isolated too', async () => {
-  const data = { ...empty(), writers: [writer('net', { substack: 'https://net.substack.com' }), writer('blog', { site: 'https://blog.example' })] };
-  const { impl } = fakeFetch({ 'https://net.substack.com/feed': new Error('ECONNRESET'), 'https://blog.example': '<html><head></head></html>' });
+  const data = { ...empty(), writers: [writer('net', { medium: 'https://medium.com/@net' }), writer('blog', { site: 'https://blog.example' })] };
+  const { impl } = fakeFetch({ 'https://medium.com/feed/@net': new Error('ECONNRESET'), 'https://blog.example': '<html><head></head></html>' });
   const { status } = await discover({ data, fetchImpl: impl, now: NOW });
-  assert.match(status.feeds['net:substack'].lastError, /ECONNRESET/);
+  assert.match(status.feeds['net:medium'].lastError, /ECONNRESET/);
   assert.match(status.feeds['blog:site'].lastError, /no feed found/);
 });
 
 test('paused writers are not fetched', async () => {
-  const data = { ...empty(), writers: [writer('ada', { substack: 'https://ada.substack.com' }, { active: false })] };
+  const data = { ...empty(), writers: [writer('ada', { medium: 'https://medium.com/@ada' }, { active: false })] };
   const { impl, calls } = fakeFetch({});
   await discover({ data, fetchImpl: impl, now: NOW });
   assert.deepEqual(calls, []);
@@ -132,8 +132,38 @@ test('weekly check flags a published link after two consecutive 404s, and clears
 });
 
 test('queue is sorted newest first', async () => {
-  const data = { ...empty(), writers: [writer('ada', { substack: 'https://ada.substack.com' })] };
-  const { impl } = fakeFetch({ 'https://ada.substack.com/feed': rss([post(2, 2), post(9, 9), post(4, 4)]) });
+  const data = { ...empty(), writers: [writer('ada', { medium: 'https://medium.com/@ada' })] };
+  const { impl } = fakeFetch({ 'https://medium.com/feed/@ada': rss([post(2, 2), post(9, 9), post(4, 4)]) });
   const { queue } = await discover({ data, fetchImpl: impl, now: NOW });
   assert.deepEqual(queue.map((q) => q.title), ['Post 9', 'Post 4', 'Post 2']);
+});
+
+test('Substack writers are manual: never fetched, marked manual, not failing', async () => {
+  const data = { ...empty(), writers: [writer('khaya', { substack: 'https://khayadlanga.substack.com' }), writer('blog', { site: 'https://blog.example' })] };
+  data.status.feeds['khaya:substack'] = { feedUrl: 'https://khayadlanga.substack.com/feed', failCount: 4, lastError: 'HTTP 403' };
+  const { impl, calls } = fakeFetch({ 'https://blog.example': '<html><head><link rel="alternate" type="application/rss+xml" href="/feed"></head></html>', 'https://blog.example/feed': rss([]) });
+  const { status } = await discover({ data, fetchImpl: impl, now: NOW });
+  assert.ok(calls.every((u) => !u.includes('substack')), calls.join(','));
+  assert.deepEqual(status.feeds['khaya:substack'], { manual: true, failCount: 0, reason: 'Substack blocks automatic checks — add their pieces with Add link' });
+  assert.equal(status.feeds['blog:site'].failCount, 0);
+});
+
+test('pasted links: your title and excerpt win; blocked pages fall back to a title from the URL', async () => {
+  const data = {
+    ...empty(),
+    writers: [writer('khaya', { substack: 'https://khayadlanga.substack.com' })],
+    inbox: [
+      { url: 'https://khayadlanga.substack.com/p/dear-south-african-education', addedAt: '2026-10-14T00:00:00Z' },
+      { url: 'https://khayadlanga.substack.com/p/second-letter', addedAt: '2026-10-14T00:00:00Z', title: 'My Own Title', excerpt: 'My chosen line.' },
+    ],
+  };
+  const { impl } = fakeFetch({ 'https://khayadlanga.substack.com/p/dear-south-african-education': 403, 'https://khayadlanga.substack.com/p/second-letter': 403 });
+  const { queue } = await discover({ data, fetchImpl: impl, now: NOW });
+  const first = queue.find((q) => q.url.endsWith('dear-south-african-education'));
+  assert.equal(first.title, 'Dear South African Education');
+  assert.equal(first.writerId, 'khaya');
+  assert.equal(first.platform, 'Substack');
+  const second = queue.find((q) => q.url.endsWith('second-letter'));
+  assert.equal(second.title, 'My Own Title');
+  assert.equal(second.excerpt, 'My chosen line.');
 });

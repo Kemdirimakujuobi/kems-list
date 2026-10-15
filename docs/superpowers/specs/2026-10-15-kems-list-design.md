@@ -69,6 +69,12 @@ Each file has **exactly one writer**, so the desk and the job never conflict.
 
 ## Discovery job (`scripts/discover.js`, `.github/workflows/discover.yml`)
 
+> **Amended 2026-10-15: manual plus automatic.** Substack's Cloudflare serves a bot challenge (403) to every
+> request from GitHub Actions (AS8075), whatever the User-Agent; Medium and blogs are fine. Substack links
+> are therefore *manual*: discovery never fetches them and records `{manual: true, reason}` in `status.json`.
+> Substack pieces enter through Add link, with an optional curator-typed `title`/`excerpt` in `inbox.json`.
+> Title precedence for pasted links: curator → page metadata → title derived from the URL slug.
+
 Triggers: every 3 hours; on push touching `data/writers.json` or `data/inbox.json`; manual dispatch.
 
 1. **Feed detection** per active writer link:

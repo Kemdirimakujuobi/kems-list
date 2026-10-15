@@ -3,7 +3,9 @@
 import { readFile, writeFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import { idFor, canonicalUrl } from './lib/canonical.js';
-import { discoverFeedUrl, fetchText, parseFeed, toCandidate, pageMeta, excerptOf, platformOf, USER_AGENT } from './lib/feeds.js';
+import { discoverFeedUrl, fetchText, parseFeed, toCandidate, pageMeta, excerptOf, platformOf, titleFromUrl, isManualHost, USER_AGENT } from './lib/feeds.js';
+
+const MANUAL_REASON = 'Substack blocks automatic checks — add their pieces with Add link';
 
 const SEED_COUNT = 3;
 
@@ -22,6 +24,7 @@ export async function discover({ data, fetchImpl = fetch, now = new Date(), week
   for (const writer of data.writers.filter((w) => w.active)) {
     for (const [kind, link] of Object.entries(writer.links)) {
       const key = `${writer.id}:${kind}`;
+      if (isManualHost(link)) { status.feeds[key] = { manual: true, failCount: 0, reason: MANUAL_REASON }; continue; }
       const entry = (status.feeds[key] ??= { failCount: 0 });
       try {
         entry.feedUrl ??= await discoverFeedUrl(link, fetchImpl);
@@ -42,22 +45,24 @@ export async function discover({ data, fetchImpl = fetch, now = new Date(), week
   }
 
   // 2. Links pasted in the desk
-  for (const { url: raw } of data.inbox) {
+  for (const { url: raw, title: givenTitle, excerpt: givenExcerpt } of data.inbox) {
     const url = canonicalUrl(raw);
     if (!url) continue;
     const id = idFor(url);
     if (decided.has(id) || queued.has(id)) continue;
     let meta = {};
-    try { meta = pageMeta(await fetchText(url, fetchImpl)); } catch (err) { log(`inbox fetch failed ${url}: ${err.message}`); }
-    const u = new URL(url);
+    if (!isManualHost(url)) {
+      try { meta = pageMeta(await fetchText(url, fetchImpl)); } catch (err) { log(`inbox fetch failed ${url}: ${err.message}`); }
+    }
     const writerId = matchWriter(url, data.writers);
+    const excerpt = givenExcerpt || meta.description;
     add({
       id,
       url,
-      title: meta.title || `${u.host.replace(/^www\./, '')}${u.pathname}`.replace(/\/$/, ''),
+      title: givenTitle || meta.title || titleFromUrl(url),
       ...(writerId ? { writerId } : {}),
       publishedAt: meta.publishedAt || now.toISOString(),
-      ...(meta.description ? { excerpt: excerptOf(meta.description) } : {}),
+      ...(excerpt ? { excerpt: excerptOf(excerpt) } : {}),
       platform: platformOf(url),
       paywalled: false,
       foundAt: now.toISOString(),

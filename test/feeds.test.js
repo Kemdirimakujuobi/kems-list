@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import {
-  fetchText, feedUrlFor, discoverFeedUrl, parseFeed, toCandidate, excerptOf, readMinutes, textOf, pageMeta, platformOf,
+  titleFromUrl, fetchText, feedUrlFor, discoverFeedUrl, parseFeed, toCandidate, excerptOf, readMinutes, textOf, pageMeta, platformOf,
 } from '../scripts/lib/feeds.js';
 
 const fixture = (n) => readFileSync(new URL(`./fixtures/${n}`, import.meta.url), 'utf8');
@@ -183,4 +183,11 @@ test('fetchText waits and retries on 429/503, honouring Retry-After', async () =
 test('fetchText gives up after its retries with the HTTP status', async () => {
   const fetchImpl = async () => new Response('', { status: 503 });
   await assert.rejects(fetchText('https://x.example/feed', fetchImpl, { wait: async () => {} }), /HTTP 503/);
+});
+
+test('titleFromUrl turns a slug into a readable title', () => {
+  assert.equal(titleFromUrl('https://khayadlanga.substack.com/p/dear-south-african-education'), 'Dear South African Education');
+  assert.equal(titleFromUrl('https://medium.com/@kem/the-art-of-leaving-lagos-3f9a2b7c1d0e'), 'The Art of Leaving Lagos');
+  assert.equal(titleFromUrl('https://mag.example/2026/10/on_rest_and_work/'), 'On Rest and Work');
+  assert.equal(titleFromUrl('https://mag.example/'), 'mag.example');
 });

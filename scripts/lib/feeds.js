@@ -179,6 +179,26 @@ export function readMinutes(html) {
   return Math.max(1, Math.round(wordCount(textOf(html)) / WORDS_PER_MINUTE));
 }
 
+// A readable title from a URL slug, for pages we can't fetch: /p/dear-south-african-education → "Dear South African Education".
+// Short or missing slugs fall back to host + path so the curator still recognises the link.
+const SMALL_WORDS = new Set(['a', 'an', 'and', 'as', 'at', 'by', 'for', 'in', 'of', 'on', 'or', 'the', 'to', 'with']);
+export function titleFromUrl(url) {
+  const u = new URL(url);
+  const host = u.hostname.replace(/^www\./, '');
+  const slug = (u.pathname.split('/').filter(Boolean).pop() || '').replace(/\.[a-z]+$/i, '').replace(/-[0-9a-f]{10,12}$/i, '');
+  const words = slug.split(/[-_]+/).filter(Boolean);
+  if (words.length < 2) return `${host}${u.pathname}`.replace(/\/$/, '');
+  return words.map((w, i) => (i > 0 && SMALL_WORDS.has(w.toLowerCase()) ? w.toLowerCase() : w[0].toUpperCase() + w.slice(1).toLowerCase())).join(' ');
+}
+
+// Substack's Cloudflare blocks cloud servers (incl. GitHub Actions), so its writers are curated by hand.
+export function isManualHost(url) {
+  try {
+    const host = new URL(url).hostname.toLowerCase();
+    return host === 'substack.com' || host.endsWith('.substack.com');
+  } catch { return false; }
+}
+
 export function platformOf(url, feed = {}) {
   const host = new URL(url).hostname.toLowerCase().replace(/^www\./, '');
   if (host.endsWith('substack.com') || feed.isSubstack) return 'Substack';

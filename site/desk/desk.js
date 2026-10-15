@@ -60,8 +60,12 @@ function render() {
   const items = list();
   state.sel = Math.max(0, Math.min(state.sel, items.length - 1));
   const counts = { queue: visibleQueue(state.data).length, writers: state.data.writers.length, published: state.data.pieces.length };
-  const lastCheck = Object.values(state.data.status.feeds || {}).map((f) => f.lastOk).filter(Boolean).sort().pop();
-  const failing = state.data.writers.filter((w) => (feedHealth(w.id)?.failCount ?? 0) > 0).length;
+  const feeds = Object.values(state.data.status.feeds || {});
+  const manual = feeds.filter((f) => f.manual).length;
+  const lastCheck = feeds.filter((f) => !f.manual).map((f) => f.lastOk).filter(Boolean).sort().pop();
+  const checked = lastCheck ? `Feeds last checked ${ago(lastCheck)}` : feeds.length > manual ? 'Feeds not checked yet — discovery runs every 3 hours' : '';
+  const manualNote = manual ? `${manual} Substack writer${manual > 1 ? 's' : ''} curated by hand — add their pieces with Add link (n)` : '';
+  const failing = state.data.writers.filter((w) => w.active && (feedHealth(w.id)?.failCount ?? 0) > 0).length;
 
   app.innerHTML = `
 <header class="top desk-top">
@@ -75,7 +79,7 @@ function render() {
   </nav>
 </header>
 <main class="desk">
-  <p class="status-line">${lastCheck ? `Feeds last checked ${ago(lastCheck)}` : 'Feeds not checked yet — discovery runs every 3 hours'}${failing ? ` · <span class="fail">${failing} writer${failing > 1 ? 's' : ''} with a failing feed</span>` : ''}${state.busy ? ' · Saving…' : ''}</p>
+  <p class="status-line">${[checked, manualNote].filter(Boolean).join(' · ') || 'No writers yet'}${failing ? ` · <span class="fail">${failing} writer${failing > 1 ? 's' : ''} with a failing feed</span>` : ''}${state.busy ? ' · Saving…' : ''}</p>
   <div class="panes ${state.open ? 'is-open' : ''}">
     <div class="rows-wrap">${items.length ? `<ol class="rows">${items.map(renderRow).join('')}</ol>` : renderEmpty()}</div>
     <aside class="pane">${items.length ? renderPane(current()) : '<p class="pane-empty">Nothing selected</p>'}</aside>
@@ -98,7 +102,7 @@ function renderRow(item, i) {
   const active = i === state.sel ? ' is-active' : '';
   if (state.tab === 'writers') {
     const h = feedHealth(item.id);
-    const note = !item.active ? 'paused' : h?.failCount ? 'feed failing' : h?.lastOk ? 'ok' : 'not checked';
+    const note = !item.active ? 'paused' : h?.manual ? 'manual' : h?.failCount ? 'feed failing' : h?.lastOk ? 'ok' : 'not checked';
     return `<li><div class="row${active}${item.active ? '' : ' is-dim'}" data-i="${i}" tabindex="-1"><span class="avatar">${esc(item.name[0]?.toUpperCase())}</span><span class="from">${esc(item.name)}</span><span class="subject"><span class="snippet">${esc([item.country, Object.keys(item.links).join(', ')].filter(Boolean).join(' · '))}</span></span><span class="when ${h?.failCount ? 'fail' : ''}">${note}</span></div></li>`;
   }
   const dead = state.tab === 'published' && state.data.status.deadLinks?.includes(item.id);
@@ -112,7 +116,7 @@ function renderPane(item) {
     return `${back}<h2>${esc(item.name)}</h2>
 <p class="meta">${esc([item.country, `added ${short(item.addedAt)}`].filter(Boolean).join(' · '))}</p>
 <p class="links">${Object.entries(item.links).map(([k, v]) => `${esc(k)}: <a href="${esc(v)}" target="_blank" rel="noopener">${esc(v.replace(/^https?:\/\//, ''))}</a>`).join('<br>')}</p>
-${h?.failCount ? `<p class="fail">Feed failing (${h.failCount}×): ${esc(h.lastError)}</p>` : h?.lastOk ? `<p class="meta">Feed ok · checked ${ago(h.lastOk)}</p>` : '<p class="meta">Feed not checked yet</p>'}
+${h?.manual ? `<p class="meta">Manual: ${esc(h.reason)}.</p><p class="links"><a href="${esc(Object.values(item.links)[0])}" target="_blank" rel="noopener">Read their latest</a><kbd>o</kbd> then <kbd>n</kbd> to add a piece</p>` : h?.failCount ? `<p class="fail">Feed failing (${h.failCount}×): ${esc(h.lastError)}</p>` : h?.lastOk ? `<p class="meta">Feed ok · checked ${ago(h.lastOk)}</p>` : '<p class="meta">Feed not checked yet</p>'}
 <div class="buttons"><button class="button quiet" data-do="toggle-writer">${item.active ? 'Pause' : 'Resume'}<kbd>p</kbd></button></div>`;
   }
   const writer = writerOf(item.writerId);
@@ -139,6 +143,8 @@ function renderDialog() {
   if (d === 'link') {
     return `<div class="overlay" data-do="dismiss"><form class="dialog" data-form="link"><h2>Add a link</h2>
 <label class="field"><span>A single piece from anywhere — it appears in the queue within a few minutes</span><input name="url" type="url" required placeholder="https://"></label>
+<label class="field"><span>Title (optional — used as is; otherwise taken from the page or the link)</span><input name="title"></label>
+<label class="field"><span>Excerpt (optional — the subtitle or a line you love)</span><textarea name="excerpt"></textarea></label>
 <div class="buttons"><button class="button" type="submit">Add to queue</button><button class="button quiet" type="button" data-do="dismiss">Cancel</button></div></form></div>`;
   }
   return `<div class="overlay" data-do="dismiss"><form class="dialog" data-form="writer"><h2>Add a writer</h2>
@@ -235,7 +241,7 @@ app.addEventListener('submit', async (e) => {
       store.set('owner', owner); store.set('repo', repo); store.set('token', f.token.trim());
       return start();
     }
-    if (form.dataset.form === 'link') { state.dialog = null; return run(addLink(state.data, f.url), { done: 'Link added · it will appear in the queue shortly' }); }
+    if (form.dataset.form === 'link') { state.dialog = null; return run(addLink(state.data, f.url, undefined, { title: f.title, excerpt: f.excerpt }), { done: 'Link added · it will appear in the queue shortly' }); }
     if (form.dataset.form === 'writer') {
       const action = addWriter(state.data, { name: f.name, country: f.country, links: String(f.links).split(/\s+/) });
       state.dialog = null;
@@ -264,7 +270,7 @@ document.addEventListener('keydown', (e) => {
   const keyMap = {
     j: () => move(1), k: () => move(-1), ArrowDown: () => move(1), ArrowUp: () => move(-1),
     Enter: () => { state.open = true; render(); },
-    o: () => { const it = current(); if (it?.url) window.open(it.url, '_blank', 'noopener'); },
+    o: () => { const it = current(); const url = it?.url ?? (it?.links && Object.values(it.links)[0]); if (url) window.open(url, '_blank', 'noopener'); },
     a: () => { if (state.tab === 'queue') { state.editing = true; render(); } },
     A: () => { if (state.tab === 'queue') act.approve(''); },
     s: () => { if (state.tab === 'queue') act.skip(); },

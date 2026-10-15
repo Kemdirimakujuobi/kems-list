@@ -50,3 +50,11 @@ test('rejects duplicate writer ids', () => {
   d.writers.push({ ...d.writers[0] });
   assert.ok(validateData(d).includes('writers[1].id: duplicate id ada-okafor'));
 });
+
+test('inbox entries may carry a title and excerpt', () => {
+  const d = valid();
+  d.inbox[0] = { ...d.inbox[0], title: 'A title', excerpt: 'A line.' };
+  assert.deepEqual(validateData(d), []);
+  d.inbox[0].title = 42;
+  assert.ok(validateData(d).includes('inbox[0].title: must be a non-empty string'));
+});
