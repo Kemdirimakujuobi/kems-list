@@ -131,7 +131,9 @@ serving the last good version. Output to `_site/`, deployed with the official Pa
 - **`/` (home):** one list, grouped *Today / This week / Earlier* by `approvedAt`, newest first.
   Row: writer-initial circle · writer name · **title** — excerpt (muted, one line) · date.
   Whole row links to the piece page. All pieces on one page (paginate by year later if > 1,000).
-- **`/p/<id>/`:** title; writer · country; publish date · read time; curator note as a quote
+- **Amended 2026-10-15:** rows show title only and link straight to the original (new tab); per-piece pages
+  were removed. Notes appear in `feed.xml`.
+- ~~**`/p/<id>/`:**~~ (removed) title; writer · country; publish date · read time; curator note as a quote
   (if any); excerpt; primary button **"Read on <platform> →"** (`rel="noopener"`).
   Open Graph + Twitter meta (title, excerpt, site name) for sharing. Keys: `j`/`k` next/prev, `Esc` home.
 - **`/feed.xml`:** RSS 2.0, latest 50 pieces; item description = note (if any) + excerpt; link = original URL.

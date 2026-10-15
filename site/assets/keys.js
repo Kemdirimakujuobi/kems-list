@@ -1,17 +1,6 @@
-// Keyboard navigation for the public site, Tempo-style. The site works fully without it.
+// Keyboard navigation for the list, Tempo-style: j/k move, Enter or o opens the piece. Works fine without it.
 (() => {
   const typing = (e) => e.target.closest('input, textarea, select, [contenteditable]');
-  const body = document.body;
-
-  // Piece page: j = older, k = newer, Esc = back to the list.
-  if (body.dataset.home) {
-    document.addEventListener('keydown', (e) => {
-      if (typing(e) || e.metaKey || e.ctrlKey || e.altKey) return;
-      const go = { j: body.dataset.next, k: body.dataset.prev, Escape: body.dataset.home }[e.key];
-      if (go) { e.preventDefault(); location.href = go; }
-    });
-    return;
-  }
 
   // List: j/k move a highlight, Enter or o opens.
   const rows = [...document.querySelectorAll('.row')];

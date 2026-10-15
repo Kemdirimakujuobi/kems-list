@@ -4,9 +4,9 @@ The best writing by Africans on the internet, chosen one piece at a time.
 
 **Site:** https://kemdirimakujuobi.github.io/kems-list/ · **RSS:** https://kemdirimakujuobi.github.io/kems-list/feed.xml
 
-A calm, Tempo-style reading list. Each piece shows its title, writer, a short excerpt and an
-optional note from the curator, then links to the original, so writers keep their readers and
-subscribers.
+A calm, Tempo-style reading list: one row per piece (logo, title, source, publish date). Each row links
+straight to the original, so writers keep their readers and subscribers. Curator notes travel in the
+RSS feed.
 
 ## How it works
 

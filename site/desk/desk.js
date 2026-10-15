@@ -150,7 +150,7 @@ ${item.excerpt ? `<p class="excerpt">${esc(item.excerpt)}</p>` : ''}
 <div class="buttons"><button class="button" data-do="approve" ${state.busy ? 'disabled' : ''}>Approve<kbd>a</kbd></button><button class="button quiet" data-do="skip" ${state.busy ? 'disabled' : ''}>Skip<kbd>s</kbd></button></div>`;
   }
   return `${head}<label class="field"><span>Your note — Enter saves</span><textarea id="note">${esc(item.note ?? '')}</textarea></label>
-<div class="buttons"><button class="button quiet" data-do="save-note" ${state.busy ? 'disabled' : ''}>Save note<kbd>e</kbd></button><a class="button quiet" href="../p/${esc(item.id)}/" target="_blank">View live</a><button class="button danger" data-do="unpublish" ${state.busy ? 'disabled' : ''}>Unpublish<kbd>x</kbd></button></div>`;
+<div class="buttons"><button class="button quiet" data-do="save-note" ${state.busy ? 'disabled' : ''}>Save note<kbd>e</kbd></button><button class="button danger" data-do="unpublish" ${state.busy ? 'disabled' : ''}>Unpublish<kbd>x</kbd></button></div>`;
 }
 
 function renderDialog() {

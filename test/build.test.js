@@ -4,7 +4,7 @@ import { mkdtempSync, readFileSync, existsSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { XMLParser } from 'fast-xml-parser';
-import { build, renderIndex, renderPiece, renderFeed, iconSourceUrl } from '../scripts/build.js';
+import { build, renderIndex, renderFeed, iconSourceUrl } from '../scripts/build.js';
 
 const NOW = new Date('2026-10-15T12:00:00Z');
 const cfg = { title: "Kem's List", description: 'The best writing by Africans online.', base: '/kems-list/', url: 'https://kemdirimakujuobi.github.io/kems-list' };
@@ -23,7 +23,7 @@ test('index groups pieces into Today / This week / Earlier, newest first', () =>
   const html = renderIndex(data(), cfg, NOW);
   const order = ['Today', 'Title aaaaaaaaaaaa', 'This week', 'Title bbbbbbbbbbbb', 'Earlier', 'Title cccccccccccc'].map((s) => html.indexOf(s));
   assert.ok(order.every((v, i) => v > -1 && (i === 0 || v > order[i - 1])), JSON.stringify(order));
-  assert.match(html, /href="\/kems-list\/p\/aaaaaaaaaaaa\/"/);
+  assert.match(html, /<a class="row" href="https:\/\/ada\.substack\.com\/p\/aaaaaaaaaaaa" target="_blank" rel="noopener">/);
   assert.match(html, />Ada Okafor</);
   assert.match(html, />mag\.example</, 'pieces without a writer show their platform');
   assert.match(html, /href="\/kems-list\/feed\.xml"/);
@@ -33,31 +33,16 @@ test('empty index has a calm empty state', () => {
   assert.match(renderIndex({ ...data(), pieces: [] }, cfg, NOW), /Nothing here yet/);
 });
 
-test('piece page: writer, country, read time, note, excerpt, read-on button and OG tags', () => {
-  const d = data();
-  const html = renderPiece(d.pieces[0], d, cfg, { prev: null, next: d.pieces[1] });
-  assert.match(html, /<h1[^>]*>Title aaaaaaaaaaaa<\/h1>/);
-  assert.match(html, /Ada Okafor · Nigeria/);
-  assert.match(html, /7 min read/);
-  assert.match(html, /<blockquote[^>]*>Read this one slowly\.<\/blockquote>/);
-  assert.match(html, /Excerpt aaaaaaaaaaaa/);
-  assert.match(html, /<a[^>]+href="https:\/\/ada\.substack\.com\/p\/aaaaaaaaaaaa"[^>]*>Read on Substack →<\/a>/);
-  assert.match(html, /<meta property="og:title" content="Title aaaaaaaaaaaa">/);
-  assert.match(html, /<meta property="og:url" content="https:\/\/kemdirimakujuobi\.github\.io\/kems-list\/p\/aaaaaaaaaaaa\/">/);
-  assert.match(html, /data-next="\/kems-list\/p\/bbbbbbbbbbbb\/"/);
-});
-
 test('everything user-provided is escaped in HTML and RSS', () => {
   const d = data();
   d.pieces[0] = { ...d.pieces[0], title: '<script>alert(1)</script> & “quotes”', note: '"><img src=x onerror=1>', excerpt: 'a < b & c' };
   const index = renderIndex(d, cfg, NOW);
-  const page = renderPiece(d.pieces[0], d, cfg, {});
   const feed = renderFeed(d, cfg);
-  for (const out of [index, page, feed]) {
+  for (const out of [index, feed]) {
     assert.doesNotMatch(out, /<script>alert|<img src=x/);
   }
-  assert.match(page, /&lt;script&gt;alert\(1\)&lt;\/script&gt; &amp; “quotes”/);
-  assert.match(page, /&quot;&gt;&lt;img src=x onerror=1&gt;/);
+  assert.match(index, /&lt;script&gt;alert\(1\)&lt;\/script&gt; &amp; “quotes”/);
+  assert.match(feed, /&quot;&gt;&lt;img src=x onerror=1&gt;/);
 });
 
 test('feed.xml is valid RSS with the newest 50 items, note before excerpt', () => {
@@ -68,13 +53,14 @@ test('feed.xml is valid RSS with the newest 50 items, note before excerpt', () =
   assert.equal(rss.item.length, 50);
   assert.equal(rss.item[0].link, d.pieces[0].url);
   assert.match(rss.item[0].description, /^Kem says read it\./);
-  assert.equal(rss.item[0].guid['#text'], `${cfg.url}/p/${d.pieces[0].id}/`);
+  assert.equal(rss.item[0].guid['#text'], d.pieces[0].url);
 });
 
 test('build writes the whole site, and refuses invalid data', async () => {
   const out = mkdtempSync(join(tmpdir(), 'kems-'));
   await build({ data: data(), outDir: out, config: cfg, now: NOW });
-  for (const f of ['index.html', 'p/aaaaaaaaaaaa/index.html', 'feed.xml', '404.html', '.nojekyll', 'assets/style.css', 'assets/keys.js', 'desk/index.html', 'desk/desk.js', 'lib/desk.js', 'lib/github.js', 'lib/schema.js']) {
+  assert.equal(existsSync(join(out, 'p')), false, 'no per-piece pages');
+  for (const f of ['index.html', 'feed.xml', '404.html', '.nojekyll', 'assets/style.css', 'assets/keys.js', 'desk/index.html', 'desk/desk.js', 'lib/desk.js', 'lib/github.js', 'lib/schema.js']) {
     assert.ok(existsSync(join(out, f)), f);
   }
   assert.match(readFileSync(join(out, 'index.html'), 'utf8'), /Title aaaaaaaaaaaa/);
@@ -83,11 +69,12 @@ test('build writes the whole site, and refuses invalid data', async () => {
   await assert.rejects(build({ data: bad, outDir: mkdtempSync(join(tmpdir(), 'kems-')), config: cfg, now: NOW }), /pieces\[0\]\.url/);
 });
 
-test('rows read: icon, title — excerpt, source, publish date', () => {
+test('rows read: icon, title, source, publish date — no excerpt', () => {
   const d = data();
   d.pieces = [piece('dddddddddddd', '2026-10-15T09:00:00.000Z', { writerId: undefined, source: 'Dianne_-_', author: 'Dianne_-_', icon: 'https://substackcdn.com/a.jpg', publishedAt: '2026-10-11T07:39:15.000Z' })];
   const html = renderIndex(d, cfg, NOW, { 'https://substackcdn.com/a.jpg': 'icons/abc.png' });
   const row = html.match(/<a class="row"[\s\S]*?<\/a>/)[0];
+  assert.doesNotMatch(row, /Excerpt dddddddddddd|snippet/);
   const order = ['<img class="avatar" src="/kems-list/icons/abc.png"', 'Title dddddddddddd', 'Dianne_-_', '11 Oct'].map((x) => row.indexOf(x));
   assert.ok(order.every((v, i) => v > -1 && (i === 0 || v > order[i - 1])), `${order} in ${row}`);
 });
@@ -104,14 +91,6 @@ test('source name: writer, then captured source, then platform', () => {
   assert.match(html, /class="from">Ada Okafor</);
   assert.match(html, /class="from">Pub Name</);
   assert.match(html, /class="from">Substack</);
-});
-
-test('piece page byline uses author and source when there is no roster writer', () => {
-  const d = data();
-  const p = piece('dddddddddddd', '2026-10-15T09:00:00.000Z', { writerId: undefined, source: 'Dee Writes', author: 'Dianne' });
-  assert.match(renderPiece(p, d, cfg, {}), /<p class="byline">Dianne · Dee Writes<\/p>/);
-  const same = { ...p, source: 'Dianne' };
-  assert.match(renderPiece(same, d, cfg, {}), /<p class="byline">Dianne<\/p>/);
 });
 
 test("iconSourceUrl asks Substack's CDN for a small square version", () => {

@@ -26,9 +26,7 @@ function shortDate(iso, now) {
   const s = `${d.getUTCDate()} ${MONTHS[d.getUTCMonth()]}`;
   return d.getUTCFullYear() === now.getUTCFullYear() ? s : `${s} ${d.getUTCFullYear()}`;
 }
-const longDate = (iso) => { const d = new Date(iso); return `${d.getUTCDate()} ${MONTHS[d.getUTCMonth()]} ${d.getUTCFullYear()}`; };
 const byApproved = (a, b) => Date.parse(b.approvedAt) - Date.parse(a.approvedAt);
-const pieceHref = (cfg, p) => `${cfg.base}p/${p.id}/`;
 const writerOf = (data, p) => data.writers.find((w) => w.id === p.writerId) ?? null;
 const sourceName = (data, p) => writerOf(data, p)?.name ?? p.source ?? p.platform;
 const iconOf = (data, p, icons) => [p.icon, writerOf(data, p)?.icon].map((u) => u && icons[u]).find(Boolean) ?? null;
@@ -96,34 +94,13 @@ ${[...groups].map(([name, list]) => `<section>
 <h2 class="group">${name}</h2>
 <ol class="rows">
 ${list.map((p) => {
-  return `<li><a class="row" href="${pieceHref(cfg, p)}">${avatar(cfg, data, p, icons)}<span class="subject"><strong>${esc(p.title)}</strong>${p.excerpt ? `<span class="snippet"> — ${esc(p.excerpt)}</span>` : ''}</span><span class="from">${esc(sourceName(data, p))}</span><time datetime="${esc(p.publishedAt)}">${shortDate(p.publishedAt, now)}</time></a></li>`;
+  return `<li><a class="row" href="${esc(p.url)}" target="_blank" rel="noopener">${avatar(cfg, data, p, icons)}<span class="subject"><strong>${esc(p.title)}</strong></span><span class="from">${esc(sourceName(data, p))}</span><time datetime="${esc(p.publishedAt)}">${shortDate(p.publishedAt, now)}</time></a></li>`;
 }).join('\n')}
 </ol>
 </section>`).join('\n')}
 </main>`;
   }
   return layout(cfg, { title: '', description: cfg.description, path: '/', body });
-}
-
-export function renderPiece(p, data, cfg, { prev, next } = {}) {
-  const writer = writerOf(data, p);
-  const byline = writer ? [writer.name, writer.country].filter(Boolean).join(' · ') : [...new Set([p.author, p.source].filter(Boolean))].join(' · ') || p.platform;
-  const meta = [longDate(p.publishedAt), p.readMinutes ? `${p.readMinutes} min read` : null, p.platform].filter(Boolean).join(' · ');
-  const follow = writer ? Object.values(writer.links)[0] : null;
-  const attrs = [` data-home="${cfg.base}"`, prev ? ` data-prev="${pieceHref(cfg, prev)}"` : '', next ? ` data-next="${pieceHref(cfg, next)}"` : ''].join('');
-  const body = `<main class="reader">
-<article>
-<h1 class="title">${esc(p.title)}</h1>
-<p class="byline">${esc(byline)}</p>
-<p class="meta">${esc(meta)}</p>
-${p.note ? `<figure class="note"><blockquote class="note-text">${esc(p.note)}</blockquote><figcaption>Kem's note</figcaption></figure>` : ''}
-${p.excerpt ? `<p class="excerpt">${esc(p.excerpt)}</p>` : ''}
-<p class="actions"><a class="read" href="${esc(p.url)}" rel="noopener">Read on ${esc(p.platform)} →</a></p>
-${follow ? `<p class="follow"><a href="${esc(follow)}" rel="noopener">More from ${esc(writer.name)}</a></p>` : ''}
-</article>
-<nav class="pager">${prev ? `<a href="${pieceHref(cfg, prev)}">← Newer</a>` : '<span></span>'}<a href="${cfg.base}">All pieces</a>${next ? `<a href="${pieceHref(cfg, next)}">Older →</a>` : '<span></span>'}</nav>
-</main>`;
-  return layout(cfg, { title: p.title, description: p.note || p.excerpt || `${p.title}, by ${byline}`, path: `/p/${p.id}/`, body, bodyAttrs: attrs, type: 'article' });
 }
 
 export function renderFeed(data, cfg) {
@@ -140,7 +117,7 @@ export function renderFeed(data, cfg) {
 ${items.map((p) => `<item>
 <title>${xml(p.title)}</title>
 <link>${xml(p.url)}</link>
-<guid isPermaLink="true">${xml(`${cfg.url}/p/${p.id}/`)}</guid>
+<guid isPermaLink="true">${xml(p.url)}</guid>
 <pubDate>${new Date(p.approvedAt).toUTCString()}</pubDate>
 <dc:creator>${xml(sourceName(data, p))}</dc:creator>
 <description>${xml([p.note, p.excerpt].filter(Boolean).join('\n\n'))}</description>
@@ -200,7 +177,6 @@ export async function build({ data, outDir, config = CONFIG, now = new Date(), i
   const iconUrls = [...pieces.map((p) => p.icon), ...data.writers.map((w) => w.icon)].filter(Boolean);
   const icons = iconFetch ? await downloadIcons(iconUrls, outDir, iconFetch) : {};
   await write('index.html', renderIndex(data, config, now, icons));
-  await Promise.all(pieces.map((p, i) => write(`p/${p.id}/index.html`, renderPiece(p, data, config, { prev: pieces[i - 1], next: pieces[i + 1] }))));
   await write('feed.xml', renderFeed(data, config));
   await write('404.html', render404(config));
   await write('.nojekyll', '');
@@ -209,7 +185,7 @@ export async function build({ data, outDir, config = CONFIG, now = new Date(), i
   await cp(src('site/assets'), join(outDir, 'assets'), { recursive: true });
   await cp(src('site/desk'), join(outDir, 'desk'), { recursive: true });
   await cp(src('lib'), join(outDir, 'lib'), { recursive: true, filter: (f) => !f.endsWith('.test.js') });
-  return { pages: pieces.length + 2 };
+  return { pages: 2 };
 }
 
 async function main() {
