@@ -45,14 +45,14 @@ export async function discover({ data, fetchImpl = fetch, now = new Date(), week
   }
 
   // 2. Links pasted in the desk
-  for (const { url: raw, title: givenTitle, excerpt: givenExcerpt } of data.inbox) {
+  for (const { url: raw, title: givenTitle, excerpt: givenExcerpt, publishedAt: givenDate, author: givenAuthor, source: givenSource, icon: givenIcon } of data.inbox) {
     const url = canonicalUrl(raw);
     if (!url) continue;
     const id = idFor(url);
     if (decided.has(id) || queued.has(id)) continue;
     let meta = {};
     if (!isManualHost(url)) {
-      try { meta = pageMeta(await fetchText(url, fetchImpl)); } catch (err) { log(`inbox fetch failed ${url}: ${err.message}`); }
+      try { meta = pageMeta(await fetchText(url, fetchImpl), url); } catch (err) { log(`inbox fetch failed ${url}: ${err.message}`); }
     }
     const writerId = matchWriter(url, data.writers);
     const excerpt = givenExcerpt || meta.description;
@@ -61,9 +61,12 @@ export async function discover({ data, fetchImpl = fetch, now = new Date(), week
       url,
       title: givenTitle || meta.title || titleFromUrl(url),
       ...(writerId ? { writerId } : {}),
-      publishedAt: meta.publishedAt || now.toISOString(),
+      publishedAt: givenDate || meta.publishedAt || now.toISOString(),
       ...(excerpt ? { excerpt: excerptOf(excerpt) } : {}),
       platform: platformOf(url),
+      ...((givenSource || meta.source) ? { source: givenSource || meta.source } : {}),
+      ...((givenAuthor || meta.author) ? { author: givenAuthor || meta.author } : {}),
+      ...((givenIcon || meta.icon) ? { icon: givenIcon || meta.icon } : {}),
       paywalled: false,
       foundAt: now.toISOString(),
     });

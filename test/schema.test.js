@@ -58,3 +58,17 @@ test('inbox entries may carry a title and excerpt', () => {
   d.inbox[0].title = 42;
   assert.ok(validateData(d).includes('inbox[0].title: must be a non-empty string'));
 });
+
+test('optional source, author, icon and publishedAt are validated where they appear', () => {
+  const d = valid();
+  d.inbox[0] = { ...d.inbox[0], source: 'Pub', author: 'A', icon: 'https://cdn.example/i.png', publishedAt: '2026-10-11T07:39:15.000Z' };
+  d.queue[0] = { ...d.queue[0], source: 'Pub', author: 'A', icon: 'https://cdn.example/i.png' };
+  d.pieces[0] = { ...d.pieces[0], source: 'Pub', author: 'A', icon: 'https://cdn.example/i.png' };
+  d.writers[0] = { ...d.writers[0], icon: 'https://cdn.example/w.png' };
+  assert.deepEqual(validateData(d), []);
+  d.pieces[0].icon = 'javascript:alert(1)';
+  d.inbox[0].publishedAt = 'soon';
+  const errors = validateData(d);
+  assert.ok(errors.includes('pieces[0].icon: must be an http(s) URL'));
+  assert.ok(errors.includes('inbox[0].publishedAt: must be an ISO date'));
+});

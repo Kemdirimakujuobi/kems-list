@@ -67,7 +67,7 @@ a { color: inherit; }
 .rows { list-style: none; margin: 0; padding: 0; }
 .row {
   display: grid;
-  grid-template-columns: 28px 170px minmax(0, 1fr) auto;
+  grid-template-columns: 28px minmax(0, 1fr) minmax(0, 170px) auto;
   align-items: center;
   gap: 14px;
   padding: 10px;
@@ -81,8 +81,9 @@ a { color: inherit; }
   display: grid; place-items: center;
   background: var(--avatar); color: var(--ink-soft);
   font-size: 12px; font-weight: 600;
+  object-fit: cover;
 }
-.from { font-weight: 500; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.from { color: var(--muted); font-size: 14px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; text-align: right; }
 .subject { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .subject strong { font-weight: 500; }
 .snippet { color: var(--muted); }
@@ -129,7 +130,8 @@ a { color: inherit; }
 
 /* ---------- phone ---------- */
 @media (max-width: 640px) {
-  .row { grid-template-columns: 28px minmax(0, 1fr) auto; grid-template-areas: "av from when" "av subj subj"; row-gap: 2px; }
+  .row { grid-template-columns: 28px minmax(0, 1fr) auto; grid-template-areas: "av subj subj" "av from when"; row-gap: 2px; }
+  .from { text-align: left; font-size: 13px; }
   .avatar { grid-area: av; align-self: start; margin-top: 2px; }
   .from { grid-area: from; }
   .row time, .row .when { grid-area: when; }

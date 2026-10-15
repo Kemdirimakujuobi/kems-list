@@ -3,7 +3,9 @@
   "private": true,
   "type": "module",
   "description": "A calm, curated list of the best writing by Africans on the internet.",
-  "engines": { "node": ">=22" },
+  "engines": {
+    "node": ">=22"
+  },
   "scripts": {
     "test": "node --test \"test/*.test.js\"",
     "discover": "node scripts/discover.js",
@@ -12,5 +14,8 @@
   },
   "dependencies": {
     "fast-xml-parser": "5.2.5"
+  },
+  "devDependencies": {
+    "linkedom": "^0.18.9"
   }
 }

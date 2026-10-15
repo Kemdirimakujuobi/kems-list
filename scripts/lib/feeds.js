@@ -118,7 +118,8 @@ export function parseFeed(xml) {
       html: text(it['content:encoded']),
       enclosureType: it.enclosure?.['@_type'] || null,
     }));
-    return { title: textOf(text(channel.title)), generator, isSubstack, items };
+    const image = text(channel.image?.url) || null;
+    return { title: textOf(text(channel.title)), generator, isSubstack, image, items };
   }
 
   const entries = (atom.entry || []).map((e) => {
@@ -134,7 +135,7 @@ export function parseFeed(xml) {
       enclosureType: enclosure?.['@_type'] || null,
     };
   });
-  return { title: textOf(text(atom.title)), generator: text(atom.generator), isSubstack: false, items: entries };
+  return { title: textOf(text(atom.title)), generator: text(atom.generator), isSubstack: false, image: text(atom.logo) || text(atom.icon) || null, items: entries };
 }
 
 /* ---------- text helpers ---------- */
@@ -240,6 +241,8 @@ export function toCandidate(item, { writerId, now = new Date(), feed = {} }) {
     publishedAt: item.publishedAt ?? now.toISOString(),
     excerpt: excerptOf(source),
     platform: platformOf(url, feed),
+    ...(feed.title ? { source: feed.title } : {}),
+    ...(/^https?:\/\//.test(feed.image || '') ? { icon: feed.image } : {}),
     paywalled,
     foundAt: now.toISOString(),
   };
@@ -256,7 +259,20 @@ function attrs(tag) {
   return out;
 }
 
-export function pageMeta(html) {
+function jsonLdArticle(html) {
+  for (const m of html.matchAll(/<script[^>]+application\/ld\+json[^>]*>([\s\S]*?)<\/script>/gi)) {
+    let data;
+    try { data = JSON.parse(m[1]); } catch { continue; }
+    const items = [].concat(data).flatMap((d) => (d && d['@graph'] ? d['@graph'] : [d]));
+    const article = items.find((d) => d && (d.headline || /Article|BlogPosting/.test(String(d['@type']))));
+    if (article) return article;
+  }
+  return {};
+}
+
+const GENERIC_ICON = /substackcdn\.com\/icons\/substack\//;
+
+export function pageMeta(html, pageUrl) {
   const metas = {};
   for (const tag of html.match(/<meta\b[^>]*>/gi) || []) {
     const a = attrs(tag);
@@ -269,12 +285,25 @@ export function pageMeta(html) {
     if (/(^|\s)canonical(\s|$)/i.test(a.rel || '') && a.href) { canonical = a.href; break; }
   }
   const titleTag = html.match(/<title[^>]*>([\s\S]*?)<\/title>/i)?.[1];
-  const author = metas.author || (metas['article:author'] && !/^https?:/.test(metas['article:author']) ? metas['article:author'] : null);
+  const ld = jsonLdArticle(html);
+  const ldAuthor = [].concat(ld.author || [])[0];
+  const imageUrl = (img) => (typeof img === 'string' ? img : img?.url || img?.contentUrl) || null;
+  const iconLinks = [];
+  for (const tag of html.match(/<link\b[^>]*>/gi) || []) {
+    const a = attrs(tag);
+    if (/apple-touch-icon/i.test(a.rel || '') && a.href) iconLinks.unshift(a.href);
+    else if (/(^|\s)icon(\s|$)/i.test(a.rel || '') && a.href) iconLinks.push(a.href);
+  }
+  const absolute = (u) => { try { return new URL(u, pageUrl).href; } catch { return null; } };
+  const icon = [imageUrl(ld.publisher?.logo), ...iconLinks, imageUrl(ldAuthor?.image)]
+    .map((u) => u && absolute(u)).find((u) => u && /^https?:/.test(u) && !GENERIC_ICON.test(u)) || null;
+  const author = ldAuthor?.name || metas.author || (metas['article:author'] && !/^https?:/.test(metas['article:author']) ? metas['article:author'] : null);
   return {
-    title: textOf(metas['og:title'] || metas['twitter:title'] || titleTag || '') || null,
-    description: textOf(metas['og:description'] || metas.description || metas['twitter:description'] || '') || null,
-    publishedAt: isoOrNull(metas['article:published_time'] || metas['og:published_time'] || ''),
+    title: textOf(ld.headline || metas['og:title'] || metas['twitter:title'] || titleTag || '') || null,
+    description: textOf(ld.description || metas['og:description'] || metas.description || metas['twitter:description'] || '') || null,
+    publishedAt: isoOrNull(ld.datePublished || metas['article:published_time'] || metas['og:published_time'] || ''),
     author: author || null,
     canonical,
+    ...(pageUrl ? { source: ld.publisher?.name || metas['og:site_name'] || null, icon } : {}),
   };
 }

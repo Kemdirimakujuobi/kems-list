@@ -3,6 +3,7 @@
 import { readFile, writeFile, mkdir, cp, rm } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import { join } from 'node:path';
+import { createHash } from 'node:crypto';
 import { validateData } from '../lib/schema.js';
 
 export const CONFIG = {
@@ -29,7 +30,14 @@ const longDate = (iso) => { const d = new Date(iso); return `${d.getUTCDate()} $
 const byApproved = (a, b) => Date.parse(b.approvedAt) - Date.parse(a.approvedAt);
 const pieceHref = (cfg, p) => `${cfg.base}p/${p.id}/`;
 const writerOf = (data, p) => data.writers.find((w) => w.id === p.writerId) ?? null;
-const sourceName = (data, p) => writerOf(data, p)?.name ?? p.platform;
+const sourceName = (data, p) => writerOf(data, p)?.name ?? p.source ?? p.platform;
+const iconOf = (data, p, icons) => [p.icon, writerOf(data, p)?.icon].map((u) => u && icons[u]).find(Boolean) ?? null;
+
+function avatar(cfg, data, p, icons) {
+  const local = iconOf(data, p, icons);
+  if (local) return `<img class="avatar" src="${cfg.base}${local}" alt="" width="28" height="28" loading="lazy">`;
+  return `<span class="avatar" aria-hidden="true">${esc(sourceName(data, p).trim()[0]?.toUpperCase() ?? '·')}</span>`;
+}
 
 function layout(cfg, { title, description, path, body, bodyAttrs = '', type = 'website' }) {
   const fullTitle = title ? `${title} · ${cfg.title}` : cfg.title;
@@ -70,7 +78,7 @@ function groupOf(p, now) {
   return 'Earlier';
 }
 
-export function renderIndex(data, cfg, now = new Date()) {
+export function renderIndex(data, cfg, now = new Date(), icons = {}) {
   const pieces = [...data.pieces].sort(byApproved);
   let body;
   if (pieces.length === 0) {
@@ -88,8 +96,7 @@ ${[...groups].map(([name, list]) => `<section>
 <h2 class="group">${name}</h2>
 <ol class="rows">
 ${list.map((p) => {
-  const from = sourceName(data, p);
-  return `<li><a class="row" href="${pieceHref(cfg, p)}"><span class="avatar" aria-hidden="true">${esc(from.trim()[0]?.toUpperCase() ?? '·')}</span><span class="from">${esc(from)}</span><span class="subject"><strong>${esc(p.title)}</strong>${p.excerpt ? `<span class="snippet"> — ${esc(p.excerpt)}</span>` : ''}</span><time datetime="${esc(p.publishedAt)}">${shortDate(p.publishedAt, now)}</time></a></li>`;
+  return `<li><a class="row" href="${pieceHref(cfg, p)}">${avatar(cfg, data, p, icons)}<span class="subject"><strong>${esc(p.title)}</strong>${p.excerpt ? `<span class="snippet"> — ${esc(p.excerpt)}</span>` : ''}</span><span class="from">${esc(sourceName(data, p))}</span><time datetime="${esc(p.publishedAt)}">${shortDate(p.publishedAt, now)}</time></a></li>`;
 }).join('\n')}
 </ol>
 </section>`).join('\n')}
@@ -100,7 +107,7 @@ ${list.map((p) => {
 
 export function renderPiece(p, data, cfg, { prev, next } = {}) {
   const writer = writerOf(data, p);
-  const byline = writer ? [writer.name, writer.country].filter(Boolean).join(' · ') : p.platform;
+  const byline = writer ? [writer.name, writer.country].filter(Boolean).join(' · ') : [...new Set([p.author, p.source].filter(Boolean))].join(' · ') || p.platform;
   const meta = [longDate(p.publishedAt), p.readMinutes ? `${p.readMinutes} min read` : null, p.platform].filter(Boolean).join(' · ');
   const follow = writer ? Object.values(writer.links)[0] : null;
   const attrs = [` data-home="${cfg.base}"`, prev ? ` data-prev="${pieceHref(cfg, prev)}"` : '', next ? ` data-next="${pieceHref(cfg, next)}"` : ''].join('');
@@ -147,9 +154,41 @@ function render404(cfg) {
   return layout(cfg, { title: 'Not found', description: cfg.description, path: '/404.html', body: `<main class="list"><div class="empty"><p class="empty-title">That page isn't here</p><p><a href="${cfg.base}">Back to the list</a></p></div></main>` });
 }
 
+/* ---------- icons ---------- */
+
+const ICON_MAX_BYTES = 300 * 1024;
+const ICON_TYPES = { 'image/png': 'png', 'image/jpeg': 'jpg', 'image/gif': 'gif', 'image/webp': 'webp', 'image/svg+xml': 'svg', 'image/x-icon': 'ico', 'image/vnd.microsoft.icon': 'ico' };
+
+// Substack images can be resized by its CDN: ask for a small square PNG instead of the original.
+export function iconSourceUrl(url) {
+  const fetched = url.match(/^https:\/\/substackcdn\.com\/image\/fetch\/[^/]+\/(https?%3A.*)$/i);
+  if (fetched) return `https://substackcdn.com/image/fetch/w_96,h_96,c_fill,f_png/${fetched[1]}`;
+  if (/^https:\/\/substack-post-media\.s3\.amazonaws\.com\//.test(url)) return `https://substackcdn.com/image/fetch/w_96,h_96,c_fill,f_png/${encodeURIComponent(url)}`;
+  return url;
+}
+
+// Downloads every icon once into outDir/icons/. Returns { originalUrl: 'icons/<hash>.<ext>' }; failures are skipped.
+async function downloadIcons(urls, outDir, iconFetch) {
+  const icons = {};
+  await mkdir(join(outDir, 'icons'), { recursive: true });
+  await Promise.all([...new Set(urls)].map(async (url) => {
+    try {
+      const res = await iconFetch(iconSourceUrl(url), { signal: AbortSignal.timeout(15000), headers: { 'user-agent': 'KemsList/1.0' } });
+      const ext = ICON_TYPES[(res.headers.get('content-type') || '').split(';')[0].trim()];
+      if (!res.ok || !ext) return;
+      const bytes = Buffer.from(await res.arrayBuffer());
+      if (bytes.length === 0 || bytes.length > ICON_MAX_BYTES) return;
+      const name = `icons/${createHash('sha1').update(url).digest('hex').slice(0, 12)}.${ext}`;
+      await writeFile(join(outDir, name), bytes);
+      icons[url] = name;
+    } catch { /* no icon: the row shows an initial */ }
+  }));
+  return icons;
+}
+
 /* ---------- build ---------- */
 
-export async function build({ data, outDir, config = CONFIG, now = new Date() }) {
+export async function build({ data, outDir, config = CONFIG, now = new Date(), iconFetch = null }) {
   const errors = validateData(data);
   if (errors.length) throw new Error(`Invalid data, not building:\n${errors.join('\n')}`);
 
@@ -158,7 +197,9 @@ export async function build({ data, outDir, config = CONFIG, now = new Date() })
   const write = async (rel, content) => { await mkdir(join(outDir, rel, '..'), { recursive: true }); await writeFile(join(outDir, rel), content); };
 
   const pieces = [...data.pieces].sort(byApproved);
-  await write('index.html', renderIndex(data, config, now));
+  const iconUrls = [...pieces.map((p) => p.icon), ...data.writers.map((w) => w.icon)].filter(Boolean);
+  const icons = iconFetch ? await downloadIcons(iconUrls, outDir, iconFetch) : {};
+  await write('index.html', renderIndex(data, config, now, icons));
   await Promise.all(pieces.map((p, i) => write(`p/${p.id}/index.html`, renderPiece(p, data, config, { prev: pieces[i - 1], next: pieces[i + 1] }))));
   await write('feed.xml', renderFeed(data, config));
   await write('404.html', render404(config));
@@ -175,7 +216,7 @@ async function main() {
   const names = ['writers', 'inbox', 'pieces', 'skipped', 'queue', 'status'];
   const data = Object.fromEntries(await Promise.all(names.map(async (n) => [n, JSON.parse(await readFile(new URL(`data/${n}.json`, ROOT), 'utf8'))])));
   const outDir = fileURLToPath(new URL('_site', ROOT));
-  const { pages } = await build({ data, outDir });
+  const { pages } = await build({ data, outDir, iconFetch: (...a) => fetch(...a) });
   console.log(`built ${pages} pages → _site/`);
 }
 

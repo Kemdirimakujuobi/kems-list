@@ -105,7 +105,7 @@ test('platformOf names Substack, Medium, or the host', () => {
 test('toCandidate builds queue items and applies the noise filters', () => {
   const feed = parseFeed(fixture('blog-atom.xml'));
   const [essay, podcast, note, undated] = feed.items.map((i) => toCandidate(i, { writerId: 'ama', now: NOW, feed }));
-  assert.deepEqual(Object.keys(essay).sort(), ['excerpt', 'foundAt', 'id', 'paywalled', 'platform', 'publishedAt', 'readMinutes', 'title', 'url', 'writerId'].sort());
+  assert.deepEqual(Object.keys(essay).sort(), ['excerpt', 'foundAt', 'id', 'paywalled', 'platform', 'publishedAt', 'readMinutes', 'source', 'title', 'url', 'writerId'].sort());
   assert.equal(essay.url, 'https://ama.example.com/2026/10/lagos-sea');
   assert.match(essay.id, /^[0-9a-f]{12}$/);
   assert.equal(essay.platform, 'ama.example.com');

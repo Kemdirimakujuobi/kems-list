@@ -1,5 +1,6 @@
 // The desk: private, keyboard-first curation for Kem's List. Static page; talks only to api.github.com.
 import { createRepo } from '../lib/github.js';
+import { capturePage } from '../lib/capture.js';
 import { validateData } from '../lib/schema.js';
 import {
   approve, skip, unpublish, editNote, addWriter, setWriterActive, addLink, visibleQueue,
@@ -20,7 +21,7 @@ function defaultRepo() {
 
 const state = {
   repo: null, data: null, tab: 'queue', sel: 0, open: false,
-  undo: [], busy: false, toast: null, dialog: null, editing: false,
+  undo: [], busy: false, toast: null, dialog: null, editing: false, prefill: null,
 };
 
 const app = document.getElementById('app');
@@ -37,7 +38,25 @@ const ago = (iso) => {
 /* ---------- data access ---------- */
 
 const writerOf = (id) => state.data.writers.find((w) => w.id === id);
-const nameOf = (item) => writerOf(item.writerId)?.name ?? item.platform;
+const nameOf = (item) => writerOf(item.writerId)?.name ?? item.source ?? item.platform;
+function avatarOf(name, icon) {
+  return icon ? `<img class="avatar" src="${esc(icon)}" alt="" width="28" height="28" referrerpolicy="no-referrer">` : `<span class="avatar">${esc(String(name)[0]?.toUpperCase() ?? '·')}</span>`;
+}
+
+// The "+ Kem's List" bookmarklet: runs capturePage() on the page you're reading, then opens this desk with it.
+function bookmarklet() {
+  const desk = `${location.origin}${location.pathname}`;
+  // One line, no comments: some browsers strip newlines from bookmarks, which would swallow code after a `//`.
+  const fn = capturePage.toString().replace(/^\s*\/\/.*$/gm, '').replace(/\s*\n\s*/g, ' ');
+  const code = `(()=>{const capturePage=${fn};const m=capturePage(document,location.href);const u=${JSON.stringify(desk)}+'#add='+encodeURIComponent(JSON.stringify(m));if(!window.open(u,'_blank'))location.href=u;})()`;
+  return `javascript:${encodeURIComponent(code)}`;
+}
+
+function readAddHash() {
+  const m = location.hash.match(/^#add=(.+)$/);
+  if (!m) return null;
+  try { return JSON.parse(decodeURIComponent(m[1])); } catch { return null; }
+}
 
 function list() {
   const d = state.data;
@@ -103,10 +122,10 @@ function renderRow(item, i) {
   if (state.tab === 'writers') {
     const h = feedHealth(item.id);
     const note = !item.active ? 'paused' : h?.manual ? 'manual' : h?.failCount ? 'feed failing' : h?.lastOk ? 'ok' : 'not checked';
-    return `<li><div class="row${active}${item.active ? '' : ' is-dim'}" data-i="${i}" tabindex="-1"><span class="avatar">${esc(item.name[0]?.toUpperCase())}</span><span class="from">${esc(item.name)}</span><span class="subject"><span class="snippet">${esc([item.country, Object.keys(item.links).join(', ')].filter(Boolean).join(' · '))}</span></span><span class="when ${h?.failCount ? 'fail' : ''}">${note}</span></div></li>`;
+    return `<li><div class="row${active}${item.active ? '' : ' is-dim'}" data-i="${i}" tabindex="-1">${avatarOf(item.name, item.icon)}<span class="subject"><strong>${esc(item.name)}</strong><span class="snippet"> — ${esc([item.country, Object.keys(item.links).join(', ')].filter(Boolean).join(' · '))}</span></span><span class="from"></span><span class="when ${h?.failCount ? 'fail' : ''}">${note}</span></div></li>`;
   }
   const dead = state.tab === 'published' && state.data.status.deadLinks?.includes(item.id);
-  return `<li><div class="row${active}" data-i="${i}" tabindex="-1"><span class="avatar">${esc(nameOf(item)[0]?.toUpperCase())}</span><span class="from">${esc(nameOf(item))}</span><span class="subject"><strong>${esc(item.title)}</strong>${item.paywalled ? '<span class="badge">paid</span>' : ''}${dead ? '<span class="badge">dead link?</span>' : ''}${item.excerpt ? `<span class="snippet"> — ${esc(item.excerpt)}</span>` : ''}</span><span class="when">${short(item.publishedAt)}</span></div></li>`;
+  return `<li><div class="row${active}" data-i="${i}" tabindex="-1">${avatarOf(nameOf(item), item.icon ?? writerOf(item.writerId)?.icon)}<span class="subject"><strong>${esc(item.title)}</strong>${item.paywalled ? '<span class="badge">paid</span>' : ''}${dead ? '<span class="badge">dead link?</span>' : ''}${item.excerpt ? `<span class="snippet"> — ${esc(item.excerpt)}</span>` : ''}</span><span class="from">${esc(nameOf(item))}</span><span class="when">${short(item.publishedAt)}</span></div></li>`;
 }
 
 function renderPane(item) {
@@ -122,7 +141,7 @@ ${h?.manual ? `<p class="meta">Manual: ${esc(h.reason)}.</p><p class="links"><a 
   const writer = writerOf(item.writerId);
   const meta = [short(item.publishedAt), item.readMinutes ? `${item.readMinutes} min read` : null, item.platform, item.paywalled ? 'paid subscribers only' : null].filter(Boolean).join(' · ');
   const head = `${back}<h2>${esc(item.title)}</h2>
-<p class="byline">${esc(writer ? [writer.name, writer.country].filter(Boolean).join(' · ') : item.platform)}</p>
+<p class="byline">${esc(writer ? [writer.name, writer.country].filter(Boolean).join(' · ') : [...new Set([item.author, item.source].filter(Boolean))].join(' · ') || item.platform)}</p>
 <p class="meta">${esc(meta)}</p>
 ${item.excerpt ? `<p class="excerpt">${esc(item.excerpt)}</p>` : ''}
 <p class="links"><a href="${esc(item.url)}" target="_blank" rel="noopener">Open original</a><kbd>o</kbd></p>`;
@@ -138,13 +157,21 @@ function renderDialog() {
   const d = state.dialog;
   if (d === 'help') {
     const keys = [['j / k', 'Move down / up'], ['Enter', 'Open the selected item'], ['o', 'Open the original in a new tab'], ['a', 'Approve — write a note, Enter saves'], ['A', 'Approve without a note'], ['s', 'Skip'], ['u', 'Undo the last action'], ['e', 'Edit note (Published)'], ['x', 'Unpublish (Published)'], ['p', 'Pause / resume writer'], ['n', 'Add a link'], ['w', 'Add a writer'], ['1 2 3', 'Queue · Writers · Published'], ['Esc', 'Close / back']];
-    return `<div class="overlay" data-do="dismiss"><div class="dialog"><h2>Keys</h2><dl class="keys">${keys.map(([k, v]) => `<dt><kbd>${k}</kbd></dt><dd style="margin:0">${v}</dd>`).join('')}</dl></div></div>`;
+    return `<div class="overlay" data-do="dismiss"><div class="dialog"><h2>Add from any page</h2>
+<p class="meta">Drag this button to your bookmarks bar. While reading a piece, click it: the desk opens with the exact title, publish date, author, source and logo filled in.</p>
+<p><a class="button" href="${esc(bookmarklet())}" onclick="event.preventDefault()">+ Kem's List</a></p>
+<h2>Keys</h2><dl class="keys">${keys.map(([k, v]) => `<dt><kbd>${k}</kbd></dt><dd style="margin:0">${v}</dd>`).join('')}</dl></div></div>`;
   }
   if (d === 'link') {
-    return `<div class="overlay" data-do="dismiss"><form class="dialog" data-form="link"><h2>Add a link</h2>
-<label class="field"><span>A single piece from anywhere — it appears in the queue within a few minutes</span><input name="url" type="url" required placeholder="https://"></label>
-<label class="field"><span>Title (optional — used as is; otherwise taken from the page or the link)</span><input name="title"></label>
-<label class="field"><span>Excerpt (optional — the subtitle or a line you love)</span><textarea name="excerpt"></textarea></label>
+    const f = state.prefill ?? {};
+    const captured = [f.author, f.source && f.source !== f.author ? f.source : null].filter(Boolean).join(' · ');
+    return `<div class="overlay" data-do="dismiss"><form class="dialog" data-form="link"><h2>${state.prefill ? 'Add this piece' : 'Add a link'}</h2>
+${state.prefill ? `<p class="meta" style="display:flex;gap:10px;align-items:center">${f.icon ? avatarOf(captured || '·', f.icon) : ''}<span>${esc(captured || 'Captured from the page')}</span></p>` : ''}
+<label class="field"><span>Link</span><input name="url" type="url" required placeholder="https://" value="${esc(f.url ?? '')}"></label>
+<label class="field"><span>Title${state.prefill ? '' : ' (optional — otherwise taken from the page or the link)'}</span><input name="title" value="${esc(f.title ?? '')}"></label>
+<label class="field"><span>Published on${state.prefill ? '' : ' (optional)'}</span><input name="publishedAt" type="date" value="${esc((f.publishedAt ?? '').slice(0, 10))}"></label>
+<label class="field"><span>Excerpt (optional — the subtitle or a line you love)</span><textarea name="excerpt">${esc(f.excerpt ?? '')}</textarea></label>
+<input type="hidden" name="author" value="${esc(f.author ?? '')}"><input type="hidden" name="source" value="${esc(f.source ?? '')}"><input type="hidden" name="icon" value="${esc(f.icon ?? '')}">
 <div class="buttons"><button class="button" type="submit">Add to queue</button><button class="button quiet" type="button" data-do="dismiss">Cancel</button></div></form></div>`;
   }
   return `<div class="overlay" data-do="dismiss"><form class="dialog" data-form="writer"><h2>Add a writer</h2>
@@ -205,7 +232,7 @@ const act = {
   link: () => { state.dialog = 'link'; render(); },
   writer: () => { state.dialog = 'writer'; render(); },
   help: () => { state.dialog = 'help'; render(); },
-  dismiss: () => { state.dialog = null; render(); },
+  dismiss: () => { state.dialog = null; state.prefill = null; render(); },
   close: () => { state.open = false; render(); },
   lock: () => { store.del('token'); state.repo = null; state.data = null; render(); },
 };
@@ -241,7 +268,11 @@ app.addEventListener('submit', async (e) => {
       store.set('owner', owner); store.set('repo', repo); store.set('token', f.token.trim());
       return start();
     }
-    if (form.dataset.form === 'link') { state.dialog = null; return run(addLink(state.data, f.url, undefined, { title: f.title, excerpt: f.excerpt }), { done: 'Link added · it will appear in the queue shortly' }); }
+    if (form.dataset.form === 'link') { state.dialog = null; const captured = state.prefill?.publishedAt;
+      const publishedAt = f.publishedAt ? (captured && captured.startsWith(f.publishedAt) ? captured : `${f.publishedAt}T12:00:00.000Z`) : undefined;
+      const action = addLink(state.data, f.url, undefined, { title: f.title, excerpt: f.excerpt, publishedAt, author: f.author, source: f.source, icon: f.icon });
+      state.prefill = null;
+      return run(action, { done: 'Added · it will be in the queue in a few minutes' }); }
     if (form.dataset.form === 'writer') {
       const action = addWriter(state.data, { name: f.name, country: f.country, links: String(f.links).split(/\s+/) });
       state.dialog = null;
@@ -252,7 +283,7 @@ app.addEventListener('submit', async (e) => {
 
 document.addEventListener('keydown', (e) => {
   if (!state.data || e.metaKey || e.ctrlKey || e.altKey) return;
-  const inField = e.target.closest('input, textarea');
+  const inField = e.target.closest?.('input, textarea');
   if (e.key === 'Escape') {
     if (state.dialog) return act.dismiss();
     if (inField) { e.target.blur(); state.editing = false; return; }
@@ -297,6 +328,8 @@ async function start() {
   render();
   try {
     state.data = await state.repo.load(FILES);
+    const added = readAddHash();
+    if (added) { state.prefill = added; state.dialog = 'link'; history.replaceState(null, '', location.pathname); }
     render();
   } catch (err) {
     if (/token was rejected/.test(err.message)) store.del('token');

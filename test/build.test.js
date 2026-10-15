@@ -4,7 +4,7 @@ import { mkdtempSync, readFileSync, existsSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { XMLParser } from 'fast-xml-parser';
-import { build, renderIndex, renderPiece, renderFeed } from '../scripts/build.js';
+import { build, renderIndex, renderPiece, renderFeed, iconSourceUrl } from '../scripts/build.js';
 
 const NOW = new Date('2026-10-15T12:00:00Z');
 const cfg = { title: "Kem's List", description: 'The best writing by Africans online.', base: '/kems-list/', url: 'https://kemdirimakujuobi.github.io/kems-list' };
@@ -81,4 +81,60 @@ test('build writes the whole site, and refuses invalid data', async () => {
   const bad = data();
   bad.pieces[0].url = 'javascript:alert(1)';
   await assert.rejects(build({ data: bad, outDir: mkdtempSync(join(tmpdir(), 'kems-')), config: cfg, now: NOW }), /pieces\[0\]\.url/);
+});
+
+test('rows read: icon, title — excerpt, source, publish date', () => {
+  const d = data();
+  d.pieces = [piece('dddddddddddd', '2026-10-15T09:00:00.000Z', { writerId: undefined, source: 'Dianne_-_', author: 'Dianne_-_', icon: 'https://substackcdn.com/a.jpg', publishedAt: '2026-10-11T07:39:15.000Z' })];
+  const html = renderIndex(d, cfg, NOW, { 'https://substackcdn.com/a.jpg': 'icons/abc.png' });
+  const row = html.match(/<a class="row"[\s\S]*?<\/a>/)[0];
+  const order = ['<img class="avatar" src="/kems-list/icons/abc.png"', 'Title dddddddddddd', 'Dianne_-_', '11 Oct'].map((x) => row.indexOf(x));
+  assert.ok(order.every((v, i) => v > -1 && (i === 0 || v > order[i - 1])), `${order} in ${row}`);
+});
+
+test('rows without a downloaded icon fall back to the initial', () => {
+  const html = renderIndex(data(), cfg, NOW, {});
+  assert.match(html, /<span class="avatar" aria-hidden="true">A<\/span>/);
+});
+
+test('source name: writer, then captured source, then platform', () => {
+  const d = data();
+  d.pieces = [piece('aaaaaaaaaaaa', '2026-10-15T09:00:00.000Z'), piece('bbbbbbbbbbbb', '2026-10-15T08:00:00.000Z', { writerId: undefined, source: 'Pub Name' }), piece('cccccccccccc', '2026-10-15T07:00:00.000Z', { writerId: undefined })];
+  const html = renderIndex(d, cfg, NOW, {});
+  assert.match(html, /class="from">Ada Okafor</);
+  assert.match(html, /class="from">Pub Name</);
+  assert.match(html, /class="from">Substack</);
+});
+
+test('piece page byline uses author and source when there is no roster writer', () => {
+  const d = data();
+  const p = piece('dddddddddddd', '2026-10-15T09:00:00.000Z', { writerId: undefined, source: 'Dee Writes', author: 'Dianne' });
+  assert.match(renderPiece(p, d, cfg, {}), /<p class="byline">Dianne · Dee Writes<\/p>/);
+  const same = { ...p, source: 'Dianne' };
+  assert.match(renderPiece(same, d, cfg, {}), /<p class="byline">Dianne<\/p>/);
+});
+
+test("iconSourceUrl asks Substack's CDN for a small square version", () => {
+  assert.equal(iconSourceUrl('https://substackcdn.com/image/fetch/$s_!6eMR!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Ff2ff.jpeg'),
+    'https://substackcdn.com/image/fetch/w_96,h_96,c_fill,f_png/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Ff2ff.jpeg');
+  assert.equal(iconSourceUrl('https://substack-post-media.s3.amazonaws.com/public/images/x.jpeg'),
+    'https://substackcdn.com/image/fetch/w_96,h_96,c_fill,f_png/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fx.jpeg');
+  assert.equal(iconSourceUrl('https://wanjiru.example/favicon.png'), 'https://wanjiru.example/favicon.png');
+});
+
+test('build downloads icons into /icons and survives failed downloads', async () => {
+  const out = mkdtempSync(join(tmpdir(), 'kems-'));
+  const d = data();
+  d.pieces[0].icon = 'https://cdn.example/good.png';
+  d.pieces[1].icon = 'https://cdn.example/broken.png';
+  d.writers[0].icon = 'https://cdn.example/writer.png';
+  const png = Buffer.from('89504e470d0a1a0a', 'hex');
+  const iconFetch = async (url) => (url.includes('broken') ? new Response('', { status: 404 }) : new Response(png, { headers: { 'content-type': 'image/png' } }));
+  await build({ data: d, outDir: out, config: cfg, now: NOW, iconFetch });
+  const index = readFileSync(join(out, 'index.html'), 'utf8');
+  const srcs = [...index.matchAll(/<img class="avatar" src="\/kems-list\/(icons\/[0-9a-f]+\.png)"/g)].map((m) => m[1]);
+  assert.ok(srcs.length >= 2, index);
+  for (const s of srcs) assert.ok(existsSync(join(out, s)), s);
+  assert.match(index, /<span class="avatar" aria-hidden="true">M<\/span>/, 'no icon anywhere → the initial');
+  assert.equal(srcs.length, 2, 'good icon + the writer icon standing in for the broken one');
 });

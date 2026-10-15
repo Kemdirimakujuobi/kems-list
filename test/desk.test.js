@@ -130,3 +130,16 @@ test('addLink keeps an optional title and excerpt, trimmed', () => {
   const bare = applyLocal(d, addLink(d, 'https://x.example/a', NOW, { title: ' ', excerpt: '' }));
   assert.deepEqual(Object.keys(bare.inbox.at(-1)).sort(), ['addedAt', 'url']);
 });
+
+test('addLink carries captured details; approve copies them onto the piece', () => {
+  const d = data();
+  const captured = { title: 'IJGB diaries', excerpt: 'Originally written', publishedAt: '2026-10-11T07:39:15.000Z', author: 'Dianne', source: 'Dee', icon: 'https://substackcdn.com/a.jpg', ignored: 'x' };
+  const after = applyLocal(d, addLink(d, 'https://deesknees1.substack.com/p/ijgb', NOW, captured));
+  const { ignored, ...expected } = captured;
+  assert.deepEqual(after.inbox.at(-1), { url: 'https://deesknees1.substack.com/p/ijgb', addedAt: NOW, ...expected });
+  const withQueue = { ...d, queue: [{ ...q('dddddddddddd', '11'), writerId: undefined, source: 'Dee', author: 'Dianne', icon: 'https://substackcdn.com/a.jpg' }] };
+  const piece = applyLocal(withQueue, approve(withQueue, 'dddddddddddd', '', NOW)).pieces[0];
+  assert.equal(piece.source, 'Dee');
+  assert.equal(piece.author, 'Dianne');
+  assert.equal(piece.icon, 'https://substackcdn.com/a.jpg');
+});

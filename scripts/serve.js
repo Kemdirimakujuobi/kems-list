@@ -21,7 +21,7 @@ const sha = (text) => createHash('sha1').update(text).digest('hex');
 
 async function rebuild() {
   const data = Object.fromEntries(await Promise.all(FILES.map(async (n) => [n, JSON.parse(await readFile(join(DATA, `${n}.json`), 'utf8'))])));
-  await build({ data, outDir: SITE, config: { ...CONFIG, base: BASE, url: `http://localhost:${PORT}/kems-list` } });
+  await build({ data, outDir: SITE, config: { ...CONFIG, base: BASE, url: `http://localhost:${PORT}/kems-list` }, iconFetch: (...a) => fetch(...a) });
 }
 
 async function fakeGitHub(req, res, path) {

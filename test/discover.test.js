@@ -167,3 +167,31 @@ test('pasted links: your title and excerpt win; blocked pages fall back to a tit
   assert.equal(second.title, 'My Own Title');
   assert.equal(second.excerpt, 'My chosen line.');
 });
+
+test('pasted links keep every captured detail (date, author, source, icon) over guesses', async () => {
+  const data = { ...empty(), inbox: [{ url: 'https://deesknees1.substack.com/p/ijgb-diaries-how-selfish-are-we-part', addedAt: '2026-10-15T20:13:19.876Z', title: 'IJGB diaries: How selfish are we? — Part 1', excerpt: 'Originally written: Jan 4, 2025', publishedAt: '2026-10-11T07:39:15.000Z', author: 'Dianne_-_', source: 'Dianne_-_', icon: 'https://substackcdn.com/image/fetch/a.jpg' }] };
+  const { queue } = await discover({ data, fetchImpl: fakeFetch({}).impl, now: NOW });
+  assert.equal(queue[0].title, 'IJGB diaries: How selfish are we? — Part 1');
+  assert.equal(queue[0].publishedAt, '2026-10-11T07:39:15.000Z');
+  assert.equal(queue[0].author, 'Dianne_-_');
+  assert.equal(queue[0].source, 'Dianne_-_');
+  assert.equal(queue[0].icon, 'https://substackcdn.com/image/fetch/a.jpg');
+});
+
+test('fetchable pasted pages get source, author and icon from the page itself', async () => {
+  const page = `<html><head><meta property="og:title" content="The Long Walk"><meta property="og:site_name" content="Wanjiru Writes">
+    <meta name="author" content="Wanjiru K."><link rel="icon" href="/favicon.png"></head></html>`;
+  const data = { ...empty(), inbox: [{ url: 'https://wanjiru.example/long-walk', addedAt: '2026-10-14T00:00:00Z' }] };
+  const { queue } = await discover({ data, fetchImpl: fakeFetch({ 'https://wanjiru.example/long-walk': page }).impl, now: NOW });
+  assert.equal(queue[0].source, 'Wanjiru Writes');
+  assert.equal(queue[0].author, 'Wanjiru K.');
+  assert.equal(queue[0].icon, 'https://wanjiru.example/favicon.png');
+});
+
+test('feed candidates carry the feed title as source and the feed image as icon', async () => {
+  const feedXml = rss([post(1, 1)]).replace('<channel><title>Ada</title>', '<channel><title>Ada Writes</title><image><url>https://cdn.example/ada.png</url></image>');
+  const data = { ...empty(), writers: [writer('ada', { medium: 'https://medium.com/@ada' })] };
+  const { queue } = await discover({ data, fetchImpl: fakeFetch({ 'https://medium.com/feed/@ada': feedXml }).impl, now: NOW });
+  assert.equal(queue[0].source, 'Ada Writes');
+  assert.equal(queue[0].icon, 'https://cdn.example/ada.png');
+});

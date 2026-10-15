@@ -58,6 +58,16 @@ Open **`/kems-list/desk/`**. It isn't linked from the site.
 3. Under **Permissions**, set **Contents** to **Read and write**. No other permissions are needed.
 4. Paste the token at the desk. It's stored in that browser only, and **Lock** removes it.
 
+**Add from any page: the `+ Kem's List` bookmark**
+
+Press `?` at the desk and drag the **+ Kem's List** button to your bookmarks bar. While reading a piece,
+click it. The desk opens with everything read from the page itself: exact title, publish date, author,
+publication and logo. This is the best way to add Substack pieces, because GitHub's servers can't read
+Substack pages but your browser can. On iPhone, add it as a Safari bookmark.
+
+**Logos:** each row shows the publication's logo or the writer's avatar. The build downloads them into
+`/icons/`, so readers' browsers never contact third parties.
+
 **Keys**
 
 | Key | |
