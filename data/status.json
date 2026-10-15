@@ -69,6 +69,86 @@
       "manual": true,
       "failCount": 0,
       "reason": "Substack blocks automatic checks — add their pieces with Add link"
+    },
+    "mona-eltahawy:site": {
+      "failCount": 0,
+      "feedUrl": "https://www.feministgiant.com/feed",
+      "lastOk": "2026-10-15T21:41:38.857Z"
+    },
+    "yassmin-abdel-magied:substack": {
+      "manual": true,
+      "failCount": 0,
+      "reason": "Substack blocks automatic checks — add their pieces with Add link"
+    },
+    "yousra-imran:substack": {
+      "manual": true,
+      "failCount": 0,
+      "reason": "Substack blocks automatic checks — add their pieces with Add link"
+    },
+    "hossam-el-hamalawy:substack": {
+      "manual": true,
+      "failCount": 0,
+      "reason": "Substack blocks automatic checks — add their pieces with Add link"
+    },
+    "keguro-macharia:substack": {
+      "manual": true,
+      "failCount": 0,
+      "reason": "Substack blocks automatic checks — add their pieces with Add link"
+    },
+    "karim-f-hirji:substack": {
+      "manual": true,
+      "failCount": 0,
+      "reason": "Substack blocks automatic checks — add their pieces with Add link"
+    },
+    "beyan-negash:substack": {
+      "manual": true,
+      "failCount": 0,
+      "reason": "Substack blocks automatic checks — add their pieces with Add link"
+    },
+    "yusuf-bangura:substack": {
+      "manual": true,
+      "failCount": 0,
+      "reason": "Substack blocks automatic checks — add their pieces with Add link"
+    },
+    "dami-ajayi:substack": {
+      "manual": true,
+      "failCount": 0,
+      "reason": "Substack blocks automatic checks — add their pieces with Add link"
+    },
+    "nnamdi-ehirim:substack": {
+      "manual": true,
+      "failCount": 0,
+      "reason": "Substack blocks automatic checks — add their pieces with Add link"
+    },
+    "nana-darkoa-sekyiamah:substack": {
+      "manual": true,
+      "failCount": 0,
+      "reason": "Substack blocks automatic checks — add their pieces with Add link"
+    },
+    "kobby-ankomah-graham:substack": {
+      "manual": true,
+      "failCount": 0,
+      "reason": "Substack blocks automatic checks — add their pieces with Add link"
+    },
+    "perry-munzwembiri:substack": {
+      "manual": true,
+      "failCount": 0,
+      "reason": "Substack blocks automatic checks — add their pieces with Add link"
+    },
+    "remy-ngamije:site": {
+      "failCount": 0,
+      "feedUrl": "https://remythequill.com/feed/",
+      "lastOk": "2026-10-15T21:41:38.857Z"
+    },
+    "sisonke-msimang:substack": {
+      "manual": true,
+      "failCount": 0,
+      "reason": "Substack blocks automatic checks — add their pieces with Add link"
+    },
+    "jj-bola:substack": {
+      "manual": true,
+      "failCount": 0,
+      "reason": "Substack blocks automatic checks — add their pieces with Add link"
     }
   },
   "deadLinks": [],
