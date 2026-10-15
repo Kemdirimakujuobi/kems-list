@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Ama &amp; Friends</title>
+  <link href="https://ama.example.com/"/>
+  <entry>
+    <title type="html">Lagos &amp;amp; the &amp;lt;sea&amp;gt; — “a love letter”</title>
+    <link rel="alternate" href="https://ama.example.com/2026/10/lagos-sea/?utm_source=rss"/>
+    <id>tag:ama.example.com,2026:1</id>
+    <published>2026-10-12T09:30:00+01:00</published>
+    <summary type="html">&lt;p&gt;The water keeps its own time. We walked to the edge of Bar Beach at dawn and watched the fishermen return. Everything else in this essay follows from that morning.&lt;/p&gt;</summary>
+    <content type="html">&lt;p&gt;word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word&lt;/p&gt;</content>
+  </entry>
+  <entry>
+    <title>Episode 12: On rest</title>
+    <link rel="alternate" href="https://ama.example.com/podcast/12"/>
+    <link rel="enclosure" type="audio/mpeg" href="https://ama.example.com/ep12.mp3"/>
+    <id>tag:ama.example.com,2026:2</id>
+    <updated>2026-10-10T08:00:00Z</updated>
+    <summary>Listen to episode twelve.</summary>
+  </entry>
+  <entry>
+    <title>Quick note</title>
+    <link rel="alternate" href="https://ama.example.com/2026/10/note"/>
+    <id>tag:ama.example.com,2026:3</id>
+    <updated>2026-10-09T08:00:00Z</updated>
+    <content type="html">&lt;p&gt;Back next week with something longer.&lt;/p&gt;</content>
+  </entry>
+  <entry>
+    <title>Undated draft that leaked</title>
+    <link rel="alternate" href="https://ama.example.com/2026/10/undated"/>
+    <id>tag:ama.example.com,2026:4</id>
+    <summary>No date on this one.</summary>
+  </entry>
+</feed>
