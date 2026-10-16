@@ -1,0 +1,20 @@
+{
+  "manifest_version": 3,
+  "name": "Kem's List",
+  "version": "1.0.0",
+  "description": "Add the piece you're reading to Kem's List, with its exact title, date, author and logo.",
+  "icons": { "16": "icons/16.png", "32": "icons/32.png", "48": "icons/48.png", "128": "icons/128.png" },
+  "action": {
+    "default_title": "Add to Kem's List",
+    "default_icon": { "16": "icons/16.png", "32": "icons/32.png", "48": "icons/48.png" }
+  },
+  "background": { "service_worker": "background.js", "type": "module" },
+  "permissions": ["activeTab", "scripting", "contextMenus"],
+  "optional_host_permissions": ["https://*/*", "http://*/*"],
+  "commands": {
+    "add-to-kems-list": {
+      "suggested_key": { "default": "Alt+K", "mac": "Alt+K" },
+      "description": "Add this page to Kem's List"
+    }
+  }
+}

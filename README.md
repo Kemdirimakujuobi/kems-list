@@ -58,7 +58,23 @@ Open **`/kems-list/desk/`**. It isn't linked from the site.
 3. Under **Permissions**, set **Contents** to **Read and write**. No other permissions are needed.
 4. Paste the token at the desk. It's stored in that browser only, and **Lock** removes it.
 
-**Add from any page: the `+ Kem's List` bookmark**
+**Add from any page: the Kem's List extension (Chrome, Arc, Brave, Edge)**
+
+The `extension/` folder holds a small browser extension. Click its toolbar button, press `⌥K`, or right-click
+**Add this page / link to Kem's List**. It reads the piece's exact title, publish date, author, publication and
+logo, then opens the desk with everything filled in. You press **Add to queue** there.
+
+Install it once:
+
+1. Get the repo onto your computer (`git clone https://github.com/Kemdirimakujuobi/kems-list`).
+2. Open `chrome://extensions` (in Arc: `arc://extensions`) and turn on **Developer mode**.
+3. Click **Load unpacked** and choose the `extension` folder.
+4. Pin the blue **K** to your toolbar.
+
+To update it, run `git pull` and click ↻ on the extension card. The extension stores no tokens and has no standing
+access to websites. It reads only the tab you click on. Adding a *link* asks once for permission for that one site.
+
+**The `+ Kem's List` bookmark (any browser)**
 
 Press `?` at the desk and drag the **+ Kem's List** button to your bookmarks bar. While reading a piece,
 click it. The desk opens with everything read from the page itself: exact title, publish date, author,

@@ -158,7 +158,7 @@ function renderDialog() {
   if (d === 'help') {
     const keys = [['j / k', 'Move down / up'], ['Enter', 'Open the selected item'], ['o', 'Open the original in a new tab'], ['a', 'Approve — write a note, Enter saves'], ['A', 'Approve without a note'], ['s', 'Skip'], ['u', 'Undo the last action'], ['e', 'Edit note (Published)'], ['x', 'Unpublish (Published)'], ['p', 'Pause / resume writer'], ['n', 'Add a link'], ['w', 'Add a writer'], ['1 2 3', 'Queue · Writers · Published'], ['Esc', 'Close / back']];
     return `<div class="overlay" data-do="dismiss"><div class="dialog"><h2>Add from any page</h2>
-<p class="meta">Drag this button to your bookmarks bar. While reading a piece, click it: the desk opens with the exact title, publish date, author, source and logo filled in.</p>
+<p class="meta">Using Chrome, Arc, Brave or Edge? The Kem's List extension does this from the toolbar, the right-click menu or ⌥K. Install it from the repo's <code>extension/</code> folder (see README). Otherwise drag this button to your bookmarks bar. While reading a piece, click it: the desk opens with the exact title, publish date, author, source and logo filled in.</p>
 <p><a class="button" href="${esc(bookmarklet())}" onclick="event.preventDefault()">+ Kem's List</a></p>
 <h2>Keys</h2><dl class="keys">${keys.map(([k, v]) => `<dt><kbd>${k}</kbd></dt><dd style="margin:0">${v}</dd>`).join('')}</dl></div></div>`;
   }

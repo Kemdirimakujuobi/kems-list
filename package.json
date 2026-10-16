@@ -10,7 +10,8 @@
     "test": "node --test \"test/*.test.js\"",
     "discover": "node scripts/discover.js",
     "build": "node scripts/build.js",
-    "serve": "node scripts/serve.js"
+    "serve": "node scripts/serve.js",
+    "extension:sync": "cp lib/capture.js extension/capture.js"
   },
   "dependencies": {
     "fast-xml-parser": "5.2.5"

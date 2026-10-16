@@ -72,3 +72,10 @@ test('trims whitespace around captured text', () => {
   assert.equal(m.excerpt, 'A data-driven assessment.');
   assert.equal(m.author, 'Dalu');
 });
+
+test('defaults to the current page, so a browser extension can run it with no arguments', () => {
+  const doc = page(readFileSync(new URL('./fixtures/substack-post.html', import.meta.url), 'utf8'));
+  const run = new Function('document', 'location', `return (${capturePage.toString()})();`);
+  const m = run(doc, { href: 'https://deesknees1.substack.com/p/ijgb-diaries-how-selfish-are-we-part' });
+  assert.equal(m.title, 'IJGB diaries: How selfish are we? — Part 1');
+});
