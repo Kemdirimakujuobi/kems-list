@@ -358,5 +358,65 @@
     },
     "active": true,
     "addedAt": "2026-10-19T14:34:39.650Z"
+  },
+  {
+    "id": "adlene-meddi",
+    "name": "Adlène Meddi",
+    "country": "Algeria",
+    "links": {
+      "substack": "https://adlenemeddi.substack.com"
+    },
+    "active": true,
+    "addedAt": "2026-10-19T14:37:30.337Z"
+  },
+  {
+    "id": "facely-konate",
+    "name": "Facely Konaté",
+    "country": "Guinea",
+    "links": {
+      "site": "https://media.facelykonate.com"
+    },
+    "active": true,
+    "addedAt": "2026-10-19T14:37:30.337Z"
+  },
+  {
+    "id": "antonio-francisco",
+    "name": "António Francisco",
+    "country": "Mozambique",
+    "links": {
+      "substack": "https://aasfrancisco.substack.com"
+    },
+    "active": true,
+    "addedAt": "2026-10-19T14:37:30.337Z"
+  },
+  {
+    "id": "fatimata-wane",
+    "name": "Fatimata Wane",
+    "country": "Senegal / France",
+    "links": {
+      "substack": "https://fatimatawane.substack.com"
+    },
+    "active": true,
+    "addedAt": "2026-10-19T14:37:30.337Z"
+  },
+  {
+    "id": "manuel-brito-semedo",
+    "name": "Manuel Brito-Semedo",
+    "country": "Cabo Verde",
+    "links": {
+      "site": "https://www.crioulambs.com/author/brito-semedo"
+    },
+    "active": true,
+    "addedAt": "2026-10-19T14:37:30.337Z"
+  },
+  {
+    "id": "akram-belkaid",
+    "name": "Akram Belkaïd",
+    "country": "Algeria / France",
+    "links": {
+      "site": "https://akram-belkaid.blogspot.com"
+    },
+    "active": true,
+    "addedAt": "2026-10-19T14:37:30.337Z"
   }
 ]

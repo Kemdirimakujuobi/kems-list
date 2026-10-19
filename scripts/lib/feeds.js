@@ -70,13 +70,19 @@ export async function discoverFeedUrl(link, fetchImpl = fetch) {
   }
 
   const page = await fetchText(link, fetchImpl);
+  const feeds = [];
   for (const tag of page.match(/<link\b[^>]*>/gi) || []) {
     const a = attrs(tag);
     if (/alternate/i.test(a.rel || '') && /application\/(rss|atom)\+xml/i.test(a.type || '') && a.href) {
-      try { return new URL(a.href, link).href; } catch { /* ignore bad href */ }
+      try { feeds.push(new URL(a.href, link)); } catch { /* ignore bad href */ }
     }
   }
-  return null;
+  // On an author or section page (e.g. a writer's page on a publisher's WordPress site), prefer the feed
+  // scoped to that page over the site-wide one. Comment feeds are never what we want.
+  const path = new URL(link).pathname.replace(/\/?$/, '/');
+  const posts = feeds.filter((u) => !/\/comments\//.test(u.pathname));
+  const scoped = path !== '/' && posts.find((u) => u.pathname.startsWith(path));
+  return (scoped || posts[0] || feeds[0])?.href ?? null;
 }
 
 /* ---------- parsing ---------- */

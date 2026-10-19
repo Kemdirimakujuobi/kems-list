@@ -27,6 +27,15 @@ test('discoverFeedUrl reads <link rel=alternate> from the page, resolving relati
   assert.equal(await discoverFeedUrl('https://nofeed.example', html('<html></html>')), null);
 });
 
+test('discoverFeedUrl prefers the feed scoped to an author page over the site-wide one, and skips comment feeds', async () => {
+  const page = `<link rel="alternate" type="application/rss+xml" title="Site" href="https://press.example/feed/">
+    <link rel="alternate" type="application/rss+xml" title="Comments" href="https://press.example/comments/feed/">
+    <link rel="alternate" type="application/rss+xml" title="By Ada" href="https://press.example/author/ada/feed/">`;
+  assert.equal(await discoverFeedUrl('https://press.example/author/ada/', html(page)), 'https://press.example/author/ada/feed/');
+  assert.equal(await discoverFeedUrl('https://press.example/author/ada', html(page)), 'https://press.example/author/ada/feed/');
+  assert.equal(await discoverFeedUrl('https://press.example/', html(page)), 'https://press.example/feed/');
+});
+
 test('parseFeed reads a real Substack feed', () => {
   const feed = parseFeed(fixture('substack.xml'));
   assert.equal(feed.generator.includes('Substack') || feed.isSubstack, true);
