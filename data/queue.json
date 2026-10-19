@@ -1,5 +1,46 @@
 [
   {
+    "id": "eabee95d483e",
+    "url": "https://media.facelykonate.com/p/guinee-comment-des-absences-de-mamadi-doumbouya-sont-devenues-des-recits-de-maladie-ou-de-mort",
+    "title": "Guinée : comment des absences de Mamadi Doumbouya sont devenues des récits de maladie ou de mort ?",
+    "writerId": "facely-konate",
+    "publishedAt": "2026-10-19T11:39:20.000Z",
+    "excerpt": "Hospitalisation, empoisonnement, décès… plongée dans une mécanique de récits trompeurs.",
+    "platform": "Substack",
+    "source": "L’ŒIL DE KONATE",
+    "icon": "https://media.facelykonate.com/img/substack.png",
+    "paywalled": false,
+    "foundAt": "2026-10-19T14:38:16.469Z"
+  },
+  {
+    "id": "b2afdfe7f973",
+    "url": "https://www.crioulambs.com/os-caminhos-da-partida",
+    "title": "Os caminhos da partida",
+    "writerId": "manuel-brito-semedo",
+    "publishedAt": "2026-10-19T01:44:35.000Z",
+    "excerpt": "Pelo Dia Nacional da Cultura e das Comunidades, vale a pena recordar que Cabo Verde não se construiu apenas dentro das suas ilhas.",
+    "platform": "crioulambs.com",
+    "source": "Brito-Semedo – CRIoula MBS Editora",
+    "icon": "https://www.crioulambs.com/wp-content/uploads/2026/06/cropped-CRIoula-Logotipo-FAVICON-32x32.png",
+    "paywalled": false,
+    "foundAt": "2026-10-19T14:38:16.469Z",
+    "readMinutes": 2
+  },
+  {
+    "id": "51c7374dbd2f",
+    "url": "https://www.crioulambs.com/once-upon-a-time-there-was-a-boy-from-the-sea",
+    "title": "Once Upon a Time… There Was a Boy from the Sea",
+    "writerId": "manuel-brito-semedo",
+    "publishedAt": "2026-10-15T19:46:35.000Z",
+    "excerpt": "On the anniversary of Eugénio Tavares, also celebrated as CaBO Verde’s Day of Culture and Communities, I share the English version of a story inspired by an old Brava legend about his birth.",
+    "platform": "crioulambs.com",
+    "source": "Brito-Semedo – CRIoula MBS Editora",
+    "icon": "https://www.crioulambs.com/wp-content/uploads/2026/06/cropped-CRIoula-Logotipo-FAVICON-32x32.png",
+    "paywalled": false,
+    "foundAt": "2026-10-19T14:38:16.469Z",
+    "readMinutes": 4
+  },
+  {
     "id": "9b1a3d39b8ee",
     "url": "https://www.feministgiant.com/p/book-feminism-vs-fascism",
     "title": "BOOK: Feminism vs Fascism",
@@ -11,6 +52,48 @@
     "icon": "https://substackcdn.com/image/fetch/$s_!5u3C!,w_256,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fbucketeer-e05bbc84-baa3-437e-9518-adb32be77984.s3.amazonaws.com%2Fpublic%2Fimages%2Fd3a5f9ce-d3e9-4ed0-b079-28d297cb2b18_1280x1280.png",
     "paywalled": false,
     "foundAt": "2026-10-15T21:41:38.857Z",
+    "readMinutes": 6
+  },
+  {
+    "id": "91c9a83cb568",
+    "url": "https://www.crioulambs.com/era-uma-vez-um-menino-do-mar",
+    "title": "Era uma vez… um menino do mar",
+    "writerId": "manuel-brito-semedo",
+    "publishedAt": "2026-10-14T09:12:05.000Z",
+    "excerpt": "Esta estória é contada para as minhas netas, Liana, Nicole e Aliyah, herdeiras da ilha de onde veio Eugénio Tavares: a Brava.",
+    "platform": "crioulambs.com",
+    "source": "Brito-Semedo – CRIoula MBS Editora",
+    "icon": "https://www.crioulambs.com/wp-content/uploads/2026/06/cropped-CRIoula-Logotipo-FAVICON-32x32.png",
+    "paywalled": false,
+    "foundAt": "2026-10-19T14:38:16.469Z",
+    "readMinutes": 4
+  },
+  {
+    "id": "f700ed839909",
+    "url": "https://aasfrancisco.substack.com/p/como-pode-um-pais-crescer-e-ficar",
+    "title": "Como Pode um País Crescer e Ficar Mais Jovem?",
+    "writerId": "antonio-francisco",
+    "publishedAt": "2026-10-13T23:09:15.000Z",
+    "excerpt": "O paradoxo demográfico moçambicano e a hipótese de uma via de subdesenvolvimento",
+    "platform": "Substack",
+    "source": "EVS — Em Vias de Subdesenvolvimento",
+    "author": "António Francisco",
+    "icon": "https://substackcdn.com/image/fetch/$s_!0Vzm!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F175ccab1-76b9-4a91-93bb-15225cf55359_1024x1024.png",
+    "paywalled": false,
+    "foundAt": "2026-10-19T14:38:16.469Z"
+  },
+  {
+    "id": "5bb4966beb64",
+    "url": "https://media.facelykonate.com/p/guinee-le-piege-dune-croissance-qui-ne-profite-pas-a-tous",
+    "title": "Guinée : le piège d’une croissance qui ne profite pas à tous ?",
+    "writerId": "facely-konate",
+    "publishedAt": "2026-10-12T12:22:40.000Z",
+    "excerpt": "Simandou accélère la croissance, mais la création d’emplois, le pouvoir d’achat et les retombées pour les entreprises locales restent des défis majeurs.",
+    "platform": "Substack",
+    "source": "L’ŒIL DE KONATE",
+    "icon": "https://media.facelykonate.com/img/substack.png",
+    "paywalled": false,
+    "foundAt": "2026-10-19T14:38:16.469Z",
     "readMinutes": 6
   },
   {
@@ -82,6 +165,20 @@
     "paywalled": false,
     "foundAt": "2026-10-15T23:42:04.089Z",
     "readMinutes": 11
+  },
+  {
+    "id": "df31f467f739",
+    "url": "https://adlenemeddi.substack.com/p/moi-et-octobre-88-les-balles-le-complot",
+    "title": "Moi et Octobre 88 : les balles, le « complot » et l’oubli",
+    "writerId": "adlene-meddi",
+    "publishedAt": "2026-10-04T07:37:01.000Z",
+    "excerpt": "Je rouvre trois textes que j’ai consacrés à Octobre 88, en 2005, en 2009 et en 2018, pour mesurer comment le récit officiel de ces journées a glissé d’une époque à l’autre.",
+    "platform": "Substack",
+    "source": "Adlène Meddi",
+    "author": "Adlène Meddi",
+    "icon": "https://substackcdn.com/image/fetch/$s_!zKhK!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F3d5c517a-bbb3-4d47-b471-ea39b83a3b87_1181x1181.png",
+    "paywalled": false,
+    "foundAt": "2026-10-19T14:38:16.469Z"
   },
   {
     "id": "31ffab18cd30",
@@ -194,6 +291,34 @@
     "paywalled": false,
     "foundAt": "2026-10-15T23:42:04.089Z",
     "readMinutes": 8
+  },
+  {
+    "id": "743f9189e774",
+    "url": "https://media.facelykonate.com/p/la-regulation-des-medias-guineens-est-elle-en-dephasage-avec-levolution-du-secteur",
+    "title": "La régulation des médias guinéens est-elle en déphasage avec l’évolution du secteur ?",
+    "writerId": "facely-konate",
+    "publishedAt": "2026-09-17T17:06:11.000Z",
+    "excerpt": "Le débat sur les Web TV révèle un décalage plus profond entre le droit et les nouveaux usages de l’information.",
+    "platform": "Substack",
+    "source": "L’ŒIL DE KONATE",
+    "icon": "https://media.facelykonate.com/img/substack.png",
+    "paywalled": false,
+    "foundAt": "2026-10-19T14:38:16.469Z",
+    "readMinutes": 7
+  },
+  {
+    "id": "9fcfa8e0bbfe",
+    "url": "https://media.facelykonate.com/p/jaurais-du-mourir-a-womey",
+    "title": "J’aurais dû mourir à Womey",
+    "writerId": "facely-konate",
+    "publishedAt": "2026-09-16T09:49:38.000Z",
+    "excerpt": "Womey, 2014 : le témoignage d’un journaliste qui raconte comment son ami Facely Camara est parti à sa place pour une mission contre Ebola.",
+    "platform": "media.facelykonate.com",
+    "source": "L’ŒIL DE KONATE",
+    "author": "Facely Konaté",
+    "icon": "https://substackcdn.com/image/fetch/$s_!asb8!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F99912fcd-191b-495d-b3fe-ddfd5add8d79_1140x1140.png",
+    "paywalled": false,
+    "foundAt": "2026-10-19T14:38:16.469Z"
   },
   {
     "id": "a602edd23de5",
@@ -378,6 +503,33 @@
     "readMinutes": 8
   },
   {
+    "id": "6a232cbe3e8d",
+    "url": "https://akram-belkaid.blogspot.com/2026/07/pleine-lune-sur-bagdad-1-bagdad-fruits.html",
+    "title": "1- Bagdad : Fruits secs, vers et vipères",
+    "writerId": "akram-belkaid",
+    "publishedAt": "2026-07-29T13:56:27.714Z",
+    "excerpt": "_ Pleine Lune sur Bagdad (Érik Bonnier Éditions, Paris, 2017) Le 20 mars 2003, par une nuit de pleine lune, les États-Unis d’Amérique, et leurs alliés, déclenchent l’invasion de l’Irak pour renverser le président Saddam Hussein et son régime.",
+    "platform": "akram-belkaid.blogspot.com",
+    "source": "Lignes quotidiennes, par Akram Belkaïd",
+    "paywalled": false,
+    "foundAt": "2026-10-19T14:38:16.469Z",
+    "readMinutes": 28
+  },
+  {
+    "id": "0246a6a30840",
+    "url": "http://akram-belkaid.blogspot.com/2026/07/pleine-lune-sur-bagdad-1-bagdad-fruits.html",
+    "title": "Bagdad : Fruits secs, vers et vipères",
+    "writerId": "akram-belkaid",
+    "publishedAt": "2026-07-29T13:56:27.714Z",
+    "excerpt": "_ Pleine Lune sur Bagdad (Érik Bonnier Éditions, Paris, 2017) Le 20 mars 2003, par une nuit de pleine lune, les États-Unis d’Amérique, et ...",
+    "platform": "akram-belkaid.blogspot.com",
+    "source": "Lignes quotidiennes",
+    "author": "Akram Belkaïd",
+    "icon": "https://akram-belkaid.blogspot.com/favicon.ico",
+    "paywalled": false,
+    "foundAt": "2026-10-19T14:38:16.469Z"
+  },
+  {
     "id": "ef4bdbad6ba6",
     "url": "https://www.feministgiant.com/p/essay-why-i-say-fuck-509",
     "title": "Essay: Why I Say \"Fuck\"",
@@ -404,6 +556,45 @@
     "paywalled": false,
     "foundAt": "2026-10-15T23:42:04.089Z",
     "readMinutes": 6
+  },
+  {
+    "id": "f6ece53028c7",
+    "url": "https://akram-belkaid.blogspot.com/2026/06/la-coupe-du-monde-de-trump-non-merci.html",
+    "title": "La Coupe du monde de Trump ? Non merci !",
+    "writerId": "akram-belkaid",
+    "publishedAt": "2026-06-10T08:29:26.409Z",
+    "excerpt": "Je ne regarderai pas la Coupe du monde de football qui débute ce jeudi aux États-Unis, au Canada et au Mexique. Contrairement à 2018 et 2022, il n’y aura pas d’écriture de chroniques, de commentaires à chaud sur les réseaux sociaux, pas de vignettes à collectionner, pas de…",
+    "platform": "akram-belkaid.blogspot.com",
+    "source": "Lignes quotidiennes, par Akram Belkaïd",
+    "paywalled": false,
+    "foundAt": "2026-10-19T14:38:16.469Z",
+    "readMinutes": 3
+  },
+  {
+    "id": "34d7a3c5c303",
+    "url": "https://fatimatawane.substack.com/p/lafrique-nest-pas-un-pays-10-le-burkina",
+    "title": "L’Afrique n’est pas un pays #10 Le Burkina Faso et le fantôme de Thomas Sankara",
+    "writerId": "fatimata-wane",
+    "publishedAt": "2026-05-22T10:09:10.000Z",
+    "excerpt": "Cette semaine, nous allons au pays des hommes intègres. Bafoué par la guerre que mènent les djihadistes sur tous les fronts, et une junte dont le bilan reste incertain.",
+    "platform": "Substack",
+    "source": "Fatimata Wane",
+    "author": "Fatimata Wane",
+    "icon": "https://substackcdn.com/image/fetch/$s_!0_5-!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F908bfddf-07e8-4796-90fa-0c4197e934f8_618x620.png",
+    "paywalled": false,
+    "foundAt": "2026-10-19T14:38:16.469Z"
+  },
+  {
+    "id": "431756cc7bc3",
+    "url": "https://akram-belkaid.blogspot.com/2026/02/avant-propos-aux-chroniques-du-ramadan.html",
+    "title": "Avant-propos aux Chroniques du ramadan",
+    "writerId": "akram-belkaid",
+    "publishedAt": "2026-02-19T11:46:00.000Z",
+    "excerpt": "_ 𝐀𝐯𝐚𝐧𝐭-𝐩𝐫𝐨𝐩𝐨𝐬 « 𝑂𝑛 𝑝𝑒𝑢𝑡 𝑑𝑖𝑟𝑒 𝑞𝑢𝑒 𝑙𝑒 𝑟𝑎𝑚𝑎𝑑𝑎𝑛 “𝑠𝑒 𝑝𝑜𝑟𝑡𝑒 𝑏𝑖𝑒𝑛”. 𝐴̀ 𝑐𝑒𝑢𝑥 𝑞𝑢𝑖 𝑝𝑟𝑒́𝑑𝑖𝑠𝑎𝑖𝑒𝑛𝑡 𝑢𝑛 𝑎𝑓𝑓𝑎𝑖𝑏𝑙𝑖𝑠𝑠𝑒𝑚𝑒𝑛𝑡 𝑑𝑒𝑠 𝑟𝑖𝑡𝑒𝑠 𝑒𝑡 𝑑𝑒 𝑙𝑎 𝑝𝑟𝑎𝑡𝑖𝑞𝑢𝑒 𝑟𝑒𝑙𝑖𝑔𝑖𝑒𝑢𝑠𝑒, 𝑖𝑙 𝑎𝑝𝑝𝑜𝑟𝑡𝑒…",
+    "platform": "akram-belkaid.blogspot.com",
+    "source": "Lignes quotidiennes, par Akram Belkaïd",
+    "paywalled": false,
+    "foundAt": "2026-10-19T14:38:16.469Z"
   },
   {
     "id": "b94bb0535ada",
