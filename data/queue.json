@@ -125,6 +125,20 @@
     "foundAt": "2026-10-19T14:35:11.047Z"
   },
   {
+    "id": "f02a3d85e979",
+    "url": "https://www.crioulambs.com/onde-nasceu-cabo-verde",
+    "title": "Onde Nasceu Cabo Verde",
+    "writerId": "manuel-brito-semedo",
+    "publishedAt": "2026-10-10T01:26:42.000Z",
+    "excerpt": "Cabo Verde nasceu de uma circunstância histórica singular. Quando os portugueses chegaram às ilhas, encontraram um território desabitado.",
+    "platform": "crioulambs.com",
+    "source": "Brito-Semedo – CRIoula MBS Editora",
+    "icon": "https://www.crioulambs.com/wp-content/uploads/2026/06/cropped-CRIoula-Logotipo-FAVICON-32x32.png",
+    "paywalled": false,
+    "foundAt": "2026-10-19T20:37:03.166Z",
+    "readMinutes": 1
+  },
+  {
     "id": "61a363615b8d",
     "url": "https://www.feministgiant.com/p/essay-menopause-is-shit-menopause-f3c",
     "title": "Essay: Menopause is Shit. Menopause is Amazing",
@@ -151,6 +165,20 @@
     "icon": "https://substackcdn.com/image/fetch/$s_!p3tf!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F32c13bfa-56ba-4ee5-8e8c-feac5e688e25_267x267.png",
     "paywalled": false,
     "foundAt": "2026-10-15T21:41:38.857Z"
+  },
+  {
+    "id": "b614e946e512",
+    "url": "https://www.crioulambs.com/alfinetadas-vao-dar-livro",
+    "title": "Alfinetadas Vão Dar Livro",
+    "writerId": "manuel-brito-semedo",
+    "publishedAt": "2026-10-05T13:13:07.000Z",
+    "excerpt": "Há textos que nascem para o dia e morrem com a notícia. Outros partem de um acontecimento e ultrapassam a circunstância que lhes deu origem.",
+    "platform": "crioulambs.com",
+    "source": "Brito-Semedo – CRIoula MBS Editora",
+    "icon": "https://www.crioulambs.com/wp-content/uploads/2026/06/cropped-CRIoula-Logotipo-FAVICON-32x32.png",
+    "paywalled": false,
+    "foundAt": "2026-10-19T20:37:03.166Z",
+    "readMinutes": 2
   },
   {
     "id": "d89444fe6a0a",
@@ -221,6 +249,20 @@
     "paywalled": false,
     "foundAt": "2026-10-15T23:42:04.089Z",
     "readMinutes": 8
+  },
+  {
+    "id": "2b5b141437ac",
+    "url": "https://www.crioulambs.com/pensar-com-a-nossa-propria-cabeca",
+    "title": "Pensar com a nossa própria cabeça?",
+    "writerId": "manuel-brito-semedo",
+    "publishedAt": "2026-09-30T12:23:24.000Z",
+    "excerpt": "Há frases que, de tanto serem repetidas, acabam por se desprender do contexto em que nasceram e passam a viver por conta própria.",
+    "platform": "crioulambs.com",
+    "source": "Brito-Semedo – CRIoula MBS Editora",
+    "icon": "https://www.crioulambs.com/wp-content/uploads/2026/06/cropped-CRIoula-Logotipo-FAVICON-32x32.png",
+    "paywalled": false,
+    "foundAt": "2026-10-19T20:37:03.166Z",
+    "readMinutes": 2
   },
   {
     "id": "530f0ecc60d1",
@@ -349,6 +391,33 @@
     "readMinutes": 14
   },
   {
+    "id": "65665184ed71",
+    "url": "https://media.facelykonate.com/p/guinee-comment-mamadi-doumbouya-a-verrouille-le-pouvoir-par-les-urnes",
+    "title": "Guinée : comment Mamadi Doumbouya a verrouillé le pouvoir par les urnes",
+    "writerId": "facely-konate",
+    "publishedAt": "2026-09-05T08:21:58.000Z",
+    "excerpt": "Du 5 septembre 2021 aux élections de 2026, le récit de cinq années qui n’ont pas tenu leurs promesses.",
+    "platform": "Substack",
+    "source": "L’ŒIL DE KONATE",
+    "icon": "https://media.facelykonate.com/img/substack.png",
+    "paywalled": false,
+    "foundAt": "2026-10-19T20:37:03.166Z",
+    "readMinutes": 7
+  },
+  {
+    "id": "eb52bb4383ea",
+    "url": "https://media.facelykonate.com/p/simandou-15-pour-cent-participation-etat-pollution-information",
+    "title": "Simandou : comment les 15 % de participation de l’État ont alimenté la pollution de l’information en ligne",
+    "writerId": "facely-konate",
+    "publishedAt": "2026-09-01T08:39:32.000Z",
+    "excerpt": "Comparaisons trompeuses, réécriture de l’histoire et cadrage politique : comment un chiffre technique a été instrumentalisé dans la bataille des récits sur Facebook, TikTok et X.",
+    "platform": "Substack",
+    "source": "L’ŒIL DE KONATE",
+    "icon": "https://media.facelykonate.com/img/substack.png",
+    "paywalled": false,
+    "foundAt": "2026-10-19T20:37:03.166Z"
+  },
+  {
     "id": "67508060e2b1",
     "url": "https://www.feministgiant.com/p/on-wandering-196",
     "title": "On Wandering",
@@ -361,6 +430,20 @@
     "paywalled": false,
     "foundAt": "2026-10-15T23:42:04.089Z",
     "readMinutes": 4
+  },
+  {
+    "id": "8932338f9fd5",
+    "url": "https://media.facelykonate.com/p/guinee-pourquoi-faut-il-repenser-le-systeme-daide-a-la-presse",
+    "title": "Guinée : pourquoi faut-il repenser le système d’aide publique à la presse ?",
+    "writerId": "facely-konate",
+    "publishedAt": "2026-08-27T15:46:00.000Z",
+    "excerpt": "La HAC demande des comptes sur la subvention 2025. Au-delà du contrôle, l’État doit repenser le financement, la fiscalité et les conditions économiques des médias.",
+    "platform": "Substack",
+    "source": "L’ŒIL DE KONATE",
+    "icon": "https://media.facelykonate.com/img/substack.png",
+    "paywalled": false,
+    "foundAt": "2026-10-19T20:37:03.166Z",
+    "readMinutes": 8
   },
   {
     "id": "4b8ded4f6341",
@@ -405,6 +488,32 @@
     "readMinutes": 5
   },
   {
+    "id": "34d8b1f77807",
+    "url": "https://media.facelykonate.com/p/guinee-pres-de-8-milliards-de-dollars-dinvestissements-etrangers-mais-pour-qui",
+    "title": "Guinée : 7,8 milliards de dollars d'investissements étrangers, mais pour qui ?",
+    "writerId": "facely-konate",
+    "publishedAt": "2026-08-20T10:15:03.000Z",
+    "excerpt": "Portée par Simandou, l’envolée des investissements étrangers place la Guinée au deuxième rang africain en 2025, mais pose la question des retombées pour l’économie locale.",
+    "platform": "Substack",
+    "source": "L’ŒIL DE KONATE",
+    "icon": "https://media.facelykonate.com/img/substack.png",
+    "paywalled": false,
+    "foundAt": "2026-10-19T20:37:03.166Z"
+  },
+  {
+    "id": "7f11479f4985",
+    "url": "https://media.facelykonate.com/p/guinee-pourquoi-recourir-au-fmi-alors-que-les-indicateurs-semblent-au-vert",
+    "title": "Guinée : pourquoi recourir au FMI alors que les indicateurs semblent au vert ?",
+    "writerId": "facely-konate",
+    "publishedAt": "2026-08-14T10:28:13.000Z",
+    "excerpt": "L'accord de 41 mois doit renforcer les finances publiques et accompagner la montée en puissance de Simandou",
+    "platform": "Substack",
+    "source": "L’ŒIL DE KONATE",
+    "icon": "https://media.facelykonate.com/img/substack.png",
+    "paywalled": false,
+    "foundAt": "2026-10-19T20:37:03.166Z"
+  },
+  {
     "id": "1a84130c1b6a",
     "url": "https://www.feministgiant.com/p/essay-the-demise-of-the-fascist-beauty-ab3",
     "title": "Essay: The Demise of the Fascist Beauty Queen",
@@ -445,6 +554,34 @@
     "paywalled": false,
     "foundAt": "2026-10-15T23:42:04.089Z",
     "readMinutes": 7
+  },
+  {
+    "id": "a40f71cd1021",
+    "url": "https://media.facelykonate.com/p/doumbouya-singapour-et-les-deux-jets-du-conge-annuel",
+    "title": "Doumbouya, Singapour et les deux jets du « congé annuel »",
+    "writerId": "facely-konate",
+    "publishedAt": "2026-08-10T19:08:41.000Z",
+    "excerpt": "Les données de vol et les sources ouvertes permettent de reconstituer le trajet de l’appareil utilisé pour le départ présidentiel.",
+    "platform": "Substack",
+    "source": "L’ŒIL DE KONATE",
+    "icon": "https://media.facelykonate.com/img/substack.png",
+    "paywalled": false,
+    "foundAt": "2026-10-19T20:37:03.166Z",
+    "readMinutes": 5
+  },
+  {
+    "id": "f6d6c3f76691",
+    "url": "https://media.facelykonate.com/p/pourquoi-les-journalistes-africains-se-tournent-vers-substack",
+    "title": "Pourquoi les journalistes africains se tournent vers Substack ?",
+    "writerId": "facely-konate",
+    "publishedAt": "2026-08-06T10:06:21.000Z",
+    "excerpt": "Entre crise des médias, exil et quête d'indépendance, la plateforme séduit les journalistes africains sans résoudre leurs fragilités économiques.",
+    "platform": "Substack",
+    "source": "L’ŒIL DE KONATE",
+    "icon": "https://media.facelykonate.com/img/substack.png",
+    "paywalled": false,
+    "foundAt": "2026-10-19T20:37:03.166Z",
+    "readMinutes": 9
   },
   {
     "id": "fac25272f95f",
@@ -489,6 +626,20 @@
     "readMinutes": 12
   },
   {
+    "id": "8bc90b2838d0",
+    "url": "https://media.facelykonate.com/p/non-lassemblee-nationale-nechappe-pas-a-tout-controle-pendant-cinq-ans",
+    "title": "Non, l'Assemblée nationale n'échappe pas à tout contrôle pendant cinq ans",
+    "writerId": "facely-konate",
+    "publishedAt": "2026-08-01T15:32:41.000Z",
+    "excerpt": "Le député Abdoulaye Kourouma affirme que l'autonomie financière interdit tout contrôle avant la fin de la législature. Nous avons vérifié.",
+    "platform": "Substack",
+    "source": "L’ŒIL DE KONATE",
+    "icon": "https://media.facelykonate.com/img/substack.png",
+    "paywalled": false,
+    "foundAt": "2026-10-19T20:37:03.166Z",
+    "readMinutes": 6
+  },
+  {
     "id": "94fd095126ba",
     "url": "https://www.feministgiant.com/p/essay-my-ambition-is-to-be-free-and-d3e",
     "title": "Essay: My Ambition is To Be Free And Awesome!",
@@ -501,6 +652,20 @@
     "paywalled": false,
     "foundAt": "2026-10-15T23:42:04.089Z",
     "readMinutes": 8
+  },
+  {
+    "id": "d9f37dbd1cec",
+    "url": "https://media.facelykonate.com/p/visas-americains-les-guineens-devront-desormais-passer-par-dakar",
+    "title": "Visas américains : les Guinéens devront désormais passer par Dakar",
+    "writerId": "facely-konate",
+    "publishedAt": "2026-07-29T16:28:02.000Z",
+    "excerpt": "Washington réorganise son réseau consulaire en Afrique et met fin au traitement des visas à Conakry.",
+    "platform": "Substack",
+    "source": "L’ŒIL DE KONATE",
+    "icon": "https://media.facelykonate.com/img/substack.png",
+    "paywalled": false,
+    "foundAt": "2026-10-19T20:37:03.166Z",
+    "readMinutes": 6
   },
   {
     "id": "6a232cbe3e8d",
@@ -530,6 +695,20 @@
     "readMinutes": 8
   },
   {
+    "id": "1ba6d4b3cb8f",
+    "url": "https://media.facelykonate.com/p/port-de-conakry-une-nouvelle-surtaxe-de-maersk-relance-le-debat-sur-la-congestion",
+    "title": "Port de Conakry : une nouvelle surtaxe de Maersk relance le débat sur la congestion",
+    "writerId": "facely-konate",
+    "publishedAt": "2026-07-22T16:21:58.000Z",
+    "excerpt": "En trois mois, la surtaxe de congestion appliquée par Maersk sur la route Europe-Conakry a augmenté de plus de 40 %.",
+    "platform": "Substack",
+    "source": "L’ŒIL DE KONATE",
+    "icon": "https://media.facelykonate.com/img/substack.png",
+    "paywalled": false,
+    "foundAt": "2026-10-19T20:37:03.166Z",
+    "readMinutes": 5
+  },
+  {
     "id": "cc8d37e017e0",
     "url": "https://www.feministgiant.com/p/essay-speak-truth-of-the-dead-42a",
     "title": "Essay: Speak Truth of the Dead",
@@ -542,6 +721,76 @@
     "paywalled": false,
     "foundAt": "2026-10-15T23:42:04.089Z",
     "readMinutes": 6
+  },
+  {
+    "id": "6872686ec595",
+    "url": "https://media.facelykonate.com/p/les-peres-fondateurs-de-la-cedeao-netaient-pas-majoritairement-des-militaires",
+    "title": "Les « pères fondateurs » de la CEDEAO n'étaient pas majoritairement des militaires",
+    "writerId": "facely-konate",
+    "publishedAt": "2026-07-21T12:31:20.000Z",
+    "excerpt": "Les archives de la CEDEAO montrent que l'affirmation de Mamadi Doumbouya sur les « pères fondateurs » de l'organisation ne correspond pas aux faits.",
+    "platform": "Substack",
+    "source": "L’ŒIL DE KONATE",
+    "icon": "https://media.facelykonate.com/img/substack.png",
+    "paywalled": false,
+    "foundAt": "2026-10-19T20:37:03.166Z",
+    "readMinutes": 5
+  },
+  {
+    "id": "3a715b7e8df3",
+    "url": "https://media.facelykonate.com/p/visas-schengen-dans-les-coulisses-du-bras-de-fer-entre-bruxelles-et-conakry",
+    "title": "Visas Schengen : dans les coulisses du bras de fer entre Bruxelles et Conakry",
+    "writerId": "facely-konate",
+    "publishedAt": "2026-07-20T10:02:05.000Z",
+    "excerpt": "Comment une coopération migratoire engagée en 2017 a progressivement conduit l'Union européenne à restreindre certaines facilités de visas accordées aux ressortissants guinéens.",
+    "platform": "Substack",
+    "source": "L’ŒIL DE KONATE",
+    "icon": "https://media.facelykonate.com/img/substack.png",
+    "paywalled": false,
+    "foundAt": "2026-10-19T20:37:03.166Z",
+    "readMinutes": 10
+  },
+  {
+    "id": "19ffe4280a48",
+    "url": "https://media.facelykonate.com/p/guinee-la-fin-du-cnt-entre-primes-decorations-et-enquete-de-la-crief",
+    "title": "Guinée : la fin du CNT entre primes, décorations et enquête de la CRIEF",
+    "writerId": "facely-konate",
+    "publishedAt": "2026-07-13T12:09:28.000Z",
+    "excerpt": "Une contestation interne sur des revalorisations salariales a conduit à révéler une prime exceptionnelle de fin de mission de 43 milliards GNF, aujourd'hui au cœur d'une enquête de la CRIEF.",
+    "platform": "Substack",
+    "source": "L’ŒIL DE KONATE",
+    "icon": "https://media.facelykonate.com/img/substack.png",
+    "paywalled": false,
+    "foundAt": "2026-10-19T20:37:03.166Z",
+    "readMinutes": 6
+  },
+  {
+    "id": "17fcd5852f52",
+    "url": "https://media.facelykonate.com/p/affaire-zogota-la-justice-francaise-ouvre-une-nouvelle-voie-pour-les-victimes",
+    "title": "Affaire Zogota : la justice française ouvre une nouvelle voie pour les victimes",
+    "writerId": "facely-konate",
+    "publishedAt": "2026-07-08T19:57:43.000Z",
+    "excerpt": "Le tribunal judiciaire de Paris reconnaît l'arrêt de la Cour de justice de la CEDEAO. Une décision inédite qui pourrait faire jurisprudence en matière de droits humains.",
+    "platform": "Substack",
+    "source": "L’ŒIL DE KONATE",
+    "icon": "https://media.facelykonate.com/img/substack.png",
+    "paywalled": false,
+    "foundAt": "2026-10-19T20:37:03.166Z",
+    "readMinutes": 6
+  },
+  {
+    "id": "f5a283cf9dca",
+    "url": "https://media.facelykonate.com/p/mondial-2026-le-maroc-dernier-espoir-africain",
+    "title": "Mondial 2026 : le Maroc, dernier espoir africain",
+    "writerId": "facely-konate",
+    "publishedAt": "2026-07-08T09:50:07.000Z",
+    "excerpt": "Après la qualification du Maroc et l'élimination cruelle de l'Égypte, les Lions de l'Atlas restent les seuls représentants africains avant leur quart de finale contre la France.",
+    "platform": "Substack",
+    "source": "L’ŒIL DE KONATE",
+    "icon": "https://media.facelykonate.com/img/substack.png",
+    "paywalled": false,
+    "foundAt": "2026-10-19T20:37:03.166Z",
+    "readMinutes": 7
   },
   {
     "id": "f6ece53028c7",
@@ -583,6 +832,19 @@
     "foundAt": "2026-10-19T14:38:16.469Z"
   },
   {
+    "id": "200441d67a80",
+    "url": "https://akram-belkaid.blogspot.com/2026/02/jeuner-apres-gaza.html",
+    "title": "𝐏𝐫𝐞́𝐚𝐦𝐛𝐮𝐥𝐞 Jeûner après Gaza",
+    "writerId": "akram-belkaid",
+    "publishedAt": "2026-02-19T11:43:00.000Z",
+    "excerpt": "_ 𝐏𝐫𝐞́𝐚𝐦𝐛𝐮𝐥𝐞 Jeûner après Gaza Durant le mois de ramadan, le neuvième du calendrier lunaire hégirien, les musulmans doivent s’abstenir de manger et de boire du lever au coucher du soleil.",
+    "platform": "akram-belkaid.blogspot.com",
+    "source": "Lignes quotidiennes, par Akram Belkaïd",
+    "paywalled": false,
+    "foundAt": "2026-10-19T20:37:03.166Z",
+    "readMinutes": 2
+  },
+  {
     "id": "b94bb0535ada",
     "url": "https://remythequill.com/sacrifices-and-sacraments",
     "title": "Sacrifices And Sacraments",
@@ -609,6 +871,19 @@
     "foundAt": "2026-10-15T21:41:38.857Z"
   },
   {
+    "id": "ec26b3d9f5f6",
+    "url": "https://akram-belkaid.blogspot.com/2025/10/entretien-avec-mohamed-arkoun-islam-et.html",
+    "title": "Entretien avec Mohamed Arkoun : Islam et éducation",
+    "writerId": "akram-belkaid",
+    "publishedAt": "2025-10-20T15:42:00.000Z",
+    "excerpt": "Le Monde de l’Éducation, Paris, septembre 1996 Propos recueillis par Mohammed et Akram Belkaïd Intellectuel et penseur d’origine algérienne, Mohamed Arkoun (1) est docteur ès lettres et professeur émérite à la Sorbonne nouvelle-Paris-III.",
+    "platform": "akram-belkaid.blogspot.com",
+    "source": "Lignes quotidiennes, par Akram Belkaïd",
+    "paywalled": false,
+    "foundAt": "2026-10-19T20:37:03.166Z",
+    "readMinutes": 7
+  },
+  {
     "id": "86b09daabafd",
     "url": "https://remythequill.com/places-from-which-we-look-out-at-the-world",
     "title": "Places From Which We Look Out At The World",
@@ -620,5 +895,148 @@
     "icon": "https://remythequill.com/wp-content/uploads/2025/11/cropped-2026-Website-Favicon-32x32.png",
     "paywalled": false,
     "foundAt": "2026-10-15T23:42:04.089Z"
+  },
+  {
+    "id": "67800a887410",
+    "url": "https://akram-belkaid.blogspot.com/2025/05/gaza-quand-tartuffe-sindigne.html",
+    "title": "Gaza : Quand Tartuffe s’indigne",
+    "writerId": "akram-belkaid",
+    "publishedAt": "2025-05-09T20:55:00.000Z",
+    "excerpt": "_ Par Akram Belkaïd Soudain, la conscience assoupie donne quelques signes de vie. Celles et ceux qui empêchaient – qui empêchent encore – les défenseurs du peuple palestinien de s’exprimer ont désormais des remords ou, simplement, ils sentent bien que la situation est intenable…",
+    "platform": "akram-belkaid.blogspot.com",
+    "source": "Lignes quotidiennes, par Akram Belkaïd",
+    "paywalled": false,
+    "foundAt": "2026-10-19T20:37:03.166Z",
+    "readMinutes": 4
+  },
+  {
+    "id": "8d7a5989ade5",
+    "url": "https://akram-belkaid.blogspot.com/2025/03/hommage-mes-parents.html",
+    "title": "Hommage à mes parents",
+    "writerId": "akram-belkaid",
+    "publishedAt": "2025-03-17T11:30:00.000Z",
+    "excerpt": "_ Fadhila Ayari (14 juillet 1940 – 4 décembre 2024) Mohammed Belkaïd (15 février 1939 – 8 mars 2025) Mes parents, paix à leurs âmes, se sont mariés en 1963 à Tunis. La vie, l’usure du temps, les aléas ont fait diverger leurs routes.",
+    "platform": "akram-belkaid.blogspot.com",
+    "source": "Lignes quotidiennes, par Akram Belkaïd",
+    "paywalled": false,
+    "foundAt": "2026-10-19T20:37:03.166Z",
+    "readMinutes": 1
+  },
+  {
+    "id": "e9633c1b8532",
+    "url": "https://akram-belkaid.blogspot.com/2024/12/treize-ans-dans-les-prisons-syriennes.html",
+    "title": "Treize ans dans les prisons syriennes",
+    "writerId": "akram-belkaid",
+    "publishedAt": "2024-12-12T16:26:00.000Z",
+    "excerpt": "_ Syrie. Pour qui voulait savoir, il était possible de savoir. ------------------------------------------------------- Récit d'une captivité dans les geôles d'Assad par Aram Karabet (2009).",
+    "platform": "akram-belkaid.blogspot.com",
+    "source": "Lignes quotidiennes, par Akram Belkaïd",
+    "paywalled": false,
+    "foundAt": "2026-10-19T20:37:03.166Z",
+    "readMinutes": 2
+  },
+  {
+    "id": "4b3d0799c665",
+    "url": "https://akram-belkaid.blogspot.com/2024/12/liberte-pour-boualem-sansal.html",
+    "title": "Liberté pour Boualem Sansal",
+    "writerId": "akram-belkaid",
+    "publishedAt": "2024-12-03T16:59:00.000Z",
+    "excerpt": "_ Commençons par l’essentiel. L’indiscutable. Boualem Sansal n’a rien à faire en prison et j’en appelle ici aux autorités algériennes les plus hautes pour qu’il soit libéré et qu’il puisse aller où qu’il aille.",
+    "platform": "akram-belkaid.blogspot.com",
+    "source": "Lignes quotidiennes, par Akram Belkaïd",
+    "paywalled": false,
+    "foundAt": "2026-10-19T20:37:03.166Z",
+    "readMinutes": 2
+  },
+  {
+    "id": "0effe4284a45",
+    "url": "https://akram-belkaid.blogspot.com/2023/01/godo-houellebecq-et-le-debat-fructueux.html",
+    "title": "Godo, Houellebecq et le « débat fructueux »",
+    "writerId": "akram-belkaid",
+    "publishedAt": "2023-01-05T11:16:00.008Z",
+    "excerpt": "Dans une chronique publiée par La Croix (4 janvier 2023), l’écrivain Emmanuel Godo prend la défense de Michel Houellebecq et dénonce la décision de la Mosquée de Paris de poursuivre en justice l’auteur d’Anéantir pour « provocation à la haine contre les musulmans ».",
+    "platform": "akram-belkaid.blogspot.com",
+    "source": "Lignes quotidiennes, par Akram Belkaïd",
+    "paywalled": false,
+    "foundAt": "2026-10-19T20:37:03.166Z",
+    "readMinutes": 2
+  },
+  {
+    "id": "54cfb5debe75",
+    "url": "https://akram-belkaid.blogspot.com/2022/03/le-pas-de-cote-non-au-campisme.html",
+    "title": "Le pas de côté : Non au campisme",
+    "writerId": "akram-belkaid",
+    "publishedAt": "2022-03-02T09:02:00.006Z",
+    "excerpt": "L’invasion de l’Ukraine par les forces armées russes déclenche un peu partout passions et divisions. Dans ce genre de situation, les adeptes du campisme – autrement dit ceux qui multiplient les injonctions à choisir son camp – entretiennent la confusion et poussent à la…",
+    "platform": "akram-belkaid.blogspot.com",
+    "source": "Lignes quotidiennes, par Akram Belkaïd",
+    "paywalled": false,
+    "foundAt": "2026-10-19T20:37:03.166Z",
+    "readMinutes": 3
+  },
+  {
+    "id": "762d63e0ddab",
+    "url": "https://akram-belkaid.blogspot.com/2022/01/maniere-de-voir-le-maghreb-en-danger.html",
+    "title": "Manière de voir : Le Maghreb en danger...",
+    "writerId": "akram-belkaid",
+    "publishedAt": "2022-01-26T21:50:00.002Z",
+    "excerpt": "Désunion et autoritarisme ///// Akram Belkaïd Une certaine idée du Maghreb ///// Amin Khan Au coeur du combat anticolonial, la promesse d'un Maghreb uni cimentait les discours des nationalistes algériens, marocains et tunisiens.",
+    "platform": "akram-belkaid.blogspot.com",
+    "source": "Lignes quotidiennes, par Akram Belkaïd",
+    "paywalled": false,
+    "foundAt": "2026-10-19T20:37:03.166Z",
+    "readMinutes": 2
+  },
+  {
+    "id": "899b59f7b247",
+    "url": "https://akram-belkaid.blogspot.com/2021/12/la-chronique-du-bledard-la-huit-cent.html",
+    "title": "La chronique du blédard : La huit-cent-cinquantième : Merci et au-revoir !",
+    "writerId": "akram-belkaid",
+    "publishedAt": "2021-12-30T10:19:00.002Z",
+    "excerpt": "Le Quotidien d’Oran, Jeudi 30 décembre 2021 Amies lectrices, amis lecteurs, copains d’Alger et de Montréal, cousins et parents de Ténès et de partout ailleurs, bienveillantes lectrices, bienveillants lecteurs de La Marsa, Portland, Vienne, Genève, Mascate et Barize, cher…",
+    "platform": "akram-belkaid.blogspot.com",
+    "source": "Lignes quotidiennes, par Akram Belkaïd",
+    "paywalled": false,
+    "foundAt": "2026-10-19T20:37:03.166Z",
+    "readMinutes": 3
+  },
+  {
+    "id": "6e08a061f819",
+    "url": "https://akram-belkaid.blogspot.com/2021/12/plus-de-trois-cent-prisonniers-dopinion.html",
+    "title": "[Plus de trois cent prisonniers d’opinion] La chronique du blédard : Nos joies amères",
+    "writerId": "akram-belkaid",
+    "publishedAt": "2021-12-23T21:16:00.004Z",
+    "excerpt": "One, two, three, on a gagné et la vie est belle… La formule consacrée affirme que le football est l’opium des peuples. On peut aussi reprendre l’expression romaine « panem et circences » (du pain et des jeux du cirque) en l’adaptant : « panem et pila ludum pedites »(du pain et…",
+    "platform": "akram-belkaid.blogspot.com",
+    "source": "Lignes quotidiennes, par Akram Belkaïd",
+    "paywalled": false,
+    "foundAt": "2026-10-19T20:37:03.166Z",
+    "readMinutes": 4
+  },
+  {
+    "id": "ce718a222fda",
+    "url": "https://akram-belkaid.blogspot.com/2021/12/la-chronique-du-bledard-foie-gras-et.html",
+    "title": "La chronique du blédard : « Foie gras et Tour de France » - Quatre questions pour la naturalisation de Deqqa El-Tkatki",
+    "writerId": "akram-belkaid",
+    "publishedAt": "2021-12-21T14:27:00.003Z",
+    "excerpt": "_ Le Quotidien d’Oran, jeudi 16 décembre 2021 Akram Belkaïd, Paris Quelques mois après l’élection de Valérie Pécresse à l’élection présidentielle (on ne précisera pas l’année), M.",
+    "platform": "akram-belkaid.blogspot.com",
+    "source": "Lignes quotidiennes, par Akram Belkaïd",
+    "paywalled": false,
+    "foundAt": "2026-10-19T20:37:03.166Z",
+    "readMinutes": 4
+  },
+  {
+    "id": "917ed617c809",
+    "url": "https://akram-belkaid.blogspot.com/2021/10/la-chronique-du-bledard-une-affaire.html",
+    "title": "La chronique du blédard : Une affaire franco-française",
+    "writerId": "akram-belkaid",
+    "publishedAt": "2021-10-07T11:45:00.004Z",
+    "excerpt": "Le Quotidien d’Oran, jeudi 7 octobre 2021 Commençons par une mise au point. Les Algériennes et les Algériens connaissent la nature du pouvoir qui dirige leur pays.",
+    "platform": "akram-belkaid.blogspot.com",
+    "source": "Lignes quotidiennes, par Akram Belkaïd",
+    "paywalled": false,
+    "foundAt": "2026-10-19T20:37:03.166Z",
+    "readMinutes": 5
   }
 ]
