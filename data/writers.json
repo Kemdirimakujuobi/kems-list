@@ -328,5 +328,35 @@
     "active": true,
     "addedAt": "2026-10-15T21:41:09.351Z",
     "icon": "https://substack-post-media.s3.amazonaws.com/public/images/f6adbd6b-47b5-4a77-9ec2-ed1555c32af5_235x235.jpeg"
+  },
+  {
+    "id": "rais-neza-boneza",
+    "name": "Raïs Neza Boneza",
+    "country": "DR Congo / Norway",
+    "links": {
+      "substack": "https://rboneza.substack.com"
+    },
+    "active": true,
+    "addedAt": "2026-10-19T14:34:39.650Z"
+  },
+  {
+    "id": "kambale-musavuli",
+    "name": "Kambale Musavuli",
+    "country": "DR Congo / US",
+    "links": {
+      "substack": "https://kambalemusavuli.substack.com"
+    },
+    "active": true,
+    "addedAt": "2026-10-19T14:34:39.650Z"
+  },
+  {
+    "id": "mo-hamdouni",
+    "name": "Mo Hamdouni",
+    "country": "Morocco",
+    "links": {
+      "substack": "https://moroccanepistemologies.substack.com"
+    },
+    "active": true,
+    "addedAt": "2026-10-19T14:34:39.650Z"
   }
 ]
