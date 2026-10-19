@@ -21,3 +21,7 @@ test('idFor is 12 hex chars and equal for equivalent URLs', () => {
   assert.equal(a, idFor('https://X.substack.com/p/essay/?utm_campaign=z'));
   assert.notEqual(a, idFor('https://x.substack.com/p/other'));
 });
+
+test('idFor treats http and https as the same piece (Blogspot pages say http, their feeds https)', () => {
+  assert.equal(idFor('http://ada.blogspot.com/2026/07/post.html'), idFor('https://ada.blogspot.com/2026/07/post.html'));
+});
