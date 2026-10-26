@@ -73,7 +73,7 @@
     "mona-eltahawy:site": {
       "failCount": 0,
       "feedUrl": "https://www.feministgiant.com/feed",
-      "lastOk": "2026-10-26T13:11:37.774Z"
+      "lastOk": "2026-10-26T13:31:30.750Z"
     },
     "yassmin-abdel-magied:substack": {
       "manual": true,
@@ -138,7 +138,7 @@
     "remy-ngamije:site": {
       "failCount": 0,
       "feedUrl": "https://remythequill.com/feed/",
-      "lastOk": "2026-10-26T13:11:37.774Z"
+      "lastOk": "2026-10-26T13:31:30.750Z"
     },
     "sisonke-msimang:substack": {
       "manual": true,
@@ -173,7 +173,7 @@
     "facely-konate:site": {
       "failCount": 0,
       "feedUrl": "https://media.facelykonate.com/feed",
-      "lastOk": "2026-10-26T13:11:37.774Z"
+      "lastOk": "2026-10-26T13:31:30.750Z"
     },
     "antonio-francisco:substack": {
       "manual": true,
@@ -188,12 +188,12 @@
     "manuel-brito-semedo:site": {
       "failCount": 0,
       "feedUrl": "https://www.crioulambs.com/author/brito-semedo/feed/",
-      "lastOk": "2026-10-26T13:11:37.774Z"
+      "lastOk": "2026-10-26T13:31:30.750Z"
     },
     "akram-belkaid:site": {
       "failCount": 0,
       "feedUrl": "https://akram-belkaid.blogspot.com/feeds/posts/default",
-      "lastOk": "2026-10-26T13:11:37.774Z"
+      "lastOk": "2026-10-26T13:31:30.750Z"
     }
   },
   "deadLinks": [],
