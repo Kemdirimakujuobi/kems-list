@@ -2,6 +2,7 @@
 import { createRepo } from '../lib/github.js';
 import { capturePage } from '../lib/capture.js';
 import { validateData } from '../lib/schema.js';
+import { languageOf, LANGUAGE_NAMES } from '../lib/lang.js';
 import {
   approve, skip, unpublish, editNote, addWriter, setWriterActive, addLink, visibleQueue,
 } from '../lib/desk.js';
@@ -26,6 +27,10 @@ const state = {
 
 const app = document.getElementById('app');
 const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
+// Same rule as the public site: English goes untagged; other languages get a small tag.
+const langOf = (item) => item.lang ?? languageOf(`${item.title} ${item.excerpt ?? ''}`);
+const langAttr = (item) => (langOf(item) === 'en' ? '' : ` lang="${esc(langOf(item))}"`);
+const langTag = (item) => { const l = langOf(item); return l === 'en' ? '' : `<span class="lang" title="In ${esc(LANGUAGE_NAMES[l] ?? l)}">${esc(l.toUpperCase())}</span>`; };
 const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 const short = (iso) => { const d = new Date(iso); return `${d.getDate()} ${MONTHS[d.getMonth()]}`; };
 const ago = (iso) => {
@@ -125,7 +130,7 @@ function renderRow(item, i) {
     return `<li><div class="row${active}${item.active ? '' : ' is-dim'}" data-i="${i}" tabindex="-1">${avatarOf(item.name, item.icon)}<span class="subject"><strong>${esc(item.name)}</strong><span class="snippet"> — ${esc([item.country, Object.keys(item.links).join(', ')].filter(Boolean).join(' · '))}</span></span><span class="from"></span><span class="when ${h?.failCount ? 'fail' : ''}">${note}</span></div></li>`;
   }
   const dead = state.tab === 'published' && state.data.status.deadLinks?.includes(item.id);
-  return `<li><div class="row${active}" data-i="${i}" tabindex="-1">${avatarOf(nameOf(item), item.icon ?? writerOf(item.writerId)?.icon)}<span class="subject"><strong>${esc(item.title)}</strong>${item.paywalled ? '<span class="badge">paid</span>' : ''}${dead ? '<span class="badge">dead link?</span>' : ''}${item.excerpt ? `<span class="snippet"> — ${esc(item.excerpt)}</span>` : ''}</span><span class="from">${esc(nameOf(item))}</span><span class="when">${short(item.publishedAt)}</span></div></li>`;
+  return `<li><div class="row${active}" data-i="${i}" tabindex="-1">${avatarOf(nameOf(item), item.icon ?? writerOf(item.writerId)?.icon)}<span class="subject"><strong${langAttr(item)}>${esc(item.title)}</strong>${langTag(item)}${item.paywalled ? '<span class="badge">paid</span>' : ''}${dead ? '<span class="badge">dead link?</span>' : ''}${item.excerpt ? `<span class="snippet"> — ${esc(item.excerpt)}</span>` : ''}</span><span class="from">${esc(nameOf(item))}</span><span class="when">${short(item.publishedAt)}</span></div></li>`;
 }
 
 function renderPane(item) {

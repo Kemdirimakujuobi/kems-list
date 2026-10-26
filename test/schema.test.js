@@ -72,3 +72,11 @@ test('optional source, author, icon and publishedAt are validated where they app
   assert.ok(errors.includes('pieces[0].icon: must be an http(s) URL'));
   assert.ok(errors.includes('inbox[0].publishedAt: must be an ISO date'));
 });
+
+test('pieces may carry a two-letter lang that overrides the language guess', () => {
+  const d = valid();
+  d.pieces[0].lang = 'fr';
+  assert.deepEqual(validateData(d), []);
+  d.pieces[0].lang = 'French';
+  assert.deepEqual(validateData(d), ['pieces[0].lang: must be a two-letter language code like fr']);
+});

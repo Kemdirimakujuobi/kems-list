@@ -46,6 +46,9 @@ Cost: **$0**. Dependencies: one XML parser. Nothing to keep alive.
 - An individual's piece published *in* a magazine can still be added with **Add link** (`n`). The rule is
   about who wrote it, not where it appeared.
 - Quality over volume: skipping is the default; approve what you'd send a friend.
+- **Writing in French and Portuguese is welcome.** Each row is tagged with its language (`FR`, `PT`); English
+  is untagged. The language is guessed from the title and excerpt (`lib/lang.js`). If a guess is wrong, set
+  `"lang": "en"` (or `fr`, `pt`, …) on that piece in `data/pieces.json`.
 
 ## Curating at the desk
 

@@ -131,3 +131,29 @@ test('built pages and desk reference versioned assets, so a deploy is never hidd
   assert.match(deskHtml, new RegExp(`\\.\\./assets/style\\.css\\?v=${v}`));
   for (const lib of ['github', 'schema', 'desk', 'capture']) assert.match(deskJs, new RegExp(`'\\.\\./lib/${lib}\\.js\\?v=${v}'`), lib);
 });
+
+test('index tags French and Portuguese pieces with their language, and leaves English untagged', () => {
+  const d = data();
+  d.pieces = [
+    piece('aaaaaaaaaaaa', '2026-10-15T09:00:00.000Z', { title: 'Moi et Octobre 88 : les balles, le « complot » et l’oubli', excerpt: 'Je rouvre trois textes' }),
+    piece('bbbbbbbbbbbb', '2026-10-15T08:00:00.000Z', { title: 'Era uma vez… um menino do mar', excerpt: 'Esta estória é contada para as minhas netas' }),
+    piece('cccccccccccc', '2026-10-15T07:00:00.000Z', { title: 'Ceuta and the Long Memory of Purity', excerpt: 'Inside the Line' }),
+  ];
+  const html = renderIndex(d, cfg, NOW);
+  assert.match(html, /<strong lang="fr">Moi et Octobre 88[^<]*<\/strong><span class="lang" title="In French">FR<\/span>/);
+  assert.match(html, /<strong lang="pt">Era uma vez[^<]*<\/strong><span class="lang" title="In Portuguese">PT<\/span>/);
+  assert.match(html, /<strong>Ceuta and the Long Memory of Purity<\/strong><\/span>/);
+  assert.equal((html.match(/class="lang"/g) || []).length, 2);
+});
+
+test('a piece\'s own lang overrides the guess', () => {
+  const d = data();
+  d.pieces = [
+    piece('aaaaaaaaaaaa', '2026-10-15T09:00:00.000Z', { title: 'Séraphin', lang: 'fr' }),
+    piece('bbbbbbbbbbbb', '2026-10-15T08:00:00.000Z', { title: 'Mondial 2026 : le Maroc, dernier espoir africain', lang: 'en' }),
+  ];
+  const html = renderIndex(d, cfg, NOW);
+  assert.match(html, /<strong lang="fr">Séraphin<\/strong><span class="lang" title="In French">FR<\/span>/);
+  assert.match(html, /<strong>Mondial 2026/);
+  assert.equal((html.match(/class="lang"/g) || []).length, 1);
+});

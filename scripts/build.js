@@ -5,6 +5,7 @@ import { fileURLToPath } from 'node:url';
 import { join } from 'node:path';
 import { createHash } from 'node:crypto';
 import { validateData } from '../lib/schema.js';
+import { languageOf, LANGUAGE_NAMES } from '../lib/lang.js';
 
 export const CONFIG = {
   title: "Kem's List",
@@ -35,6 +36,14 @@ function avatar(cfg, data, p, icons) {
   const local = iconOf(data, p, icons);
   if (local) return `<img class="avatar" src="${cfg.base}${local}" alt="" width="28" height="28" loading="lazy">`;
   return `<span class="avatar" aria-hidden="true">${esc(sourceName(data, p).trim()[0]?.toUpperCase() ?? '·')}</span>`;
+}
+
+// English is the default and goes untagged; any other language gets a small tag, and the title its lang.
+function titleWithLang(p) {
+  const lang = p.lang ?? languageOf(`${p.title} ${p.excerpt ?? ''}`);
+  if (lang === 'en') return `<strong>${esc(p.title)}</strong>`;
+  const name = LANGUAGE_NAMES[lang] ?? lang.toUpperCase();
+  return `<strong lang="${esc(lang)}">${esc(p.title)}</strong><span class="lang" title="In ${esc(name)}">${esc(lang.toUpperCase())}</span>`;
 }
 
 function layout(cfg, { title, description, path, body, bodyAttrs = '', type = 'website' }) {
@@ -94,7 +103,7 @@ ${[...groups].map(([name, list]) => `<section>
 <h2 class="group">${name}</h2>
 <ol class="rows">
 ${list.map((p) => {
-  return `<li><a class="row" href="${esc(p.url)}" target="_blank" rel="noopener">${avatar(cfg, data, p, icons)}<span class="subject"><strong>${esc(p.title)}</strong></span><span class="from">${esc(sourceName(data, p))}</span><time datetime="${esc(p.publishedAt)}">${shortDate(p.publishedAt, now)}</time></a></li>`;
+  return `<li><a class="row" href="${esc(p.url)}" target="_blank" rel="noopener">${avatar(cfg, data, p, icons)}<span class="subject">${titleWithLang(p)}</span><span class="from">${esc(sourceName(data, p))}</span><time datetime="${esc(p.publishedAt)}">${shortDate(p.publishedAt, now)}</time></a></li>`;
 }).join('\n')}
 </ol>
 </section>`).join('\n')}
