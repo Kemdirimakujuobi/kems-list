@@ -78,11 +78,25 @@ ${body}
 
 /* ---------- pages ---------- */
 
-function groupOf(p, now) {
-  const t = Date.parse(p.approvedAt);
-  if (new Date(t).toISOString().slice(0, 10) === now.toISOString().slice(0, 10)) return 'Today';
-  if (now - t < 7 * DAY) return 'This week';
-  return 'Earlier';
+const MONTH_NAMES = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
+// A calendar timeline by approval date (UTC): Today, Yesterday, This week (from Monday), Last week,
+// This month, Last month, then month names, with the year once it isn't this year.
+export function groupOf(p, now) {
+  const d = new Date(p.approvedAt);
+  const dayOf = (t) => Math.floor(t / DAY);
+  const day = dayOf(d.getTime());
+  const today = dayOf(now.getTime());
+  const monday = today - ((now.getUTCDay() + 6) % 7);
+  if (day >= today) return 'Today';
+  if (day === today - 1) return 'Yesterday';
+  if (day >= monday) return 'This week';
+  if (day >= monday - 7) return 'Last week';
+  const monthsAgo = (now.getUTCFullYear() - d.getUTCFullYear()) * 12 + now.getUTCMonth() - d.getUTCMonth();
+  if (monthsAgo === 0) return 'This month';
+  if (monthsAgo === 1) return 'Last month';
+  const name = MONTH_NAMES[d.getUTCMonth()];
+  return d.getUTCFullYear() === now.getUTCFullYear() ? name : `${name} ${d.getUTCFullYear()}`;
 }
 
 export function renderIndex(data, cfg, now = new Date(), icons = {}) {

@@ -1,6 +1,6 @@
 name: Build and deploy
 
-# Rebuilds the site when published pieces, writers or the code change. Invalid data fails the build,
+# Rebuilds the site when published pieces, writers or the code change, and once a day. Invalid data fails the build,
 # so GitHub Pages keeps serving the last good version.
 on:
   push:
@@ -15,6 +15,9 @@ on:
       - 'package.json'
       - 'package-lock.json'
       - '.github/workflows/build.yml'
+  # Daily, so pieces move from Today → Yesterday → This week… even on days nothing new is published.
+  schedule:
+    - cron: '7 0 * * *'
   workflow_dispatch:
 
 permissions:

@@ -4,7 +4,7 @@ import { mkdtempSync, readFileSync, existsSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { XMLParser } from 'fast-xml-parser';
-import { build, renderIndex, renderFeed, iconSourceUrl } from '../scripts/build.js';
+import { build, renderIndex, renderFeed, iconSourceUrl, groupOf } from '../scripts/build.js';
 
 const NOW = new Date('2026-10-15T12:00:00Z');
 const cfg = { title: "Kem's List", description: 'The best writing by Africans online.', base: '/kems-list/', url: 'https://kemdirimakujuobi.github.io/kems-list' };
@@ -19,9 +19,9 @@ const data = () => ({
   ],
 });
 
-test('index groups pieces into Today / This week / Earlier, newest first', () => {
+test('index groups pieces by when they were approved, newest first', () => {
   const html = renderIndex(data(), cfg, NOW);
-  const order = ['Today', 'Title aaaaaaaaaaaa', 'This week', 'Title bbbbbbbbbbbb', 'Earlier', 'Title cccccccccccc'].map((s) => html.indexOf(s));
+  const order = ['Today', 'Title aaaaaaaaaaaa', 'This week', 'Title bbbbbbbbbbbb', 'Last month', 'Title cccccccccccc'].map((s) => html.indexOf(s));
   assert.ok(order.every((v, i) => v > -1 && (i === 0 || v > order[i - 1])), JSON.stringify(order));
   assert.match(html, /<a class="row" href="https:\/\/ada\.substack\.com\/p\/aaaaaaaaaaaa" target="_blank" rel="noopener">/);
   assert.match(html, />Ada Okafor</);
@@ -156,4 +156,29 @@ test('a piece\'s own lang overrides the guess', () => {
   assert.match(html, /<strong lang="fr">Séraphin<\/strong><span class="lang" title="In French">FR<\/span>/);
   assert.match(html, /<strong>Mondial 2026/);
   assert.equal((html.match(/class="lang"/g) || []).length, 1);
+});
+
+test('groupOf keeps a calendar timeline instead of collapsing into one "Earlier" group', () => {
+  // NOW is Thursday 15 Oct 2026, 12:00 UTC; the week starts on Monday 12 Oct.
+  const g = (approvedAt) => groupOf({ approvedAt }, NOW);
+  assert.equal(g('2026-10-15T00:30:00Z'), 'Today');
+  assert.equal(g('2026-10-14T23:59:00Z'), 'Yesterday');
+  assert.equal(g('2026-10-12T08:00:00Z'), 'This week');
+  assert.equal(g('2026-10-11T23:00:00Z'), 'Last week');
+  assert.equal(g('2026-10-05T00:00:00Z'), 'Last week');
+  assert.equal(g('2026-10-04T23:00:00Z'), 'This month');
+  assert.equal(g('2026-09-30T00:00:00Z'), 'Last month');
+  assert.equal(g('2026-09-01T00:00:00Z'), 'Last month');
+  assert.equal(g('2026-08-31T00:00:00Z'), 'August');
+  assert.equal(g('2026-01-02T00:00:00Z'), 'January');
+  assert.equal(g('2025-12-20T00:00:00Z'), 'December 2025');
+});
+
+test('groupOf: on a Monday, yesterday is last week; in January, last month is December', () => {
+  const monday = new Date('2026-10-12T09:00:00Z');
+  assert.equal(groupOf({ approvedAt: '2026-10-11T10:00:00Z' }, monday), 'Yesterday');
+  assert.equal(groupOf({ approvedAt: '2026-10-10T10:00:00Z' }, monday), 'Last week');
+  const jan = new Date('2027-01-20T09:00:00Z');
+  assert.equal(groupOf({ approvedAt: '2026-12-15T10:00:00Z' }, jan), 'Last month');
+  assert.equal(groupOf({ approvedAt: '2026-11-15T10:00:00Z' }, jan), 'November 2026');
 });
