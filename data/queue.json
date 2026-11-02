@@ -473,6 +473,19 @@
     "readMinutes": 7
   },
   {
+    "id": "cb7f794d6412",
+    "url": "https://pixeldahn.substack.com/p/caching",
+    "title": "Caching",
+    "publishedAt": "2026-09-01T17:16:42.000Z",
+    "excerpt": "What should a product remember?",
+    "platform": "Substack",
+    "source": "Daniel’s Notes",
+    "author": "Daniel Bezos",
+    "icon": "https://substackcdn.com/image/fetch/$s_!11dz!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fc161e99c-8a56-4674-9ff0-f535bf4d16b7_1179x914.jpeg",
+    "paywalled": false,
+    "foundAt": "2026-11-02T10:13:10.953Z"
+  },
+  {
     "id": "67508060e2b1",
     "url": "https://www.feministgiant.com/p/on-wandering-196",
     "title": "On Wandering",
@@ -609,20 +622,6 @@
     "paywalled": false,
     "foundAt": "2026-10-19T20:37:03.166Z",
     "readMinutes": 9
-  },
-  {
-    "id": "fac25272f95f",
-    "url": "https://keguro.substack.com/p/womens-notebooks",
-    "title": "Women’s Notebooks",
-    "writerId": "keguro-macharia",
-    "publishedAt": "2026-08-04T04:02:43.000Z",
-    "excerpt": "musings with my mother",
-    "platform": "Substack",
-    "source": "Imagining Freedom",
-    "author": "k'eguro",
-    "icon": "https://substackcdn.com/image/fetch/$s_!jroF!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fbucketeer-e05bbc84-baa3-437e-9518-adb32be77984.s3.amazonaws.com%2Fpublic%2Fimages%2F15e73bcf-e958-463c-8813-fe2b86a6e895_1280x1280.png",
-    "paywalled": false,
-    "foundAt": "2026-10-15T21:41:38.857Z"
   },
   {
     "id": "204a1f597202",
@@ -817,19 +816,6 @@
     "paywalled": false,
     "foundAt": "2026-10-19T14:38:16.469Z",
     "readMinutes": 3
-  },
-  {
-    "id": "63b2041cb866",
-    "url": "https://becomingnan.substack.com/p/at-three-years-old-you-were-unstoppable",
-    "title": "At Three Years Old, You Were Unstoppable. What Changed?",
-    "publishedAt": "2026-05-26T17:34:04.000Z",
-    "excerpt": "To get your mind in the right space—when you think about most people’s biggest problems with kids, say toddlers, beyond the financial responsibility, they would tell you it’s their stubbornness.",
-    "platform": "Substack",
-    "source": "Nan",
-    "author": "Nan",
-    "icon": "https://substackcdn.com/image/fetch/$s_!ulqF!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F3c7eb7ed-f77d-4d10-abd3-f7fe54574d46_1204x1206.png",
-    "paywalled": false,
-    "foundAt": "2026-11-02T10:09:58.406Z"
   },
   {
     "id": "431756cc7bc3",
