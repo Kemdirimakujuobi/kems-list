@@ -73,7 +73,7 @@
     "mona-eltahawy:site": {
       "failCount": 0,
       "feedUrl": "https://www.feministgiant.com/feed",
-      "lastOk": "2026-11-28T07:56:17.865Z"
+      "lastOk": "2026-11-28T17:37:03.412Z"
     },
     "yassmin-abdel-magied:substack": {
       "manual": true,
@@ -138,7 +138,7 @@
     "remy-ngamije:site": {
       "failCount": 0,
       "feedUrl": "https://remythequill.com/feed/",
-      "lastOk": "2026-11-28T07:56:17.865Z"
+      "lastOk": "2026-11-28T17:37:03.412Z"
     },
     "sisonke-msimang:substack": {
       "manual": true,
@@ -173,7 +173,7 @@
     "facely-konate:site": {
       "failCount": 0,
       "feedUrl": "https://media.facelykonate.com/feed",
-      "lastOk": "2026-11-28T07:56:17.865Z"
+      "lastOk": "2026-11-28T17:37:03.412Z"
     },
     "antonio-francisco:substack": {
       "manual": true,
@@ -186,7 +186,7 @@
       "reason": "Substack blocks automatic checks — add their pieces with Add link"
     },
     "manuel-brito-semedo:site": {
-      "failCount": 1,
+      "failCount": 2,
       "feedUrl": "https://www.crioulambs.com/author/brito-semedo/feed/",
       "lastOk": "2026-11-27T23:29:44.133Z",
       "lastError": "2026-11-28: HTTP 415"
@@ -194,7 +194,7 @@
     "akram-belkaid:site": {
       "failCount": 0,
       "feedUrl": "https://akram-belkaid.blogspot.com/feeds/posts/default",
-      "lastOk": "2026-11-28T07:56:17.865Z"
+      "lastOk": "2026-11-28T17:37:03.412Z"
     }
   },
   "deadLinks": [],
